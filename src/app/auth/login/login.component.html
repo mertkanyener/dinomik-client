@@ -2,7 +2,15 @@
   <div fxLayout="row">
     <h1>Facebook Login</h1>
   </div>
-  <div fxLayout="row">
-    <button mat-raised-button color="primary" type="button" (click)="onLogin()">Login</button>
+  <div *ngIf="!authService.isAuthenticated();else elseBlock;" fxLayout="row">
+    <button mat-raised-button color="primary" type="submit" (click)="onLogin()">Login</button>
   </div>
+  <ng-template #elseBlock>
+    <div fxLayout="row">
+      <h4>Welcome!</h4>
+    </div>
+    <div fxLayout="row">
+      <button mat-raised-button color="warn" type="button" (click)="onLogout()">Logout</button>
+    </div>
+  </ng-template>
 </div>
