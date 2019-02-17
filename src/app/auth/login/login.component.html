@@ -4,6 +4,7 @@
   </div>
   <div *ngIf="!authService.isAuthenticated();else elseBlock;" fxLayout="row">
     <button mat-raised-button color="primary" type="submit" (click)="onLogin()">Login</button>
+    <fa name="cog" animation="spin"></fa>
   </div>
   <ng-template #elseBlock>
     <div fxLayout="row">

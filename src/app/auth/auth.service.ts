@@ -6,7 +6,7 @@ export class AuthService{
 
   public clientId = '647358105696445';
   public clientSecret = '7c2cfc030acf8551641f65c2531ab0c3';
-  public redirectUri = 'http://localhost:4200/';
+  public redirectUri = 'http://localhost:4200';
 
   constructor(private http: HttpClient){}
 
@@ -17,8 +17,8 @@ export class AuthService{
       .append('code', code);
 
     const headers = new HttpHeaders().set('Content-type', 'application/x-www-form-urlencoded; charset=utf-8')
-      .append('Authorization', 'Basic '+btoa(this.clientSecret));
-    this.http.post('http://localhost:8080/login', {}, {params: params, headers:headers}).subscribe(
+      .append('Authorization', 'Basic '+btoa(this.clientId+ ":" + this.clientSecret));
+    this.http.post('https://graph.facebook.com/oauth/access_token', null,  {params: params, headers:headers}).subscribe(
       (res) => {
         console.log("Token: ", res);
         this.saveToken(res);

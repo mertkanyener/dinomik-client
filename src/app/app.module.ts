@@ -9,6 +9,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import {AuthService} from './auth/auth.service';
+import {AngularFontAwesomeModule} from "angular-font-awesome";
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {AuthService} from './auth/auth.service';
     MaterialModule,
     FlexLayoutModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    AngularFontAwesomeModule
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]
