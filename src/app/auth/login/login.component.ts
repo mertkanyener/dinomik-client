@@ -14,9 +14,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     let i = window.location.href.indexOf('code');
+    let j  = window.location.href.indexOf('state');
+
 
     if (!this.authService.isAuthenticated() && i != -1) {
       this.authService.getToken(window.location.href.substring(i + 5));
+      console.log('State: ', window.location.href.substring(j + 6, j + 12));
     }
   }
 
