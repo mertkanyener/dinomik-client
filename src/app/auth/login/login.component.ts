@@ -18,8 +18,10 @@ export class LoginComponent implements OnInit {
 
 
     if (!this.authService.isAuthenticated() && i != -1) {
-      this.authService.getToken(window.location.href.substring(i + 5));
-      console.log('State: ', window.location.href.substring(j + 6, j + 12));
+      let code = window.location.href.substring(i + 5, j-1);
+      let state = window.location.href.substring(j + 6, j + 12);
+      this.authService.getToken(code, state);
+      console.log("Code: ", code);
     }
   }
 
@@ -28,9 +30,10 @@ export class LoginComponent implements OnInit {
       + '&redirect_uri=' + this.authService.redirectUri
       + '&response_type=code';
       */
-    window.location.href = 'http://localhost:8080/login?client_id=' + this.authService.clientId
+    window.location.href = 'https://www.facebook.com/v3.2/dialog/oauth?client_id=' + this.authService.clientId
       + '&response_type=code'
-      + '&redirect_uri=' + this.authService.redirectUri;
+      + '&redirect_uri=' + this.authService.redirectUri
+      + '&state=' + this.authService.state;
   }
 
   onLogout(){

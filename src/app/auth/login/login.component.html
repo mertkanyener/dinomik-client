@@ -1,6 +1,6 @@
 <div fxLayout="column">
   <div fxLayout="row">
-    <h1>Facebook Login</h1>
+    <h1 class="mat-h1">Facebook Login</h1>
   </div>
   <div *ngIf="!authService.isAuthenticated();else elseBlock;" fxLayout="row">
     <button mat-raised-button color="primary" type="submit" (click)="onLogin()">Login</button>
