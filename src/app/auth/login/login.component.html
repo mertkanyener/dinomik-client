@@ -1,18 +1,16 @@
-<h2 mat-dialog-title>Facebook ile Giriş Yap</h2>
+<h2 mat-dialog-title align="center">Facebook ile Giriş Yap</h2>
 <mat-dialog-content class="mat-typography">
-  <div fxLayout="column" fxLayoutAlign="center" >
-    <div id="facebook" *ngIf="!authService.isAuthenticated();else elseBlock;" fxLayout="row" fxLayoutAlign="center">
-      <button id="facebookBtn" mat-raised-button  type="submit" (click)="onLogin()"><i class="fa fa-4x fa-facebook"></i></button>
+    <div id="facebook" *ngIf="!authService.isAuthenticated();" fxLayout="row" fxLayoutAlign="center">
+      <button id="facebookBtn" mat-raised-button type="submit" (click)="onLogin()"><i class="fa fa-4x fa-facebook"></i></button>
     </div>
-  </div>
 </mat-dialog-content>
-<br>
 <mat-dialog-actions>
-  <div fxLayout="row" fxFill>
-    <span style="flex: 1 1 auto;"></span>
-    <h4 class="mat-h4">Giriş yapmadan devam et: </h4>
-    <button mat-raised-button color="primary" mat-dialog-close>Devam</button>
-  </div>
+    <div fxLayout="row" fxLayoutAlign="center" fxFill>
+      <h4 class="mat-h4">Giriş yapmadan devam et</h4>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="center" fxFill>
+      <button mat-fab color="primary" mat-dialog-close><mat-icon>arrow_forward</mat-icon></button>
+    </div>
 </mat-dialog-actions>
 
 
