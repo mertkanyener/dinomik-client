@@ -26,8 +26,11 @@ const months : String[] = [
 })
 export class HomeComponent implements OnInit {
 
-  date : number;
   currentMonth : string;
+  date : number;
+
+  days = [1, 2, 3, 4, 5, 6, 7];
+
 
   constructor(public dialog: MatDialog,
               public authService: AuthService) { }
