@@ -11,6 +11,7 @@ import { HomeComponent } from './home/home.component';
 import {AuthService} from './auth/auth.service';
 import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     MaterialModule,
     FlexLayoutModule,
     HttpClientModule,
@@ -31,4 +33,6 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   bootstrap: [AppComponent],
   entryComponents: [LoginComponent]
 })
-export class AppModule { }
+export class AppModule {}
+
+
