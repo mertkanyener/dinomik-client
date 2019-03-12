@@ -1,0 +1,22 @@
+mat-card {
+  max-width: 15rem;
+}
+
+mat-card-title {
+  align-self: start;
+}
+
+.card-row {
+  margin-top: 8rem;
+}
+
+.card-option {
+  margin-right: 3rem;
+  text-decoration: none;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+

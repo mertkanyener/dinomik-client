@@ -1,15 +1,30 @@
 <div fxLayout="row" fxLayoutAlign="center">
   <div fxLayout="column">
-    <div fxLayout="row">
-      <mat-card>
-        <mat-card-header>Etkinlikler</mat-card-header>
-        <mat-card-content>
-          <div fxLayout="row">
-            <button mat-raised-button color="primary" type="button" routerLink="/admin/events"><h4 class="mat-h4">Etkinlik Listesi</h4></button>
-            <button mat-raised-button color="primary" type="button"><h4 class="mat-h4">Etkinlikler</h4></button>
-          </div>
-        </mat-card-content>
-      </mat-card>
+    <div class="card-row" fxLayout="row">
+      <a class="card-option" routerLink="/admin/events">
+        <mat-card>
+          <mat-card-header><mat-card-title>Etkinlikler</mat-card-title><span class="fill-remaining-space"></span></mat-card-header>
+          <mat-card-content>
+            <p>Yeni etkinlik ekleme, etkinlikleri düzenleme ve görüntüleme işlemlerini buradan yapabilirsin.</p>
+          </mat-card-content>
+        </mat-card>
+      </a>
+      <a class="card-option" routerLink="/admin/venues">
+        <mat-card>
+          <mat-card-header><mat-card-title>Mekanlar</mat-card-title></mat-card-header>
+          <mat-card-content>
+            <p>Yeni mekan ekleme, mekanları düzenleme ve görüntüleme işlemlerini buradan yapabilirsin.</p>
+          </mat-card-content>
+        </mat-card>
+      </a>
+      <a class="card-option" routerLink="/admin/artists">
+        <mat-card>
+          <mat-card-header><mat-card-title>Sanatçılar</mat-card-title></mat-card-header>
+          <mat-card-content>
+            <p>Yeni sanatçı ekleme, sanatçıları düzenleme ve görüntüleme işlemlerini buradan yapabilirsin.</p>
+          </mat-card-content>
+        </mat-card>
+      </a>
     </div>
   </div>
 </div>
