@@ -19,6 +19,11 @@ import { VenueComponent } from './venue/venue.component';
 import { VenueListComponent } from './venue/venue-list/venue-list.component';
 import { VenueDetailComponent } from './venue/venue-detail/venue-detail.component';
 import { EventComponent } from './event/event.component';
+import {HttpService} from './shared/http.service';
+import {EventService} from './event/event.service';
+import {VenueService} from './venue/venue.service';
+import {ArtistService} from './artist/artist.service';
+import {UtilityService} from './shared/utility.service';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,14 @@ import { EventComponent } from './event/event.component';
     AngularFontAwesomeModule,
     BrowserAnimationsModule
   ],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    HttpService,
+    EventService,
+    VenueService,
+    ArtistService,
+    UtilityService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [LoginComponent]
 })

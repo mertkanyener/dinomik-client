@@ -1,11 +1,20 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from "./home/home.component";
+import {ArtistListComponent} from './artist/artist-list/artist-list.component';
+import {ArtistDetailComponent} from './artist/artist-detail/artist-detail.component';
+import {VenueListComponent} from './venue/venue-list/venue-list.component';
+import {VenueDetailComponent} from './venue/venue-detail/venue-detail.component';
+import {EventComponent} from './event/event.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
-
+  { path: 'sanatçılar', component: ArtistListComponent },
+  { path: 'sanatçılar/:id', component: ArtistDetailComponent },
+  { path: 'mekanlar', component: VenueListComponent },
+  { path: 'mekanlar/:id', component: VenueDetailComponent},
+  { path: 'etkinlikler/:id', component: EventComponent }
 ];
 
 @NgModule({
