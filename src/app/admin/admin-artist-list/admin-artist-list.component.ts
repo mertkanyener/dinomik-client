@@ -2,9 +2,10 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {HttpService} from '../../shared/http.service';
 import {ArtistService} from '../../artist/artist.service';
 import {Artist} from '../../shared/artist.model';
-import {MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
 import {Subscription} from 'rxjs';
 import {UtilityService} from '../../shared/utility.service';
+import {DeleteDialogComponent} from '../delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-admin-artist-list',
@@ -27,7 +28,8 @@ export class AdminArtistListComponent implements OnInit, OnDestroy {
 
   constructor(private httpService: HttpService,
               private artistService: ArtistService,
-              private utilService: UtilityService) { }
+              private utilService: UtilityService,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.artists = this.artistService.getArtists();
@@ -48,6 +50,17 @@ export class AdminArtistListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
+  onDelete(id: number){
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {});
+    dialogRef.afterClosed().subscribe(result => {
+      if(result) {
+        this.httpService.deleteArtist(id);
+      }
+    });
+  }
+
+
 
 
 

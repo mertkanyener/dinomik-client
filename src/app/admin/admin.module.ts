@@ -13,6 +13,7 @@ import {MaterialModule} from '../material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {HttpClientModule} from '@angular/common/http';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {HttpClientModule} from '@angular/common/http';
     AdminEventListComponent,
     AdminEventEditComponent,
     AdminVenueEditComponent,
-    AdminVenueListComponent
+    AdminVenueListComponent,
+    DeleteDialogComponent
   ],
   imports: [
     CommonModule,
@@ -33,6 +35,9 @@ import {HttpClientModule} from '@angular/common/http';
     FlexLayoutModule,
     AngularFontAwesomeModule,
     HttpClientModule
+  ],
+  entryComponents: [
+    DeleteDialogComponent
   ]
 })
 export class AdminModule {
