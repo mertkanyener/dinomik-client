@@ -9,10 +9,15 @@ h1 {
   margin-top: 3rem;
   color: #c1c1c1;
   margin-bottom: 1rem;
+  font-size: 200%;
 }
 
 #mainDiv{
   margin-top: 2rem;
+}
+
+#btn-add{
+  margin-right: 1rem;
 }
 
 

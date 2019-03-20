@@ -4,11 +4,13 @@
   <span class="fill-remaining-space"></span>
 </div>
 <div fxLayout="row" fxLayoutAlign="center">
+  <div fxLayout="row" fxFlex="50" class="btn-row">
+    <button id="btn-add" mat-raised-button color="primary" routerLink="/admin/artists/new">Yeni Sanatçı Ekle</button>
+    <button mat-raised-button color="warn" routerLink="/admin">Geri</button>
+  </div>
+</div>
+<div fxLayout="row" fxLayoutAlign="center">
   <div id="mainDiv" fxLayout="column" fxFlex="50" fxLayoutAlign="start center">
-    <div fxLayout="row">
-      <button mat-raised-button color="primary" routerLink="/admin/artists/new">Yeni Sanatçı Ekle</button>
-      <button mat-raised-button color="warn" routerLink="/admin">Geri</button>
-    </div>
     <table mat-table [dataSource]="dataSource" matSort fxFill>
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
