@@ -1,3 +1,42 @@
-<p>
-  admin-artist-edit works!
-</p>
+<div class="header-div" fxLayout="row" fxLayoutAlign="center start">
+  <div fxLayout="column">
+    <h1 class="mat-h1">{{ editMode ? 'Sanatçı Düzenleme' : 'Yeni Sanatçı Ekle' }}</h1>
+    <mat-divider></mat-divider>
+  </div>
+</div>
+<div class="form-div" fxLayout="row" fxLayoutAlign="center start" >
+  <div fxLayout="column" fxFlex="20" fxLayoutAlign="start stretch">
+    <form (ngSubmit)="onSave()" [formGroup]="form">
+      <mat-form-field fxFlexFill>
+        <input type="text"
+               matInput
+               id="name"
+               formControlName="name"
+               placeholder="Sanatçı Adı">
+      </mat-form-field>
+      <br>
+      <mat-form-field fxFlexFill>
+        <input type="text"
+               matInput
+               id="imagePath"
+               formControlName="imgPath"
+               placeholder="Görsel Konumu">
+      </mat-form-field>
+      <br>
+      <div class="form-el" fxLayout="row">
+        <input type="file"
+               id="image"
+               accept="image/*"
+               (change)="changeListener($event)">
+      </div>
+      <div class="form-el">
+        <img [src]="base64Image" alt="Görsel">
+      </div>
+      <div class="btn-row" fxLayoutGap="2rem">
+        <button mat-raised-button color="primary" type="submit">Kaydet</button>
+        <button mat-raised-button color="warn" type="button" (click)="onCancel()">İptal</button>
+      </div>
+      <div></div>
+    </form>
+  </div>
+</div>

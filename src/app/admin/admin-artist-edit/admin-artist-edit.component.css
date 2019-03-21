@@ -1,0 +1,23 @@
+h1 {
+  color: #c1c1c1;
+}
+
+.header-div{
+  margin-top: 3rem;
+}
+
+.form-div {
+  margin-top: 2rem;
+}
+
+.btn-row {
+  margin-top: 2rem;
+}
+
+.form-el {
+  margin-top: 2rem;
+}
+
+input {
+  color: #c1c1c1;
+}

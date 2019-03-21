@@ -1,4 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpService} from '../../shared/http.service';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+import {Artist} from '../../shared/artist.model';
+import {ArtistService} from '../../artist/artist.service';
+import {FormControl, FormGroup} from '@angular/forms';
+import {UtilityService} from '../../shared/utility.service';
+import {DomSanitizer} from '@angular/platform-browser';
+import {Subject} from 'rxjs';
 
 @Component({
   selector: 'app-admin-artist-edit',
@@ -7,9 +15,77 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminArtistEditComponent implements OnInit {
 
-  constructor() { }
+  editMode = false;
+  id : number;
+  artist = new Artist();
+  form : FormGroup;
+  imageChanged = new Subject<any>();
+  base64Image: string;
+
+  constructor(private http: HttpService,
+              private route: ActivatedRoute,
+              private artistService: ArtistService,
+              private router: Router,
+              private utilService: UtilityService,
+              private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
+    this.route.params.subscribe(
+      (params: Params) => {
+        this.id = +params['id'];
+        if(params['id'] != null) {
+          this.editMode = true;
+          this.artist = this.artistService.getArtist(this.id);
+        }
+      }
+    );
+    this.imageChanged.subscribe(
+      (imgStr) => {
+        this.base64Image = imgStr;
+      }
+    )
+    this.initForm();
   }
+
+  private initForm(){
+    let name = '';
+    let imgPath = '';
+
+    if (this.editMode) {
+      name = this.artist.name;
+      imgPath = this.artist.imgPath;
+    }
+    this.form = new FormGroup({
+      'name' : new FormControl(name),
+      'imgPath' : new FormControl(imgPath)
+    });
+  }
+
+  onSave(){
+    let value = this.form.value;
+    this.artist.name = value.name;
+    this.artist.imgPath = value.imgPath;
+    if (this.editMode) {
+      this.http.updateArtist(this.id, this.artist);
+      console.log("Artist: ", this.artist);
+    } else {
+      this.http.addArtist(this.artist)
+    }
+  }
+
+  onCancel() {
+    this.router.navigate(['../../'], {relativeTo: this.route});
+  }
+
+  changeListener($event){
+    this.utilService.readImage($event.target, this.imageChanged, this.sanitizer, this.base64Image);
+  }
+
+
+
+
+
+
+
 
 }

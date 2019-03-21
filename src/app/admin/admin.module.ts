@@ -14,6 +14,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {HttpClientModule} from '@angular/common/http';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
     MaterialModule,
     FlexLayoutModule,
     AngularFontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   entryComponents: [
     DeleteDialogComponent
