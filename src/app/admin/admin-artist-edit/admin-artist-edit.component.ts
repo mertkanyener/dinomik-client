@@ -7,6 +7,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {UtilityService} from '../../shared/utility.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Subject} from 'rxjs';
+import {Image} from '../../shared/image.model';
 
 @Component({
   selector: 'app-admin-artist-edit',
@@ -19,8 +20,10 @@ export class AdminArtistEditComponent implements OnInit {
   id : number;
   artist = new Artist();
   form : FormGroup;
+  image : Image;
   imageChanged = new Subject<any>();
   base64Image: string;
+
 
   constructor(private http: HttpService,
               private route: ActivatedRoute,
@@ -40,10 +43,10 @@ export class AdminArtistEditComponent implements OnInit {
       }
     );
     this.imageChanged.subscribe(
-      (imgStr) => {
-        this.base64Image = imgStr;
+      (image) => {
+        this.image = image;
       }
-    )
+    );
     this.initForm();
   }
 
@@ -74,11 +77,11 @@ export class AdminArtistEditComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['../../'], {relativeTo: this.route});
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
   changeListener($event){
-    this.utilService.readImage($event.target, this.imageChanged, this.sanitizer, this.base64Image);
+    this.utilService.readImage($event.target, this.imageChanged, this.sanitizer, this.image);
   }
 
 

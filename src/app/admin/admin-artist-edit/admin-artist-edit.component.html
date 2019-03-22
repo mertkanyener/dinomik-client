@@ -29,9 +29,14 @@
                accept="image/*"
                (change)="changeListener($event)">
       </div>
-      <div class="form-el">
-        <img [src]="base64Image" alt="Görsel">
+      <div class="form-el" *ngIf="editMode;else elseBlock">
+        <img [src]="this.artist.imgPath" alt="Görsel">
       </div>
+      <ng-template #elseBlock>
+        <div class="form-el">
+          <img [src]="base64Image" alt="Görsel">
+        </div>
+      </ng-template>
       <div class="btn-row" fxLayoutGap="2rem">
         <button mat-raised-button color="primary" type="submit">Kaydet</button>
         <button mat-raised-button color="warn" type="button" (click)="onCancel()">İptal</button>
