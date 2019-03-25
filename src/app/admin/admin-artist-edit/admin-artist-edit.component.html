@@ -34,14 +34,13 @@
       </div>
       <ng-template #elseBlock>
         <div class="form-el">
-          <img [src]="base64Image" alt="Görsel">
+          <img [src]="this.image.dataUrl" alt="Görsel">
         </div>
       </ng-template>
       <div class="btn-row" fxLayoutGap="2rem">
         <button mat-raised-button color="primary" type="submit">Kaydet</button>
         <button mat-raised-button color="warn" type="button" (click)="onCancel()">İptal</button>
       </div>
-      <div></div>
     </form>
   </div>
 </div>

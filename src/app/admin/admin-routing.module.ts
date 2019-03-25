@@ -15,11 +15,11 @@ const routes: Route[] = [
       { path: 'events', component: AdminEventListComponent, pathMatch: 'full' },
       { path: 'venues', component: AdminVenueListComponent },
       { path: 'artists', component: AdminArtistListComponent },
-      { path: 'event/:id/edit', component: AdminEventEditComponent, pathMatch: 'full'},
+      { path: 'events/:id/edit', component: AdminEventEditComponent, pathMatch: 'full'},
       { path: 'events/new', component: AdminEventEditComponent, pathMatch: 'full' },
-      { path: 'venue/:id/edit', component: AdminVenueEditComponent, pathMatch: 'full' },
+      { path: 'venues/:id/edit', component: AdminVenueEditComponent, pathMatch: 'full' },
       { path: 'venues/new', component: AdminVenueEditComponent, pathMatch: 'full'},
-      { path: 'artist/:id/edit', component: AdminArtistEditComponent, pathMatch: 'full' },
+      { path: 'artists/:id/edit', component: AdminArtistEditComponent, pathMatch: 'full' },
       { path: 'artists/new', component: AdminArtistEditComponent, pathMatch: 'full' }
     ] }
 ];

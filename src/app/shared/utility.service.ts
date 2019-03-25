@@ -24,7 +24,8 @@ export class UtilityService {
     var reader: FileReader = new FileReader();
 
     reader.onloadend = (e) => {
-      fileChanged.next(sanitizer.bypassSecurityTrustUrl(reader.result.toString()));
+      let newImage = new Image(sanitizer.bypassSecurityTrustUrl(reader.result.toString()), image.file);
+      fileChanged.next(newImage);
       image.dataUrl = reader.result.toString();
     }
     reader.readAsDataURL(image.file);

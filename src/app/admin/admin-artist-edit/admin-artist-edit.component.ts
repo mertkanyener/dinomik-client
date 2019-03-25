@@ -20,10 +20,8 @@ export class AdminArtistEditComponent implements OnInit {
   id : number;
   artist = new Artist();
   form : FormGroup;
-  image : Image;
-  imageChanged = new Subject<any>();
-  base64Image: string;
-
+  image = new Image("", null);
+  imageChanged = new Subject<Image>();
 
   constructor(private http: HttpService,
               private route: ActivatedRoute,
@@ -43,7 +41,7 @@ export class AdminArtistEditComponent implements OnInit {
       }
     );
     this.imageChanged.subscribe(
-      (image) => {
+      (image: Image) => {
         this.image = image;
       }
     );
@@ -77,18 +75,16 @@ export class AdminArtistEditComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    if (this.editMode) {
+      this.router.navigate(['../../'], {relativeTo: this.route});
+
+    } else {
+      this.router.navigate(['../'], {relativeTo: this.route});
+    }
   }
 
   changeListener($event){
     this.utilService.readImage($event.target, this.imageChanged, this.sanitizer, this.image);
   }
-
-
-
-
-
-
-
 
 }
