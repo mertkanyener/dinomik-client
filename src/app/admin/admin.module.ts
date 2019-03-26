@@ -15,6 +15,7 @@ import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {HttpClientModule} from '@angular/common/http';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {ReactiveFormsModule} from '@angular/forms';
     AdminEventEditComponent,
     AdminVenueEditComponent,
     AdminVenueListComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    AdminLoginComponent
   ],
   imports: [
     CommonModule,

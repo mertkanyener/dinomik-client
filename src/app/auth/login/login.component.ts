@@ -27,10 +27,6 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    /*window.location.href = 'https://graph.facebook.com/oauth/authorize?client_id=' + this.authService.clientId
-      + '&redirect_uri=' + this.authService.redirectUri
-      + '&response_type=code';
-      */
     window.location.href = 'https://www.facebook.com/v3.2/dialog/oauth?client_id=' + this.authService.clientId
       + '&response_type=code'
       + '&redirect_uri=' + this.authService.redirectUri
