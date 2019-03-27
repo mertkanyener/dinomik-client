@@ -1,3 +1,37 @@
-<p>
-  admin-login works!
-</p>
+<div fxLayout="row" fxLayoutAlign="center start">
+  <h1 class="mat-h1">Admin Giriş</h1>
+</div>
+<div fxLayout="row" fxLayoutAlign="center start">
+  <form (ngSubmit)="onLogin(f)" #f="ngForm">
+    <div fxLayout="column">
+      <mat-form-field>
+        <input type="text"
+               matInput
+               required
+               ngModel
+               placeholder="Kullanıcı Adı"
+               id="username"
+               name="username"
+        >
+        <mat-error *ngIf="f.hasError('required', 'username')">* Kullanıcı Adı gerekli</mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input type="password"
+               matInput
+               required
+               ngModel
+               id="password"
+               name="password"
+               placeholder="Şifre"
+        >
+        <mat-error *ngIf="f.hasError('required', 'password')">* Şifre gerekli</mat-error>
+      </mat-form-field>
+      <br>
+      <div fxLayout="row" fxLayoutGap="3rem">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!f.valid">Giriş</button>
+        <button mat-raised-button color="warn" type="button" (click)="onCancel()">İptal</button>
+      </div>
+    </div>
+  </form>
+</div>

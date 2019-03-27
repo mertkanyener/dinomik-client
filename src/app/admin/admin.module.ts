@@ -14,7 +14,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {HttpClientModule} from '@angular/common/http';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
 
 
@@ -38,7 +38,8 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
     FlexLayoutModule,
     AngularFontAwesomeModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   entryComponents: [
     DeleteDialogComponent

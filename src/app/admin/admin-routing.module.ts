@@ -8,10 +8,12 @@ import {AdminArtistListComponent} from './admin-artist-list/admin-artist-list.co
 import {AdminEventEditComponent} from './admin-event-edit/admin-event-edit.component';
 import {AdminVenueEditComponent} from './admin-venue-edit/admin-venue-edit.component';
 import {AdminArtistEditComponent} from './admin-artist-edit/admin-artist-edit.component';
+import {AdminLoginComponent} from './admin-login/admin-login.component';
 
 const routes: Route[] = [
   { path: '', component: AdminComponent, children: [
-      { path: '', component: AdminStartComponent },
+      { path: '', component: AdminLoginComponent },
+      { path: 'home', component: AdminStartComponent },
       { path: 'events', component: AdminEventListComponent, pathMatch: 'full' },
       { path: 'venues', component: AdminVenueListComponent },
       { path: 'artists', component: AdminArtistListComponent },
