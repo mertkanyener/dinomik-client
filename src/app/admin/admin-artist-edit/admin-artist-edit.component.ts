@@ -8,6 +8,8 @@ import {UtilityService} from '../../shared/utility.service';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Subject} from 'rxjs';
 import {Image} from '../../shared/image.model';
+import {MatDialog} from '@angular/material';
+import {DeleteDialogComponent} from '../delete-dialog/delete-dialog.component';
 
 @Component({
   selector: 'app-admin-artist-edit',
@@ -28,7 +30,8 @@ export class AdminArtistEditComponent implements OnInit {
               private artistService: ArtistService,
               private router: Router,
               private utilService: UtilityService,
-              private sanitizer: DomSanitizer) { }
+              private sanitizer: DomSanitizer,
+              public dialog: MatDialog) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -66,6 +69,17 @@ export class AdminArtistEditComponent implements OnInit {
     let value = this.form.value;
     this.artist.name = value.name;
     this.artist.imgPath = value.imgPath;
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        if (this.editMode){
+
+        }
+        else {
+
+        }
+      }
+    });
     if (this.editMode) {
       this.http.updateArtist(this.id, this.artist);
       console.log("Artist: ", this.artist);
@@ -77,7 +91,6 @@ export class AdminArtistEditComponent implements OnInit {
   onCancel() {
     if (this.editMode) {
       this.router.navigate(['../../'], {relativeTo: this.route});
-
     } else {
       this.router.navigate(['../'], {relativeTo: this.route});
     }

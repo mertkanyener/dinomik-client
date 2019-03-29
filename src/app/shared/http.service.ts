@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {ArtistService} from 'src/app/artist/artist.service';
 import {EventService} from 'src/app/event/event.service';
 import {VenueService} from 'src/app/venue/venue.service';
@@ -6,6 +6,7 @@ import {Artist} from './artist.model';
 import {Event} from './event.model';
 import {Venue} from './venue.model';
 import {Injectable} from '@angular/core';
+import {AuthService} from '../auth/auth.service';
 
 @Injectable()
 export class HttpService {
@@ -15,9 +16,11 @@ export class HttpService {
   constructor(private http: HttpClient,
               private artistService: ArtistService,
               private eventService: EventService,
-              private venueService: VenueService){
+              private venueService: VenueService,
+              private authService: AuthService){
 
   }
+
 
   // Artist Operations
 
@@ -33,7 +36,7 @@ export class HttpService {
   }
 
   deleteArtist(id: number){
-    this.http.delete(this.path + 'artists/' + id).subscribe(
+    this.http.delete(this.path + 'admin/artists/' + id, this.authService.httpOptions).subscribe(
       (res) => {
         this.artistService.deleteArtist(id);
       },
@@ -44,7 +47,7 @@ export class HttpService {
   }
 
   updateArtist(id: number, artist: Artist){
-    this.http.put(this.path + 'artists/' + id, artist).subscribe(
+    this.http.put(this.path + 'admin/artists/' + id, artist, this.authService.httpOptions).subscribe(
       (res) => {
         this.artistService.updateArtist(id, artist);
       },
@@ -55,7 +58,7 @@ export class HttpService {
   }
 
   addArtist(artist: Artist){
-    this.http.post(this.path + 'artists', artist).subscribe(
+    this.http.post(this.path + 'admin/artists', artist, this.authService.httpOptions).subscribe(
       (res) => {
         this.artistService.addArtist(artist);
       },
@@ -79,7 +82,8 @@ export class HttpService {
   }
 
   deleteEvent(id: number){
-    this.http.delete(this.path + 'events/' + id).subscribe(
+
+    this.http.delete(this.path + 'admin/events/' + id, this.authService.httpOptions).subscribe(
       (res) => {
         this.eventService.deleteEvent(id);
       },
@@ -90,7 +94,7 @@ export class HttpService {
   }
 
   updateEvent(id: number, event: Event){
-    this.http.put(this.path + 'events/' + id, event).subscribe(
+    this.http.put(this.path + 'admin/events/' + id, event, this.authService.httpOptions).subscribe(
       (res) => {
         this.eventService.updateEvent(id, event);
       },
@@ -101,7 +105,7 @@ export class HttpService {
   }
 
   addEvent(event: Event){
-    this.http.post(this.path + 'events/', event).subscribe(
+    this.http.post(this.path + 'admin/events/', event, this.authService.httpOptions).subscribe(
       (res) => {
         this.eventService.addEvent(event);
       },
@@ -115,7 +119,7 @@ export class HttpService {
   // Venue Operations
 
   getVenues(){
-    this.http.get<Venue[]>(this.path + 'venues/').subscribe(
+    this.http.get<Venue[]>(this.path + 'venues').subscribe(
       (venues) => {
         this.venueService.setVenues(venues);
       },
@@ -126,7 +130,7 @@ export class HttpService {
   }
 
   deleteVenue(id: number){
-    this.http.delete(this.path + 'venues/' + id).subscribe(
+    this.http.delete(this.path + 'admin/venues/' + id, this.authService.httpOptions).subscribe(
       (res) => {
         this.venueService.deleteVenue(id);
       },
@@ -137,7 +141,7 @@ export class HttpService {
   }
 
   updateVenue(id: number, venue: Venue){
-    this.http.put(this.path + 'venues/' + id, venue).subscribe(
+    this.http.put(this.path + 'admin/venues/' + id, venue, this.authService.httpOptions).subscribe(
       (res) => {
         this.venueService.updateVenue(id, venue);
       },
@@ -148,7 +152,7 @@ export class HttpService {
   }
 
   addVenue(venue: Venue){
-    this.http.post(this.path + 'venues', venue).subscribe(
+    this.http.post(this.path + 'admin/venues', venue, this.authService.httpOptions).subscribe(
       (res) => {
         this.venueService.addVenue(venue);
       },
@@ -157,8 +161,6 @@ export class HttpService {
       }
     )
   }
-
-
 
 
 }

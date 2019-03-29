@@ -23,6 +23,7 @@ export class UtilityService {
     image.file = input.files[0];
     var reader: FileReader = new FileReader();
 
+
     reader.onloadend = (e) => {
       let newImage = new Image(sanitizer.bypassSecurityTrustUrl(reader.result.toString()), image.file);
       fileChanged.next(newImage);

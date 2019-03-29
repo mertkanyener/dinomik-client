@@ -1,7 +1,7 @@
-<div fxLayout="row" fxLayoutAlign="center start">
+<div class="row" fxLayout="row" fxLayoutAlign="center start">
   <h1 class="mat-h1">Admin Giriş</h1>
 </div>
-<div fxLayout="row" fxLayoutAlign="center start">
+<div class="row" fxLayout="row" fxLayoutAlign="center start">
   <form (ngSubmit)="onLogin(f)" #f="ngForm">
     <div fxLayout="column">
       <mat-form-field>
@@ -27,6 +27,8 @@
         >
         <mat-error *ngIf="f.hasError('required', 'password')">* Şifre gerekli</mat-error>
       </mat-form-field>
+      <mat-error *ngIf="loginClicked && loginStatus === 400">* Username or password is wrong!</mat-error>
+      <mat-error *ngIf="loginClicked && loginStatus === 401">* Something went wrong!</mat-error>
       <br>
       <div fxLayout="row" fxLayoutGap="3rem">
         <button mat-raised-button color="primary" type="submit" [disabled]="!f.valid">Giriş</button>
