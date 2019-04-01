@@ -1,0 +1,15 @@
+<mat-drawer-container autosize>
+  <mat-drawer #drawer mode="side">
+    <div fxLayout="column">
+      <button type="button" mat-button>Sanatçılar</button>
+      <button type="button" mat-button>Mekanlar</button>
+    </div>
+  </mat-drawer>
+
+
+<div>
+  <button type="button" mat-fab (click)="drawer.toggle()">
+    <mat-icon>dehaze</mat-icon>
+  </button>
+</div>
+</mat-drawer-container>

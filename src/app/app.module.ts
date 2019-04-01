@@ -24,6 +24,8 @@ import {EventService} from './event/event.service';
 import {VenueService} from './venue/venue.service';
 import {ArtistService} from './artist/artist.service';
 import {UtilityService} from './shared/utility.service';
+import { HeaderComponent } from './header/header.component';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import {UtilityService} from './shared/utility.service';
     VenueComponent,
     VenueListComponent,
     VenueDetailComponent,
-    EventComponent
+    EventComponent,
+    HeaderComponent,
+    MenuComponent
   ],
   imports: [
     BrowserModule,

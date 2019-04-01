@@ -7,6 +7,7 @@ import {
   MatDividerModule,
   MatIconModule,
   MatInputModule,
+  MatSidenavModule,
   MatSortModule,
   MatTableModule,
   MatToolbarModule
@@ -23,7 +24,8 @@ import {
     MatTableModule,
     MatSortModule,
     MatDividerModule,
-    MatInputModule
+    MatInputModule,
+    MatSidenavModule
   ],
   exports: [
     MatButtonModule,
@@ -34,7 +36,8 @@ import {
     MatTableModule,
     MatSortModule,
     MatDividerModule,
-    MatInputModule
+    MatInputModule,
+    MatSidenavModule
   ]
 })
 export class MaterialModule {

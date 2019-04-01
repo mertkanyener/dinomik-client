@@ -1,9 +1,4 @@
 <div fxLayout="column">
-  <div fxLayout="row">
-    <img id="logo" src="../../assets/photos/logo/logo.jpg" alt="Dinomik">
-    <span style="flex: 1 1 auto"></span>
-    <h4 *ngIf="this.authService.isAuthenticated()" class="mat-h4">Hoşgeldin, Mertkan Yener</h4>
-  </div>
   <div id="monthRow" fxLayout="row" fxLayoutAlign="center">
     <h1 class="mat-h1">{{date | date:'MMMM' }}</h1>
   </div>
@@ -21,5 +16,4 @@
       </mat-card>
     </div>
   </div>
-  <img src="http://localhost:9999/images/salah.jpg" alt="Salah">
 </div>

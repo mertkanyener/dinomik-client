@@ -23,6 +23,7 @@ export class AdminArtistEditComponent implements OnInit {
   artist = new Artist();
   form : FormGroup;
   image = new Image("", null);
+  imageUploaded = false;
   imageChanged = new Subject<Image>();
 
   constructor(private http: HttpService,
@@ -73,7 +74,15 @@ export class AdminArtistEditComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         if (this.editMode){
-
+          if (this.imageUploaded){
+            let status = this.http.uploadImage(this.image.file, 'artists', this.image.file.name);
+            if (status === 200 ) {
+              this.artist.imgPath = 'http://localhost:8080/images/artists/' + this.image.file.name;
+              console.log("Path: ", this.artist.imgPath);
+            } else {
+              console.log("An error occured. Status: ", status);
+            }
+          }
         }
         else {
 
@@ -84,7 +93,7 @@ export class AdminArtistEditComponent implements OnInit {
       this.http.updateArtist(this.id, this.artist);
       console.log("Artist: ", this.artist);
     } else {
-      this.http.addArtist(this.artist)
+      this.http.addArtist(this.artist);
     }
   }
 
@@ -97,6 +106,7 @@ export class AdminArtistEditComponent implements OnInit {
   }
 
   changeListener($event){
+    this.imageUploaded = true;
     this.utilService.readImage($event.target, this.imageChanged, this.sanitizer, this.image);
   }
 
