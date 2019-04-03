@@ -13,6 +13,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit(){
     this.httpService.getArtists();
+    console.log("Http service worked!!!");
     this.httpService.getEvents();
     this.httpService.getVenues();
   }

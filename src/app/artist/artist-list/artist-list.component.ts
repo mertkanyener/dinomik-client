@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ArtistService} from '../artist.service';
+import {Artist} from '../../shared/artist.model';
 
 @Component({
   selector: 'app-artist-list',
@@ -7,9 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ArtistListComponent implements OnInit {
 
-  constructor() { }
+  artists : Artist[];
+
+  constructor(private artistService: ArtistService) { }
 
   ngOnInit() {
+
+    this.artistService.artistsChanged.subscribe(
+      (artists: Artist[]) => {
+        this.artists = artists;
+      }
+    );
   }
+
+
 
 }

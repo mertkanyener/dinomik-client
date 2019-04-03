@@ -10,8 +10,8 @@ import {EventComponent} from './event/event.component';
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
-  { path: 'sanatçılar', component: ArtistListComponent },
-  { path: 'sanatçılar/:id', component: ArtistDetailComponent },
+  { path: 'sanatcilar', component: ArtistListComponent },
+  { path: 'sanatcilar/:id', component: ArtistDetailComponent },
   { path: 'mekanlar', component: VenueListComponent },
   { path: 'mekanlar/:id', component: VenueDetailComponent},
   { path: 'etkinlikler/:id', component: EventComponent }

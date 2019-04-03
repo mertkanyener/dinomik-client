@@ -1,5 +1,19 @@
 <div fxLayout="row">
   <img id="logo" src="../../assets/photos/logo/logo.jpg" alt="Dinomik">
   <span style="flex: 1 1 auto"></span>
+
+  <div fxLayout="row" fxLayoutAlign="center end">
+    <nav mat-tab-nav-bar color="primary">
+      <a
+        mat-tab-link
+        *ngFor="let link of links"
+        (click)="activeLink = link"
+        [active]="activeLink == link"
+        [routerLink]="link.url"> {{ link.name }} </a>
+    </nav>
+  </div>
+
+
+  <span style="flex: 1 1 auto"></span>
   <h4 *ngIf="this.authService.isAuthenticated()" class="mat-h4">Hoşgeldin, Mertkan Yener</h4>
 </div>

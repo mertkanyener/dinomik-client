@@ -1,15 +1,17 @@
-<mat-drawer-container autosize>
-  <mat-drawer #drawer mode="side">
-    <div fxLayout="column">
-      <button type="button" mat-button>Sanatçılar</button>
-      <button type="button" mat-button>Mekanlar</button>
+<div fxLayout="column" fxFill fxFlexAlign="center">
+  <mat-drawer-container autosize>
+    <mat-drawer #drawer mode="side" position="end">
+      <div fxLayout="column">
+        <button type="button" mat-button>Sanatçılar</button>
+        <button type="button" mat-button>Mekanlar</button>
+      </div>
+    </mat-drawer>
+
+    <div class="menu-container" fxFill fxLayout="column" fxFlexAlign="center">
+      <button type="button" mat-fab color="primary" (click)="drawer.toggle()">
+        <mat-icon>dehaze</mat-icon>
+      </button>
     </div>
-  </mat-drawer>
-
-
-<div>
-  <button type="button" mat-fab (click)="drawer.toggle()">
-    <mat-icon>dehaze</mat-icon>
-  </button>
+  </mat-drawer-container>
 </div>
-</mat-drawer-container>
+

@@ -13,3 +13,11 @@ h3 {
 h4.mat-h4 {
   color: whitesmoke;
 }
+
+
+.fill-remaining-space {
+
+  flex: 1 1 auto;
+
+}
+
