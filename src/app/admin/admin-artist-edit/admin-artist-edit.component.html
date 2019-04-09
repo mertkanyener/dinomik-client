@@ -30,7 +30,7 @@
                (change)="changeListener($event)">
       </div>
       <div class="form-el" *ngIf="editMode;else elseBlock">
-        <img [src]="this.artist.imgPath" alt="Görsel">
+        <img [src]="this.artist.image" alt="Görsel">
       </div>
       <ng-template #elseBlock>
         <div class="form-el">

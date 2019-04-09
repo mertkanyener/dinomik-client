@@ -4,7 +4,7 @@ import {
   MatButtonModule,
   MatCardModule,
   MatDialogModule,
-  MatDividerModule,
+  MatDividerModule, MatGridListModule,
   MatIconModule,
   MatInputModule,
   MatSidenavModule,
@@ -26,7 +26,8 @@ import {
     MatDividerModule,
     MatInputModule,
     MatSidenavModule,
-    MatTabsModule
+    MatTabsModule,
+    MatGridListModule
   ],
   exports: [
     MatButtonModule,
@@ -39,7 +40,8 @@ import {
     MatDividerModule,
     MatInputModule,
     MatSidenavModule,
-    MatTabsModule
+    MatTabsModule,
+    MatGridListModule
   ]
 })
 export class MaterialModule {

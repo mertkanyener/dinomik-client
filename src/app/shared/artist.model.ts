@@ -2,7 +2,7 @@ export class Artist {
 
   id: number;
   name: string;
-  imgPath: string;
+  image: string;
   altImages: string[];
 
   constructor(){}
