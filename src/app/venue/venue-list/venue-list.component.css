@@ -1,0 +1,7 @@
+mat-grid-tile {
+  background: #c1c1c1;
+}
+
+mat-grid-list {
+  display: flex;
+}

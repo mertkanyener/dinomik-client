@@ -58,7 +58,7 @@ export class AdminArtistEditComponent implements OnInit {
 
     if (this.editMode) {
       name = this.artist.name;
-      imgPath = this.artist.imgPath;
+      imgPath = this.artist.image;
     }
     this.form = new FormGroup({
       'name' : new FormControl(name),
@@ -69,7 +69,7 @@ export class AdminArtistEditComponent implements OnInit {
   onSave(){
     let value = this.form.value;
     this.artist.name = value.name;
-    this.artist.imgPath = value.imgPath;
+    this.artist.image = value.imgPath;
     const dialogRef = this.dialog.open(DeleteDialogComponent, {});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -77,8 +77,8 @@ export class AdminArtistEditComponent implements OnInit {
           if (this.imageUploaded){
             let status = this.http.uploadImage(this.image.file, 'artists', this.image.file.name);
             if (status === 200 ) {
-              this.artist.imgPath = 'http://localhost:8080/images/artists/' + this.image.file.name;
-              console.log("Path: ", this.artist.imgPath);
+              this.artist.image = 'http://localhost:8080/images/artists/' + this.image.file.name;
+              console.log("Path: ", this.artist.image);
             } else {
               console.log("An error occured. Status: ", status);
             }

@@ -26,6 +26,7 @@ import {ArtistService} from './artist/artist.service';
 import {UtilityService} from './shared/utility.service';
 import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
+import { ArtistCardComponent } from './artist/artist-list/artist-card/artist-card.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { MenuComponent } from './menu/menu.component';
     VenueDetailComponent,
     EventComponent,
     HeaderComponent,
-    MenuComponent
+    MenuComponent,
+    ArtistCardComponent
   ],
   imports: [
     BrowserModule,

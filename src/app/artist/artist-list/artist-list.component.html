@@ -1,12 +1,11 @@
-<div>
-  <mat-grid-list cols="5" rowHeight="2:1">
-    <mat-grid-tile *ngFor="let artist of artists;">
-      <mat-card>
-        <mat-card-header>
-          <mat-card-title><a [routerLink]="artist.id">{{ artist.name }}</a></mat-card-title>
-        </mat-card-header>
-        <img mat-card-image [src]="artist.image" [alt]="artist.name">
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+<div fxLayout="row">
+  <span fxFlex="25"></span>
+  <div fxLayout="column" fxFlex="50">
+    <mat-grid-list cols="5" >
+      <mat-grid-tile *ngFor="let artist of artists">
+        <app-artist-card [artist]="artist"></app-artist-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <span fxFlex="25"></span>
 </div>
