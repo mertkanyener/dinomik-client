@@ -5,13 +5,7 @@ h1 {
 }
 
 
-mat-grid-list {
-  min-width: available;
-  min-height: available;
-}
-
-mat-grid-tile {
-  min-width: available;
-  background: #c1c1c1;
-  min-height: available;
-}
+/*::ng-deep mat-grid-tile.mat-grid-tile .mat-figure {*/
+  /*width: 400px;*/
+  /*height: 400px;*/
+/*}*/

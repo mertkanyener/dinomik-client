@@ -32,7 +32,7 @@ export class AuthService{
 
   getToken(code: string, state: string) {
 
-    const url = this.path + 'login?code=' + code + "&state=" + state;
+    const url = this.path + 'facebook?code=' + code + "&state=" + state;
 
     this.http.get(url).subscribe(
       (res) => {
