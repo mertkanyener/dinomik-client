@@ -3,7 +3,7 @@
   <div fxLayout="column" fxFlex="50">
     <mat-grid-list cols="5" rowHeight="fit">
       <mat-grid-tile *ngFor="let artist of artists">
-        <app-artist-card [artist]="artist"></app-artist-card>
+        <div><img [src]="artist.image" alt="Alt"></div> 
       </mat-grid-tile>
     </mat-grid-list>
   </div>
