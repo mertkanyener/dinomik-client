@@ -27,43 +27,49 @@ import {UtilityService} from './shared/utility.service';
 import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
 import { ArtistCardComponent } from './artist/artist-list/artist-card/artist-card.component';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    HomeComponent,
-    ArtistComponent,
-    ArtistListComponent,
-    ArtistDetailComponent,
-    VenueComponent,
-    VenueListComponent,
-    VenueDetailComponent,
-    EventComponent,
-    HeaderComponent,
-    MenuComponent,
-    ArtistCardComponent
-  ],
-  imports: [
-    BrowserModule,
-    CommonModule,
-    MaterialModule,
-    FlexLayoutModule,
-    HttpClientModule,
-    AppRoutingModule,
-    AngularFontAwesomeModule,
-    BrowserAnimationsModule
-  ],
-  providers: [
-    AuthService,
-    HttpService,
-    EventService,
-    VenueService,
-    ArtistService,
-    UtilityService
-  ],
-  bootstrap: [AppComponent],
-  entryComponents: [LoginComponent]
+   declarations: [
+      AppComponent,
+      LoginComponent,
+      HomeComponent,
+      ArtistComponent,
+      ArtistListComponent,
+      ArtistDetailComponent,
+      VenueComponent,
+      VenueListComponent,
+      VenueDetailComponent,
+      EventComponent,
+      HeaderComponent,
+      MenuComponent,
+      ArtistCardComponent,
+      TestComponent
+   ],
+   imports: [
+      BrowserModule,
+      CommonModule,
+      MaterialModule,
+      FlexLayoutModule,
+      HttpClientModule,
+      AppRoutingModule,
+      AngularFontAwesomeModule,
+      BrowserAnimationsModule
+   ],
+   providers: [
+      AuthService,
+      HttpService,
+      EventService,
+      VenueService,
+      ArtistService,
+      UtilityService
+   ],
+   bootstrap: [
+      AppComponent
+   ],
+   entryComponents: [
+      LoginComponent
+   ]
 })
 export class AppModule {}
 

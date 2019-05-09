@@ -3,6 +3,9 @@
 h1 {
   color: #c1c1c1;
 }
+mat-grid-tile {
+  background: lightblue;
+}
 
 
 /*::ng-deep mat-grid-tile.mat-grid-tile .mat-figure {*/

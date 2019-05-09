@@ -1,9 +1,17 @@
 <div fxLayout="row">
   <span fxFlex="25"></span>
   <div fxLayout="column" fxFlex="50">
-    <mat-grid-list cols="5" rowHeight="fit">
+
+      <!-- <mat-grid-list  cols="2" rowHeight="2:1">
+          <mat-grid-tile>1</mat-grid-tile>
+          <mat-grid-tile>2</mat-grid-tile>
+          <mat-grid-tile>3</mat-grid-tile>
+          <mat-grid-tile>4</mat-grid-tile>
+        </mat-grid-list> -->
+    <mat-grid-list cols="2" rowHeight="2:1">
       <mat-grid-tile *ngFor="let artist of artists">
-        <div><img [src]="artist.image" alt="Alt"></div> 
+        <div>Artist</div>
+        <div><img [src]="artist.image" alt="Alt"></div>
       </mat-grid-tile>
     </mat-grid-list>
   </div>
