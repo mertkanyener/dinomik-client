@@ -6,11 +6,12 @@ import {Injectable} from '@angular/core';
 export class ArtistService {
 
   artistsChanged =  new Subject<Artist[]>();
+  rowNum: number;
   private artists: Artist[];
 
-  constructor(){}
+  constructor() {}
 
-  getArtists() : Artist[] {
+  getArtists(): Artist[] {
     return this.artists;
   }
 

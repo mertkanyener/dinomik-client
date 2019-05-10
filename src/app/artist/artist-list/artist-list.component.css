@@ -1,14 +1,29 @@
-
-
 h1 {
   color: #c1c1c1;
 }
-mat-grid-tile {
-  background: lightblue;
+
+a {
+  text-decoration: none;
+  color:  #c1c1c1;
 }
 
+mat-card + mat-card {
+  margin-left: 1.5rem; 
+}
 
-/*::ng-deep mat-grid-tile.mat-grid-tile .mat-figure {*/
-  /*width: 400px;*/
-  /*height: 400px;*/
-/*}*/
+img {
+  bottom: 0;
+}
+
+#mainRow {
+  margin-top: 3rem;
+}
+
+#cardRow {
+  margin-bottom: 1.5rem;
+}
+/* 
+.card-img{
+  width: 10rem;
+  height: 3rem;
+} */

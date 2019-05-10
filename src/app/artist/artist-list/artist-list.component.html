@@ -1,19 +1,17 @@
-<div fxLayout="row">
+<div id="mainRow" fxLayout="row">
   <span fxFlex="25"></span>
   <div fxLayout="column" fxFlex="50">
-
-      <!-- <mat-grid-list  cols="2" rowHeight="2:1">
-          <mat-grid-tile>1</mat-grid-tile>
-          <mat-grid-tile>2</mat-grid-tile>
-          <mat-grid-tile>3</mat-grid-tile>
-          <mat-grid-tile>4</mat-grid-tile>
-        </mat-grid-list> -->
-    <mat-grid-list cols="2" rowHeight="2:1">
-      <mat-grid-tile *ngFor="let artist of artists">
-        <div>Artist</div>
-        <div><img [src]="artist.image" alt="Alt"></div>
-      </mat-grid-tile>
-    </mat-grid-list>
+    <div id="card-row" fxLayout="row" *ngFor="let row of objectArray">
+      <mat-card fxFlex="50" fxFlex.gt-md="33" fxFlex.gt-lg="20" *ngFor="let artist of row">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-card-title><a [routerLink]="artist.id">{{ artist.name }}</a></mat-card-title>
+          </mat-card-title>
+        </mat-card-header>
+        <img class="card-img" mat-card-image [src]="artist.image" [alt]="artist.name">
+      </mat-card>
+      <span fxFlex.gt-lg="80"></span>
+    </div>        
   </div>
   <span fxFlex="25"></span>
 </div>

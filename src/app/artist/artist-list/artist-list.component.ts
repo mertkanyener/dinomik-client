@@ -1,3 +1,4 @@
+import { UtilityService, Grid } from './../../shared/utility.service';
 import { Component, OnInit } from '@angular/core';
 import {ArtistService} from '../artist.service';
 import {Artist} from '../../shared/artist.model';
@@ -10,27 +11,25 @@ import {Artist} from '../../shared/artist.model';
 export class ArtistListComponent implements OnInit {
 
   artists: Artist[];
-  artistCount: number;
-  rowNum: number;
+  grid: Grid;
+  objectArray: Array<Artist[]>;
+  colSize = 5;
 
-  constructor(private artistService: ArtistService) { }
+  constructor(private artistService: ArtistService,
+              private utilityService: UtilityService) { }
 
   ngOnInit() {
     this.artists = this.artistService.getArtists();
-    console.log('Artists: ', this.artists);
+    this.grid = this.utilityService.calculateGrid(this.artists.length);
+    this.objectArray = this.utilityService.transformObjectArray(this.artists, this.colSize, this.grid.lgRows);
+    console.log('Artists: ', this.artists, '   Grid: ', this.grid);
     this.artistService.artistsChanged.subscribe(
       (artists: Artist[]) => {
         this.artists = artists;
-        this.artistCount = this.artists.length;
-        this.rowNum = this.artistCount / 5;
+        this.grid = this.utilityService.calculateGrid(this.artists.length);
+        this.objectArray = this.utilityService.transformObjectArray(this.artists, this.colSize, this.grid.lgRows);
       }
     );
   }
-
-  createArray(n: number): any[] {
-    return Array(n);
-  }
-
-
 
 }
