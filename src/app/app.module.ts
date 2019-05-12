@@ -12,7 +12,6 @@ import {AuthService} from './auth/auth.service';
 import {AngularFontAwesomeModule} from "angular-font-awesome";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonModule} from '@angular/common';
-import { ArtistComponent } from './artist/artist.component';
 import { ArtistListComponent } from './artist/artist-list/artist-list.component';
 import { ArtistDetailComponent } from './artist/artist-detail/artist-detail.component';
 import { VenueComponent } from './venue/venue.component';
@@ -34,7 +33,6 @@ import { TestComponent } from './test/test.component';
       AppComponent,
       LoginComponent,
       HomeComponent,
-      ArtistComponent,
       ArtistListComponent,
       ArtistDetailComponent,
       VenueComponent,
