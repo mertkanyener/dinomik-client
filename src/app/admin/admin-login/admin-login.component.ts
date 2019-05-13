@@ -30,10 +30,10 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  onLogin(form: NgForm){
+  onLogin(form: NgForm) {
     this.loginClicked = true;
     this.authService.adminLogin(form.value.username, form.value.password);
-    console.log("Error status: ", this.loginStatus);
+    console.log('Error status: ', this.loginStatus);
   }
 
   onCancel() {

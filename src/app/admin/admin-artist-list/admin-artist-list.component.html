@@ -11,7 +11,7 @@
 </div>
 <div fxLayout="row" fxLayoutAlign="center">
   <div id="mainDiv" fxLayout="column" fxFlex="50" fxLayoutAlign="start center">
-    <table mat-table [dataSource]="dataSource" matSort fxFill>
+    <table mat-table [dataSource]="dataSource" matSort fxFill multiTemplateDataRows>
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
         <td mat-cell *matCellDef="let artist">{{ artist.id }}</td>
@@ -19,6 +19,14 @@
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Sanatçı</th>
         <td mat-cell *matCellDef="let artist"><a [routerLink]="artist.id">{{ artist.name }}</a></td>
+      </ng-container>
+      <ng-container matColumnDef="expandedArtist">
+        <td mat-cell *matCellDef="let artist">
+          <div fxLayout="column" [@detailExpand]="artist == expandedArtist ? 'expanded' : 'collapsed'" style="overflow:hidden">
+            <img [src]="artist.image" alt="artist.name">
+            <h4 class="mat-h4">{{ artist.name }}</h4>
+          </div>
+        </td>
       </ng-container>
       <ng-container matColumnDef="edit">
         <th mat-header-cell *matHeaderCellDef>Düzenle</th>
@@ -33,9 +41,11 @@
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <tr mat-row *matRowDef="let artist; columns: displayedColumns;" (click)="expandedArtist = artist"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['expandedArtist']" style="height:0;"></tr>
     </table>
   </div>
+  
 
 </div>
 

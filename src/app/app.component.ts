@@ -6,14 +6,14 @@ import {HttpService} from './shared/http.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'dinomik-client';
 
-  constructor(private httpService: HttpService){}
+  constructor(private httpService: HttpService) {}
 
   ngOnInit(){
     this.httpService.getArtists();
-    console.log("Http service worked!!!");
+    console.log('Http service worked!!!');
     this.httpService.getEvents();
     this.httpService.getVenues();
   }

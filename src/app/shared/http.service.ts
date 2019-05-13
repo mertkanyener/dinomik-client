@@ -12,7 +12,7 @@ import {map} from 'rxjs/operators';
 @Injectable()
 export class HttpService {
 
-  private path = 'http://localhost:8080/';
+  private path = 'http://localhost:6060/';
 
   constructor(private http: HttpClient,
               private artistService: ArtistService,

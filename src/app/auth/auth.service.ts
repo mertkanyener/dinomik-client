@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
-import {Data, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 
@@ -15,7 +15,7 @@ export interface Token {
 @Injectable()
 export class AuthService{
 
-  private path = 'http://localhost:8080/';
+  private path = 'http://localhost:6060/';
 
   status = new Subject<number>();
   clientId = '647358105696445';
@@ -32,15 +32,15 @@ export class AuthService{
 
   getToken(code: string, state: string) {
 
-    const url = this.path + 'facebook?code=' + code + "&state=" + state;
+    const url = this.path + 'facebook?code=' + code + '&state=' + state;
 
     this.http.get(url).subscribe(
       (res) => {
-        console.log("Token: ", res);
+        console.log('Token: ', res);
         this.saveToken(res);
       },
       (err) => {
-        console.log("ERROR: ", err);
+        console.log('ERROR: ', err);
       }
     );
   }
@@ -51,24 +51,24 @@ export class AuthService{
 
     const clientId = 'admin-client';
     const clientSecret = 'mert-secret';
-    const headers = new HttpHeaders().set("Content-type", "application/x-www-form-urlencoded").append("Accept","application/json");
-    const params = new HttpParams().set("client_id", clientId).append("client_secret", clientSecret)
-      .append("username", username).append("password", password).append("grant_type", "password");
+    const headers = new HttpHeaders().set('Content-type', 'application/x-www-form-urlencoded').append('Accept','application/json');
+    const params = new HttpParams().set('client_id', clientId).append('client_secret', clientSecret)
+      .append('username', username).append('password', password).append('grant_type', 'password');
     //const data: Data = { username: username, password: password, grant_type: "password", client_id: clientId, client_secret: clientSecret};
-    const request = new HttpRequest("POST",
-      this.path + "oauth/token",
+    const request = new HttpRequest('POST',
+      this.path + 'oauth/token',
       null,
       {headers: headers, params: params , responseType: 'text'});
     this.http.request(request).pipe(map(
       (response: HttpResponse<any>) => {
-        let body = response['body'];
-        let token: Token = JSON.parse(body || '{}');
+        const body = response['body'];
+        const token: Token = JSON.parse(body || '{}');
         return token;
       }
     )).subscribe(
       (token) => {
-        console.log("Token: ", token);
-        if (token.access_token != undefined){
+        console.log('Token: ', token);
+        if (token.access_token !== undefined){
           this.saveAdminToken(token);
           this.adminMode = true;
           this.setAuthHeaders();
@@ -76,16 +76,15 @@ export class AuthService{
         }
       },
       (error) => {
-        console.log("ERROR: ", error);
+        console.log('ERROR: ', error);
         this.status.next(error.status);
-        console.log("Error status: ", error.status);
+        console.log('Error status: ', error.status);
       }
     );
   }
 
 
   saveToken(token) {
-    let expiration = new Date().getTime() + (1000 * token.expires_in);
     localStorage.setItem('access_token', token.access_token);
     localStorage.setItem('refresh_token', token.refresh_token);
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../auth.service';
 
 @Component({
@@ -14,15 +14,15 @@ export class LoginComponent implements OnInit {
               private authService: AuthService) { }
 
   ngOnInit() {
-    let i = window.location.href.indexOf('code');
-    let j  = window.location.href.indexOf('state');
+    const i = window.location.href.indexOf('code');
+    const j  = window.location.href.indexOf('state');
 
 
-    if (!this.authService.isAuthenticated() && i != -1) {
-      let code = window.location.href.substring(i + 5, j-1);
-      let state = window.location.href.substring(j + 6, j + 12);
+    if (!this.authService.isAuthenticated() && i !== -1) {
+      const code = window.location.href.substring(i + 5, j - 1);
+      const state = window.location.href.substring(j + 6, j + 12);
       this.authService.getToken(code, state);
-      console.log("Code: ", code);
+      console.log('Code: ', code);
     }
   }
 

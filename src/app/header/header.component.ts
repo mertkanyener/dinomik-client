@@ -3,8 +3,8 @@ import {AuthService} from '../auth/auth.service';
 
 export interface Link {
 
-  name : string;
-  url : string;
+  name: string;
+  url: string;
 }
 
 @Component({
@@ -19,10 +19,18 @@ export class HeaderComponent implements OnInit {
     {name: 'Sanatçılar', url: 'sanatcilar'},
     {name: 'Mekanlar', url: 'mekanlar'}
   ];
-  activeLink = this.links[0];
+  activeLink: Link;
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
+    const path = window.location.pathname;
+    if (path === '/sanatcilar') {
+      this.activeLink = this.links[1];
+    } else if (path === '/mekanlar') {
+      this.activeLink = this.links[2];
+    } else {
+      this.activeLink = this.links[0];
+    }
   }
 
 }

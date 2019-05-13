@@ -22,6 +22,14 @@ img {
 #card-row {
   margin-bottom: 1.5rem;
 }
+
+#expanded {
+  overflow: hidden;
+}
+
+table {
+  background-color: black;
+}
 /* 
 .card-img{
   width: 10rem;

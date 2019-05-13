@@ -6,15 +6,24 @@ import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
 import {Subscription} from 'rxjs';
 import {UtilityService} from '../../shared/utility.service';
 import {DeleteDialogComponent} from '../delete-dialog/delete-dialog.component';
+import { trigger, transition, animate, state, style } from '@angular/animations';
 
 @Component({
   selector: 'app-admin-artist-list',
   templateUrl: './admin-artist-list.component.html',
-  styleUrls: ['./admin-artist-list.component.css']
+  styleUrls: ['./admin-artist-list.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ])
+  ]
 })
 export class AdminArtistListComponent implements OnInit, OnDestroy {
 
   artists: Artist[];
+  expandedArtist: Artist;
   dataSource: MatTableDataSource<Artist> = new MatTableDataSource(this.artists);
   subscription: Subscription;
   displayedColumns: string[] = ['id', 'name', 'edit', 'delete'];
