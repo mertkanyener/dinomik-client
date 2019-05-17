@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Artist } from './../../shared/artist.model';
 import { Component, OnInit } from '@angular/core';
 import { ArtistService } from '../artist.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-artist-detail',
@@ -13,15 +14,23 @@ export class ArtistDetailComponent implements OnInit {
 
   artist: Artist;
   id: number;
+  image: string;
+  avatarStyle: any;
 
   constructor(private artistService: ArtistService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
         this.artist = this.artistService.getArtist(this.id);
+        this.avatarStyle = {
+          'background-image': this.sanitizer.bypassSecurityTrustUrl(this.artist.image),
+          'background-size': 'cover'
+        };
+        this.image = this.artist.image;
       }
     );
   }

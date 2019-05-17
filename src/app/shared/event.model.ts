@@ -8,7 +8,7 @@ export class Event {
   date: string;
   time: string;
   venue: Venue;
-  artists : Artist[];
+  artists: Artist[];
   webLink: string;
 
   constructor(){}
