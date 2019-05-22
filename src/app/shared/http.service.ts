@@ -25,18 +25,16 @@ export class HttpService {
 
   // Artist Operations
 
-  getArtist(id: number): Artist {
-    let result = new Artist();
-    this.http.get<Artist>(this.path + 'artists/' + id).subscribe(
-      (artist: Artist) => {
-        result = artist;
-      },
-      (error) => {
-        console.log('ERROR: ', error);
-      }
-    );
-    return result;
-  }
+  // getArtist(id: number): Artist {
+  //   return this.http.get<any>(this.path + 'artists/' + id).pipe(
+  //     map(
+  //       (response: HttpResponse<any>) => {
+  //         let artist: Artist = response['body'];
+  //         return artist;
+  //       }
+  //     )
+  //   ).toJs();
+  // }
 
   getArtists() {
     this.http.get<Artist[]>(this.path + 'artists').subscribe(

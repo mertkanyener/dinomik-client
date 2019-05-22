@@ -22,6 +22,20 @@ export class EventService {
     return this.events.find(x => x.id === id);
   }
 
+  getEventsByArtist(artistId: number, artistName: string): Event[] {
+    const events = new Array<Event>();
+    this.events.forEach(event => {
+      const found = event.artists.find(x => x.id === artistId);
+      if (found != null) {
+        if (found.name === artistName) {
+          found.name = 'Konser';
+        }
+        events.push(event);
+      }
+    });
+    return events;
+  }
+
   addEvent(event: Event){
     this.events.push(event);
     this.eventsChanged.next(this.events.slice());
