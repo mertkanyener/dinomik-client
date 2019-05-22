@@ -6,3 +6,8 @@
 mat-card {
     margin-top: 3rem;
 }
+
+.mat-card-avatar{
+    height: 12rem;
+    width: 12rem;
+}
