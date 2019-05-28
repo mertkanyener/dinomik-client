@@ -1,3 +1,4 @@
+import { MatTableDataSource } from '@angular/material';
 import { HttpService } from 'src/app/shared/http.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -20,6 +21,8 @@ export class ArtistDetailComponent implements OnInit {
   image: string;
   avatarStyle: any;
   events: Event[];
+  displayedColumns = ['name', 'venue', 'date', 'time'];
+  dataSource: MatTableDataSource<Event> = new MatTableDataSource(this.events);
 
   constructor(private artistService: ArtistService,
               private route: ActivatedRoute,
@@ -32,6 +35,7 @@ export class ArtistDetailComponent implements OnInit {
         this.id = +params['id'];
         this.artist = this.artistService.getArtist(this.id);
         this.events = this.eventService.getEventsByArtist(this.id, this.artist.name);
+        this.dataSource.data = this.events;
         console.log('Events: ', this.events);
         this.avatarStyle = {
           'background-image': this.sanitizer.bypassSecurityTrustUrl(this.artist.image),
@@ -40,7 +44,6 @@ export class ArtistDetailComponent implements OnInit {
         this.image = this.artist.image;
       }
     );
-    
   }
 
 }

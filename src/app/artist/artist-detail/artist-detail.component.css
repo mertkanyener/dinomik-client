@@ -5,6 +5,15 @@
 
 mat-card {
     margin-top: 3rem;
+    background-color: black;
+}
+
+mat-card-header {
+    margin-bottom: 2rem;
+}
+
+table {
+    background-color: black;
 }
 
 .mat-card-avatar{
