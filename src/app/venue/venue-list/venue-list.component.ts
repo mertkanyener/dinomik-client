@@ -27,6 +27,7 @@ export class VenueListComponent implements OnInit, OnDestroy {
   expandedVenue: Venue;
   displayedColumns = ['name'];
   dataSource: MatTableDataSource<Venue> = new MatTableDataSource(this.venues);
+  zoom = 14;
   sort;
   @ViewChild(MatSort) set content(content: ElementRef) {
     this.sort = content;
@@ -57,5 +58,7 @@ export class VenueListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
+  
 
 }

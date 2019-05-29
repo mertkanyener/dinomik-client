@@ -1,7 +1,17 @@
-mat-grid-tile {
-  background: #c1c1c1;
+table {
+  background-color: black;
 }
 
-mat-grid-list {
-  display: flex;
+agm-map {
+  height: 20rem;
 }
+
+a {
+  text-decoration: none;
+  color: whitesmoke;
+}
+
+#mainRow {
+  margin-top: 3rem;
+}
+

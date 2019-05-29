@@ -27,6 +27,7 @@ import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
 import { ArtistCardComponent } from './artist/artist-list/artist-card/artist-card.component';
 import { TestComponent } from './test/test.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
    declarations: [
@@ -52,7 +53,10 @@ import { TestComponent } from './test/test.component';
       HttpClientModule,
       AppRoutingModule,
       AngularFontAwesomeModule,
-      BrowserAnimationsModule
+      BrowserAnimationsModule,
+      AgmCoreModule.forRoot({
+         apiKey: 'AIzaSyCUC95iOlSWV3njBfloU8VR3LWIKlQPRLc'
+      })
    ],
    providers: [
       AuthService,
