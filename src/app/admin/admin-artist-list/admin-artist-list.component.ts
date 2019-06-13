@@ -30,7 +30,7 @@ export class AdminArtistListComponent implements OnInit, OnDestroy {
   sort;
   @ViewChild(MatSort) set content(content: ElementRef) {
     this.sort = content;
-    if(this.sort){
+    if (this.sort) {
       this.dataSource.sort = this.sort;
     }
   }
@@ -42,7 +42,7 @@ export class AdminArtistListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.artists = this.artistService.getArtists();
-    console.log("Artists: ", this.artists);
+    console.log('Artists: ', this.artists);
     this.dataSource = new MatTableDataSource(this.artists);
     this.dataSource.filterPredicate = this.utilService.tableFilter();
     this.dataSource.sort = this.sort;
@@ -63,7 +63,7 @@ export class AdminArtistListComponent implements OnInit, OnDestroy {
   onDelete(id: number){
     const dialogRef = this.dialog.open(DeleteDialogComponent, {});
     dialogRef.afterClosed().subscribe(result => {
-      if(result) {
+      if (result) {
         this.httpService.deleteArtist(id);
       }
     });

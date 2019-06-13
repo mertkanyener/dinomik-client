@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     this.date = Date.now();
     console.log("Date: ", this.date);
     if (!this.authService.isAuthenticated()){
-      const dialogRef = this.dialog.open(LoginComponent, {width: "20rem", height: "20rem"});
+      const dialogRef = this.dialog.open(LoginComponent, {width: '20rem', height: "20rem"});
     }
   }
 

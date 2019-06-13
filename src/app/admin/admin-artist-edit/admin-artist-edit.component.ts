@@ -19,10 +19,10 @@ import {DeleteDialogComponent} from '../delete-dialog/delete-dialog.component';
 export class AdminArtistEditComponent implements OnInit {
 
   editMode = false;
-  id : number;
+  id: number;
   artist = new Artist();
-  form : FormGroup;
-  image = new Image("", null);
+  form: FormGroup;
+  image = new Image('', null);
   imageUploaded = false;
   imageChanged = new Subject<Image>();
 
@@ -66,32 +66,32 @@ export class AdminArtistEditComponent implements OnInit {
     });
   }
 
-  onSave(){
-    let value = this.form.value;
+  onSave() {
+    const value = this.form.value;
     this.artist.name = value.name;
     this.artist.image = value.imgPath;
     const dialogRef = this.dialog.open(DeleteDialogComponent, {});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        if (this.editMode){
-          if (this.imageUploaded){
-            let status = this.http.uploadImage(this.image.file, 'artists', this.image.file.name);
+        if (this.editMode) {
+          if (this.imageUploaded) {  // If an image is uploaded
+            const status = this.http.uploadImage(this.image.file, 'artists', this.image.file.name);
             if (status === 200 ) {
-              this.artist.image = 'http://localhost:8080/images/artists/' + this.image.file.name;
-              console.log("Path: ", this.artist.image);
+              this.artist.image = 'http://localhost:9999/images/artists/' + this.image.file.name;
+              console.log('Path: ', this.artist.image);
             } else {
-              console.log("An error occured. Status: ", status);
+              console.log('An error occured. Status: ', status);
             }
           }
-        }
-        else {
+        } else {
+          
 
         }
       }
     });
     if (this.editMode) {
       this.http.updateArtist(this.id, this.artist);
-      console.log("Artist: ", this.artist);
+      console.log('Artist: ', this.artist);
     } else {
       this.http.addArtist(this.artist);
     }
@@ -105,7 +105,7 @@ export class AdminArtistEditComponent implements OnInit {
     }
   }
 
-  changeListener($event){
+  changeListener($event) {
     this.imageUploaded = true;
     this.utilService.readImage($event.target, this.imageChanged, this.sanitizer, this.image);
   }
