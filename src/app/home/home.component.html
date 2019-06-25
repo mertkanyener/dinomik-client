@@ -1,19 +1,6 @@
-<div fxLayout="column">
-  <div id="monthRow" fxLayout="row" fxLayoutAlign="center">
+  <!-- <div id="monthRow" fxLayout="row" fxLayoutAlign="center">
     <h1 class="mat-h1">{{date | date:'MMMM' }}</h1>
-  </div>
-  <div fxLayout="column">
-    <div fxLayout="row">
-      <mat-card *ngFor="let day of days;" class="day-card">
-        <mat-card-header>
-          <h2 class="mat-h2">{{ day }} Mart </h2>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </p>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
+  </div> -->
+<div fxLayout="row">
+  <h1 class="mat-h1">{{ months[month] }}</h1>
 </div>
