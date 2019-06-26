@@ -93,6 +93,17 @@ export class HttpService {
     );
   }
 
+  getEventsThisMonth() {
+    this.http.get<Event[]>(this.path + 'events/now').subscribe(
+      (events) => {
+        this.eventService.setEvents(events);
+      },
+      (error) => {
+        console.log('ERROR: ', error);
+      }
+    );
+  }
+
   deleteEvent(id: number) {
 
     this.http.delete(this.path + 'admin/events/' + id, this.authService.httpOptions).subscribe(

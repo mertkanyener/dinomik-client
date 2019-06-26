@@ -9,7 +9,9 @@
         <td mat-cell *matCellDef="let artist" [attr.colspan]="displayedColumns.length">
           <div id="expanded" fxLayout="column" [@detailExpand]="artist == expandedArtist ? 'expanded' : 'collapsed'" >
             <h3 class="mat-h3">Yaklaşan Etkinlikler</h3>
-            <div></div>
+            <div fxLayout="row">
+              
+            </div>
             <a [routerLink]="artist.id" routerLinkActive="router-link-active" ><h4 class="mat-h4">{{ artist.name }}</h4></a> 
           </div>
         </td>

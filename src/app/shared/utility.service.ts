@@ -59,7 +59,7 @@ export class UtilityService {
     let n = 0;
     for (let i = 0; i < result.length; i++) {
         result[i] = objectArray.slice(n, n + colSize);
-        n += 5;
+        n += colSize;
     }
     return result;
 
