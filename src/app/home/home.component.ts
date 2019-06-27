@@ -7,6 +7,7 @@ import {LoginComponent} from '../auth/login/login.component';
 import {DatePipe} from '@angular/common';
 import { EventService } from '../event/event.service';
 import { Event } from '../shared/event.model';
+import { UtilityService } from '../shared/utility.service';
 
 const months: string[] = [
   'Ocak',
@@ -43,16 +44,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(public dialog: MatDialog,
               public authService: AuthService,
               public httpService: HttpService,
-              public eventService: EventService) { }
+              public eventService: EventService,
+              public utilService: UtilityService) { }
 
   ngOnInit() {
     this.month = this.date.getMonth();
     this.currentMonth = months[this.month];
-    this.httpService.getEventsThisMonth();
+    this.httpService.getEvents();
+    //this.httpService.getEventsThisMonth();
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
-        this.events = events;
         this.rows = Math.floor(events.length / 3 + 1);
+        this.events = this.utilService.transformObjectArray(events, 3, this.rows);
         this.rowArr = new Array<number>(this.rows);
       },
       (error) => {

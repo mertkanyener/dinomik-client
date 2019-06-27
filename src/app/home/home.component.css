@@ -24,3 +24,10 @@ p {
   color: whitesmoke;
 }
 
+#eventRow {
+  margin-bottom: 2rem;
+}
+
+#headerRow {
+  margin-bottom: 3rem;
+}

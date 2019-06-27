@@ -1,16 +1,22 @@
   <!-- <div id="monthRow" fxLayout="row" fxLayoutAlign="center">
     <h1 class="mat-h1">{{date | date:'MMMM' }}</h1>
   </div> -->
-<div fxLayout="row" fxLayoutAlign="center start">
+<div id="headerRow" fxLayout="row" fxLayoutAlign="center start">
   <h1 class="mat-h1">{{ currentMonth }}</h1>
 </div>
 <div fxLayout="row" fxLayoutAlign="center start">
   <span fxFlex="25"></span>
   <div fxLayout="column" fxFlex="50">
-    <div fxLayout="row">
-      
+    <div id="eventRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of events">
+      <mat-card fxFlex="30" *ngFor="let event of row">
+        <img mat-card-image [src]="event.artists[0].image" alt="image">
+        <mat-card-content fxLayout="column" fxLayoutGap="1px">
+          <h2 class="mat-h2">{{ event.name }}</h2>
+          <h3 class="mat-h3">{{ event.date }} {{ event.time }} </h3>
+          <h5 class="mat-h5">{{ event.venue.name }}</h5>
+        </mat-card-content>
+      </mat-card>
     </div>
-    
   </div>
   <span fxFlex="25"></span>
 </div>

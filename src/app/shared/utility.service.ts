@@ -3,6 +3,7 @@ import {MatTableDataSource} from '@angular/material';
 import {Subject} from 'rxjs';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Image} from './image.model';
+import { Event } from './event.model';
 
 export interface Grid{
   smRows: number;
