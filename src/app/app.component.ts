@@ -12,8 +12,6 @@ export class AppComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   ngOnInit(){
-    this.httpService.getArtists();
-    console.log('Http service worked!!!');
     this.httpService.getEvents();
     this.httpService.getVenues();
   }

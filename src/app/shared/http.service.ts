@@ -104,6 +104,17 @@ export class HttpService {
     );
   }
 
+  getEventsByArtist(id: number) {
+    this.http.get<Event[]>(this.path + 'artists/' + id + 'events/').subscribe(
+      (events: Event[]) => {
+        this.eventService.setEvents(events);
+      },
+      (error) => {
+        console.log('ERROR: ', error);
+      }
+    );
+  }
+
   deleteEvent(id: number) {
 
     this.http.delete(this.path + 'admin/events/' + id, this.authService.httpOptions).subscribe(

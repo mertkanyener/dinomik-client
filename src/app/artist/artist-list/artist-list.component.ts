@@ -6,6 +6,7 @@ import {Artist} from '../../shared/artist.model';
 import { UtilityService, Grid } from './../../shared/utility.service';
 import {ArtistService} from '../artist.service';
 import { Subscription } from 'rxjs';
+import { Event } from 'src/app/shared/event.model';
 
 
 @Component({
@@ -27,7 +28,9 @@ export class ArtistListComponent implements OnInit, OnDestroy {
   objectArray: Array<Artist[]>;
   colSize = 5;
 
+  events: Event[];
   subscription: Subscription;
+  subscriptionEvents: Subscription;
   dataSource: MatTableDataSource<Artist> = new MatTableDataSource(this.artists);
   displayedColumns = ['name'];
   expandedArtist: Artist;
@@ -61,6 +64,10 @@ export class ArtistListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  onClick(id: number) {
+    
   }
 
 }

@@ -9,8 +9,9 @@ export class EventService {
   private events: Event[];
 
 
-  setEvents(events: Event[]){
-    this.events = this.normalizeDates(events);
+  setEvents(events: any) {
+    this.events = this.normalizeDateAndTime
+    (events);
     this.eventsChanged.next(this.events.slice());
   }
 
@@ -22,15 +23,11 @@ export class EventService {
     return this.events.find(x => x.id === id);
   }
 
-  getEventsByArtist(artistId: number, artistName: string): Event[] {
-    const events = new Array<Event>();
-    this.events.forEach(event => {
-      const found = event.artists.find(x => x.id === artistId);
-      if (found != null) {
-        if (found.name === artistName) {
-          found.name = 'Konser';
-        }
-        events.push(event);
+  getEventsByArtist(events: Event[], artistName: string): Event[] {
+    events.forEach(event => {
+    if (event.name === artistName) {
+      event.name = 'Konser';
+      events[events.indexOf(event)] = event;
       }
     });
     return events;
@@ -54,7 +51,7 @@ export class EventService {
     this.eventsChanged.next(this.events.slice());
   }
 
-  normalizeDates(events: Event[]): Event[] {
+  normalizeDateAndTime(events: Event[]): Event[] {
     const months: string[] = [
       'Ocak',
       'Şubat',
@@ -71,6 +68,8 @@ export class EventService {
     ];
     events.forEach(event => {
       const split = event.date.split('-');
+      const splitTime = event.time.split(':');
+      event.time = splitTime[0] + ':' + splitTime[1];
       if (split[1] === '01') {
         event.date = split[2] + ' ' + months[0] + ' ' + split[0];
       } else if (split[1] === '02') {

@@ -3,7 +3,7 @@
   <div fxLayout="column" fxFlex="40">
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
       <ng-container matColumnDef="name">
-        <td mat-cell *matCellDef="let artist"><b>{{ artist.name }}</b></td>
+        <td mat-cell *matCellDef="let artist" (click)="onClick(artist.id)"><b>{{ artist.name }}</b></td>
       </ng-container>
       <ng-container matColumnDef="expandedArtist">
         <td mat-cell *matCellDef="let artist" [attr.colspan]="displayedColumns.length">
