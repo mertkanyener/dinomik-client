@@ -105,8 +105,9 @@ export class HttpService {
   }
 
   getEventsByArtist(id: number) {
-    this.http.get<Event[]>(this.path + 'artists/' + id + 'events/').subscribe(
+    this.http.get<Event[]>(this.path + 'artists/' + id + '/events/').subscribe(
       (events: Event[]) => {
+        console.log('Http service - events: ', events);
         this.eventService.setEvents(events);
       },
       (error) => {

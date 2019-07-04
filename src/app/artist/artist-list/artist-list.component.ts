@@ -28,9 +28,9 @@ export class ArtistListComponent implements OnInit, OnDestroy {
   objectArray: Array<Artist[]>;
   colSize = 5;
 
-  events: Event[];
-  subscription: Subscription;
-  subscriptionEvents: Subscription;
+  events = new Array<Event>();
+  subscription = new Subscription();
+  subscriptionEvents = new Subscription();
   dataSource: MatTableDataSource<Artist> = new MatTableDataSource(this.artists);
   displayedColumns = ['name'];
   expandedArtist: Artist;

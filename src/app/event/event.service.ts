@@ -9,9 +9,8 @@ export class EventService {
   private events: Event[];
 
 
-  setEvents(events: any) {
-    this.events = this.normalizeDateAndTime
-    (events);
+  setEvents(events: Event[]) {
+    this.events = this.normalizeDateAndTime(events);
     this.eventsChanged.next(this.events.slice());
   }
 
@@ -23,14 +22,14 @@ export class EventService {
     return this.events.find(x => x.id === id);
   }
 
-  getEventsByArtist(events: Event[], artistName: string): Event[] {
+  normalizeEventNames(events: Event[], artistName: string): Event[] {
     events.forEach(event => {
-    if (event.name === artistName) {
-      event.name = 'Konser';
-      events[events.indexOf(event)] = event;
-      }
-    });
-    return events;
+      if (event.name === artistName) {
+        event.name = 'Konser';
+        events[events.indexOf(event)] = event;
+        }
+      });
+      return events;
   }
 
   addEvent(event: Event){

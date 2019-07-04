@@ -23,12 +23,13 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   events: Event[];
   displayedColumns = ['name', 'venue', 'date', 'time'];
   dataSource: MatTableDataSource<Event> = new MatTableDataSource(this.events);
-  subscription: Subscription;
+  subscription = new Subscription();
 
   constructor(private artistService: ArtistService,
               private route: ActivatedRoute,
               private sanitizer: DomSanitizer,
-              private eventService: EventService) {
+              private eventService: EventService,
+              private httpService: HttpService) {
 
                }
 
@@ -36,25 +37,28 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
-        this.artist = this.artistService.getArtist(this.id);
-        this.eventService.getEventsByArtist(this.id, this.artist.name);
-        this.dataSource.data = this.events;
-        console.log('Events: ', this.events);
-        this.avatarStyle = {
-          'background-image': this.sanitizer.bypassSecurityTrustUrl(this.artist.image),
-          'background-size': 'cover'
-        };
-        this.image = this.artist.image;
-      }
-    );
-    this.subscription = this.eventService.eventsChanged.subscribe(
-      (events: Event[]) => {
-        this.events = events;
       },
       (error) => {
         console.log('ERROR: ', error);
       }
     );
+    this.artist = this.artistService.getArtist(this.id);
+    this.httpService.getEventsByArtist(this.id);
+    this.subscription = this.eventService.eventsChanged.subscribe(
+      (events: Event[]) => {
+        this.events = this.eventService.normalizeEventNames(events, this.artist.name);
+        this.dataSource.data = this.events;
+        console.log('Events: ', this.events);
+      },
+      (error) => {
+        console.log('ERROR: ', error);
+      }
+    );
+    this.avatarStyle = {
+      'background-image': this.sanitizer.bypassSecurityTrustUrl(this.artist.image),
+      'background-size': 'cover'
+    };
+    this.image = this.artist.image;
   }
 
   ngOnDestroy() {
