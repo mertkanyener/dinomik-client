@@ -1,3 +1,4 @@
+import { EventService } from 'src/app/event/event.service';
 import { MatTableDataSource, MatSort } from '@angular/material';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { trigger, transition, animate, state, style } from '@angular/animations';
@@ -44,7 +45,8 @@ export class ArtistListComponent implements OnInit, OnDestroy {
 
   constructor(private artistService: ArtistService,
               private utilityService: UtilityService,
-              private httpService: HttpService) {
+              private httpService: HttpService,
+              private eventService: EventService) {
                 this.httpService.getArtists();
               }
 
@@ -60,14 +62,23 @@ export class ArtistListComponent implements OnInit, OnDestroy {
         this.objectArray = this.utilityService.transformObjectArray(this.artists, this.colSize, this.grid.lgRows);
       }
     );
+    this.subscriptionEvents = this.eventService.eventsChanged.subscribe(
+      (events: Event[]) => {
+        this.events = events;
+      },
+      (error) => {
+        console.log('Error: ', error);
+      }
+    );
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.subscriptionEvents.unsubscribe();
   }
 
   onClick(id: number) {
-    
+    this.httpService.getSoonEventsByArtist(id);
   }
 
 }

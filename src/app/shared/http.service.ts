@@ -107,11 +107,27 @@ export class HttpService {
   getEventsByArtist(id: number) {
     this.http.get<Event[]>(this.path + 'artists/' + id + '/events/').subscribe(
       (events: Event[]) => {
-        console.log('Http service - events: ', events);
         this.eventService.setEvents(events);
       },
       (error) => {
         console.log('ERROR: ', error);
+      }
+    );
+  }
+
+  getSoonEventsByArtist(id: number) {
+    this.http.get<any>(this.path + 'artists/' + id + '/events/soon').pipe(map(
+      (response: HttpResponse<any>) => {
+        const events = response['content'];
+        return events;
+      }
+    )).subscribe(
+      (events: Event[]) => {
+        this.eventService.setEvents(events);
+        console.log('Http events: ', events);
+      },
+      (error) => {
+        console.log('Http error: ', error);
       }
     );
   }

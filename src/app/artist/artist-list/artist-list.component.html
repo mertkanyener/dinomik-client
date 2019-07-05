@@ -10,7 +10,17 @@
           <div id="expanded" fxLayout="column" [@detailExpand]="artist == expandedArtist ? 'expanded' : 'collapsed'" >
             <h3 class="mat-h3">Yaklaşan Etkinlikler</h3>
             <div fxLayout="row">
-              
+              <mat-card *ngFor="let event of events">
+                <img mat-card-image [src]="event.artists[0].image" alt="Image">
+                <mat-card-content fxLayout="column">
+                  <h3 class="mat-h3">{{ event.name }}</h3>
+                  <div fxLayout="row">
+                    <h4 class="mat-h4">{{ event.date }}</h4>
+                    <span style="flex: 1 1 auto;"></span>
+                    <h4 class="mat-h4">{{ event.time }}</h4>
+                  </div>
+                </mat-card-content>
+              </mat-card>
             </div>
             <a [routerLink]="artist.id" routerLinkActive="router-link-active" ><h4 class="mat-h4">{{ artist.name }}</h4></a> 
           </div>
