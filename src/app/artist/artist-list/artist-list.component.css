@@ -7,8 +7,8 @@ a {
   color:  #c1c1c1;
 }
 
-mat-card + mat-card {
-  margin-left: 1.5rem; 
+mat-card {
+  background-color: #19191a;
 }
 
 img {
@@ -25,6 +25,7 @@ img {
 
 #expanded {
   overflow: hidden;
+  margin-bottom: 1.5rem;
 }
 
 table {

@@ -2,15 +2,15 @@
   <span fxFlex="30"></span>
   <div fxLayout="column" fxFlex="40">
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
-      <ng-container matColumnDef="name">
-        <td mat-cell *matCellDef="let artist" (click)="onClick(artist.id)"><b>{{ artist.name }}</b></td>
+      <ng-container matColumnDef="name"> 
+        <td mat-cell *matCellDef="let artist" (click)="onClick(artist.id, artist.name)"><h2 class="mat-h2">{{ artist.name }}</h2></td>
       </ng-container>
       <ng-container matColumnDef="expandedArtist">
         <td mat-cell *matCellDef="let artist" [attr.colspan]="displayedColumns.length">
           <div id="expanded" fxLayout="column" [@detailExpand]="artist == expandedArtist ? 'expanded' : 'collapsed'" >
             <h3 class="mat-h3">Yaklaşan Etkinlikler</h3>
-            <div fxLayout="row">
-              <mat-card *ngFor="let event of events">
+            <div id="card-row" fxLayout="row" fxLayoutGap="5%">
+              <mat-card fxFlex="30" *ngFor="let event of events">
                 <img mat-card-image [src]="event.artists[0].image" alt="Image">
                 <mat-card-content fxLayout="column">
                   <h3 class="mat-h3">{{ event.name }}</h3>
@@ -19,10 +19,11 @@
                     <span style="flex: 1 1 auto;"></span>
                     <h4 class="mat-h4">{{ event.time }}</h4>
                   </div>
+                  <h5 class="mat-h5">{{ event.venue.name }}</h5>
                 </mat-card-content>
               </mat-card>
             </div>
-            <a [routerLink]="artist.id" routerLinkActive="router-link-active" ><h4 class="mat-h4">{{ artist.name }}</h4></a> 
+            <a [routerLink]="artist.id" routerLinkActive="router-link-active">Daha fazlası için tıkla</a> 
           </div>
         </td>
       </ng-container>

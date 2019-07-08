@@ -14,6 +14,12 @@ export class EventService {
     this.eventsChanged.next(this.events.slice());
   }
 
+  setArtistEvents(events: Event[], artistName: string) {
+    this.events = this.normalizeEventNames(events, artistName);
+    this.events = this.normalizeDateAndTime(events);
+    this.eventsChanged.next(this.events.slice());
+  }
+
   getEvents(): Event[] {
     return this.events;
   }

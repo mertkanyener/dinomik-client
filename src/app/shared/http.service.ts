@@ -115,7 +115,7 @@ export class HttpService {
     );
   }
 
-  getSoonEventsByArtist(id: number) {
+  getSoonEventsByArtist(id: number, artistName: string) {
     this.http.get<any>(this.path + 'artists/' + id + '/events/soon').pipe(map(
       (response: HttpResponse<any>) => {
         const events = response['content'];
@@ -123,7 +123,7 @@ export class HttpService {
       }
     )).subscribe(
       (events: Event[]) => {
-        this.eventService.setEvents(events);
+        this.eventService.setArtistEvents(events, artistName);
         console.log('Http events: ', events);
       },
       (error) => {

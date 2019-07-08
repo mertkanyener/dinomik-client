@@ -54,7 +54,6 @@ export class ArtistListComponent implements OnInit, OnDestroy {
     this.subscription = this.artistService.artistsChanged.subscribe(
       (artists: Artist[]) => {
         this.artists = artists;
-        console.log('Artists: ', this.artists);
         this.dataSource.filterPredicate = this.utilityService.tableFilter();
         this.dataSource.data = artists;
         this.dataSource.sort = this.sort;
@@ -77,8 +76,8 @@ export class ArtistListComponent implements OnInit, OnDestroy {
     this.subscriptionEvents.unsubscribe();
   }
 
-  onClick(id: number) {
-    this.httpService.getSoonEventsByArtist(id);
+  onClick(artistId: number, artistName: string) {
+    this.httpService.getSoonEventsByArtist(artistId, artistName);
   }
 
 }
