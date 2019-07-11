@@ -36,16 +36,23 @@ export class HttpService {
   //   ).toJs();
   // }
 
-  getArtists() {
-    this.http.get<Artist[]>(this.path + 'artists').subscribe(
-      (artists) => {
+  getArtists(page: number, size: number) {
+    const url = this.path + 'artists/page/' + page + '/size/' + size;
+    this.http.get<any>(url).pipe(map(
+      (response: HttpResponse<any>) => {
+        const artists = response['content'];
+        return artists;
+      }
+    )).subscribe(
+      (artists: Artist[]) => {
         this.artistService.setArtists(artists);
       },
       (error) => {
-        console.log('ERROR: ', error);
+        console.log('Http Service Error: ', error);
       }
     );
   }
+
 
   deleteArtist(id: number) {
     this.http.delete(this.path + 'admin/artists/' + id, this.authService.httpOptions).subscribe(
@@ -82,13 +89,19 @@ export class HttpService {
 
   // Event Operations
 
-  getEvents() {
-    this.http.get<Event[]>(this.path + 'events').subscribe(
-      (events) => {
+  getEventsPage(page: number, size: number) {
+    const url = this.path + 'events/page/' + page + '/size/' + size;
+    this.http.get<any>(url).pipe(map(
+      (response: HttpResponse<any>) => {
+        const events = response['content'];
+        return events;
+      }
+    )).subscribe(
+      (events: Event[]) => {
         this.eventService.setEvents(events);
       },
       (error) => {
-        console.log('ERROR: ', error);
+        console.log('HttpService Error: ', error);
       }
     );
   }
@@ -104,19 +117,9 @@ export class HttpService {
     );
   }
 
-  getEventsByArtist(id: number) {
-    this.http.get<Event[]>(this.path + 'artists/' + id + '/events/').subscribe(
-      (events: Event[]) => {
-        this.eventService.setEvents(events);
-      },
-      (error) => {
-        console.log('ERROR: ', error);
-      }
-    );
-  }
-
-  getSoonEventsByArtist(id: number, artistName: string) {
-    this.http.get<any>(this.path + 'artists/' + id + '/events/soon').pipe(map(
+  getSoonEventsByArtist(id: number, artistName: string, page: number, size: number) {
+    const url = this.path + 'events/artist/' + id + '/page/' + page + '/size/' + size;
+    this.http.get<any>(url).pipe(map(
       (response: HttpResponse<any>) => {
         const events = response['content'];
         return events;
@@ -128,6 +131,23 @@ export class HttpService {
       },
       (error) => {
         console.log('Http error: ', error);
+      }
+    );
+  }
+
+  getEventsByVenue(venueId: number, page: number, size: number) {
+    const url = this.path + 'events/venue/' + venueId + '/page/' + page + '/size/' + size;
+    this.http.get<any>(url).pipe(map(
+      (response: HttpResponse<any>) => {
+        const events = response['content'];
+        return events;
+      }
+    )).subscribe(
+      (events: Event[]) => {
+        this.eventService.setEvents(events);
+      },
+      (error) => {
+        console.log('HttpService Error: ', error);
       }
     );
   }
@@ -176,6 +196,23 @@ export class HttpService {
       },
       (error) => {
         console.log('ERROR: ', error);
+      }
+    );
+  }
+
+  getVenuePage(page: number, size: number) {
+    const url = this.path + 'venues/page/' + page + '/size/' + size;
+    this.http.get<any>(url).pipe(map(
+      (response: HttpResponse<any>) => {
+        const venues = response['content'];
+        return venues;
+      }
+    )).subscribe(
+      (venues: Venue[]) => {
+        this.venueService.setVenues(venues);
+      },
+      (error) => {
+        console.log('HttpService Error: ', error);
       }
     );
   }
