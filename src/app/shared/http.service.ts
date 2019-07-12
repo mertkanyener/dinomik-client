@@ -106,13 +106,19 @@ export class HttpService {
     );
   }
 
-  getEventsThisMonth() {
-    this.http.get<Event[]>(this.path + 'events/now').subscribe(
-      (events) => {
+  getEventsThisMonth(page: number, size: number) {
+    const url = this.path + 'events/now/page/' + page + '/size/' + size;
+    this.http.get<any>(url).pipe(map(
+      (response: HttpResponse<any>) => {
+        const events = response['content'];
+        return events;
+      }
+    )).subscribe(
+      (events: Event[]) => {
         this.eventService.setEvents(events);
       },
       (error) => {
-        console.log('ERROR: ', error);
+        console.log('HttpService Error: ', error);
       }
     );
   }
@@ -148,6 +154,40 @@ export class HttpService {
       },
       (error) => {
         console.log('HttpService Error: ', error);
+      }
+    );
+  }
+
+  getEventsByVenueAndMonth(venueId: number, month: number, year: number, page: number, size: number) {
+    const url = this.path + 'events/venue/' + venueId + '/month/' + month + '/year/' + year + '/page/' + page + '/size/' + size;
+    this.http.get<any>(url).pipe(map(
+      (response: HttpResponse<any>) => {
+        const events = response['content'];
+        return events;
+      }
+    )).subscribe(
+      (events: Event[]) => {
+        this.eventService.setEvents(events);
+      },
+      (error) => {
+        console.log('HttpService error: ', error);
+      }
+    );
+  }
+
+  getEventsByDate(year: number, month: number, day: number, page: number, size: number) {
+    const url = this.path + 'events/year/' + year + '/month/' + month + '/day/' + day + '/page/' + page + '/size/' + size;
+    this.http.get<any>(url).pipe(map(
+      (response: HttpResponse<any>) => {
+        const events = response['content'];
+        return events;
+      }
+    )).subscribe(
+      (events: Event[]) => {
+        this.eventService.setEvents(events);
+      },
+      (error) => {
+        console.log('HttpService error: ', error);
       }
     );
   }
