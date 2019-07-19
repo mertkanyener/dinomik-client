@@ -123,7 +123,7 @@ export class HttpService {
     );
   }
 
-  getSoonEventsByArtist(id: number, artistName: string, page: number, size: number) {
+  getEventsByArtist(id: number, artistName: string, page: number, size: number) {
     const url = this.path + 'events/artist/' + id + '/page/' + page + '/size/' + size;
     this.http.get<any>(url).pipe(map(
       (response: HttpResponse<any>) => {
@@ -177,6 +177,23 @@ export class HttpService {
 
   getEventsByDate(year: number, month: number, day: number, page: number, size: number) {
     const url = this.path + 'events/year/' + year + '/month/' + month + '/day/' + day + '/page/' + page + '/size/' + size;
+    this.http.get<any>(url).pipe(map(
+      (response: HttpResponse<any>) => {
+        const events = response['content'];
+        return events;
+      }
+    )).subscribe(
+      (events: Event[]) => {
+        this.eventService.setEvents(events);
+      },
+      (error) => {
+        console.log('HttpService error: ', error);
+      }
+    );
+  }
+
+  getEventsByCity(city: string, page: number, size: number) {
+    const url = this.path + 'events/city/' + city + '/page/' + page + '/size/' + size;
     this.http.get<any>(url).pipe(map(
       (response: HttpResponse<any>) => {
         const events = response['content'];

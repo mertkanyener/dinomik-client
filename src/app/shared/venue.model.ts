@@ -5,6 +5,10 @@ export class Venue {
   address: string;
   latitude: number;
   longitude: number;
+  image: string;
+  altImages: string[];
+  city: string;
+
 
   constructor(){}
 

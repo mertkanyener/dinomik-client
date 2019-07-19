@@ -43,7 +43,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
       }
     );
     this.artist = this.artistService.getArtist(this.id);
-    this.httpService.getEventsByArtist(this.id);
+    this.httpService.getEventsByArtist(this.id, this.artist.name, 0, 50);
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
         this.events = this.eventService.normalizeEventNames(events, this.artist.name);

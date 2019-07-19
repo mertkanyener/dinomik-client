@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.month = this.date.getMonth();
     this.currentMonth = months[this.month];
-    this.httpService.getEvents();
+    this.httpService.getEventsPage(0, 50);
     //this.httpService.getEventsThisMonth();
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {

@@ -1,5 +1,5 @@
 import { EventService } from 'src/app/event/event.service';
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { trigger, transition, animate, state, style } from '@angular/animations';
 import { HttpService } from './../../shared/http.service';
@@ -29,6 +29,9 @@ export class ArtistListComponent implements OnInit, OnDestroy {
   objectArray: Array<Artist[]>;
   colSize = 5;
 
+  currentPage = 0;
+  pageSize = 10;
+  nextPage = false; 
   events = new Array<Event>();
   subscription = new Subscription();
   subscriptionEvents = new Subscription();
@@ -46,11 +49,10 @@ export class ArtistListComponent implements OnInit, OnDestroy {
   constructor(private artistService: ArtistService,
               private utilityService: UtilityService,
               private httpService: HttpService,
-              private eventService: EventService) {
-                this.httpService.getArtists();
-              }
+              private eventService: EventService) {}
 
   ngOnInit() {
+    this.httpService.getArtists(0, 10);
     this.subscription = this.artistService.artistsChanged.subscribe(
       (artists: Artist[]) => {
         this.artists = artists;
@@ -77,7 +79,11 @@ export class ArtistListComponent implements OnInit, OnDestroy {
   }
 
   onClick(artistId: number, artistName: string) {
-    this.httpService.getSoonEventsByArtist(artistId, artistName);
+    this.httpService.getEventsByArtist(artistId, artistName, 0, 3);
+  }
+
+  onPage(page: number) {
+    this.httpService.getArtists(page - 1, this.pageSize);
   }
 
 }
