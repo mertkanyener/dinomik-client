@@ -1,3 +1,4 @@
+import { ArtistPage } from './artist-page.model';
 import {HttpClient, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
 import {ArtistService} from 'src/app/artist/artist.service';
 import {EventService} from 'src/app/event/event.service';
@@ -37,18 +38,24 @@ export class HttpService {
   // }
 
   getArtists(page: number, size: number) {
+    const artistPage = new ArtistPage();
     const url = this.path + 'artists/page/' + page + '/size/' + size;
     this.http.get<any>(url).pipe(map(
       (response: HttpResponse<any>) => {
-        const artists = response['content'];
-        return artists;
+        artistPage.artists = response['content'];
+        artistPage.first = response['first'];
+        artistPage.last = response['last'];
+        artistPage.totalElements = response['totalElements'];
+        artistPage.totalPages = response['totalPages'];
+        return artistPage;
       }
     )).subscribe(
-      (artists: Artist[]) => {
-        this.artistService.setArtists(artists);
+      (artistPage: ArtistPage) => {
+        console.log('ArtistPage: ', artistPage);
+        this.artistService.setArtistPage(artistPage);
       },
       (error) => {
-        console.log('Http Service Error: ', error);
+        console.log('HttpService Error: ', error);
       }
     );
   }

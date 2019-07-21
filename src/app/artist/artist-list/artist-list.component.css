@@ -31,6 +31,18 @@ img {
 table {
   background-color: black;
 }
+
+#paginator {
+  margin-top: 1rem;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
+mat-select {
+  align-self: center;
+}
 /* 
 .card-img{
   width: 10rem;

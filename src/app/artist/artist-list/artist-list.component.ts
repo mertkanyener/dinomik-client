@@ -1,3 +1,4 @@
+import { ArtistPage } from './../../shared/artist-page.model';
 import { EventService } from 'src/app/event/event.service';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
@@ -25,13 +26,14 @@ import { Event } from 'src/app/shared/event.model';
 export class ArtistListComponent implements OnInit, OnDestroy {
 
   artists = new Array<Artist>(50);
+  artistPage: ArtistPage;
   grid: Grid;
   objectArray: Array<Artist[]>;
   colSize = 5;
 
+  array: Array<number>;
   currentPage = 0;
   pageSize = 10;
-  nextPage = false; 
   events = new Array<Event>();
   subscription = new Subscription();
   subscriptionEvents = new Subscription();
@@ -53,14 +55,13 @@ export class ArtistListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.httpService.getArtists(0, 10);
-    this.subscription = this.artistService.artistsChanged.subscribe(
-      (artists: Artist[]) => {
-        this.artists = artists;
+    this.subscription = this.artistService.artistPageChanged.subscribe(
+      (artistPage: ArtistPage) => {
+        this.artistPage = artistPage;
+        this.artists = artistPage.artists;
+        this.array = this.utilityService.createNumberArray(artistPage.totalPages);
+        this.dataSource.data = this.artists;
         this.dataSource.filterPredicate = this.utilityService.tableFilter();
-        this.dataSource.data = artists;
-        this.dataSource.sort = this.sort;
-        this.grid = this.utilityService.calculateGrid(this.artists.length);
-        this.objectArray = this.utilityService.transformObjectArray(this.artists, this.colSize, this.grid.lgRows);
       }
     );
     this.subscriptionEvents = this.eventService.eventsChanged.subscribe(

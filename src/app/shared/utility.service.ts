@@ -55,6 +55,14 @@ export class UtilityService {
     return Array(n);
   }
 
+  createNumberArray(n: number): Array<number> {
+    const array = Array(n);
+    for (let i = 1; i <= array.length; i++) {
+      array[i - 1] = i;
+    }
+    return array;
+  }
+
   transformObjectArray(objectArray: Array<any>, colSize: number, rowNum: number ): Array<any> {
     const result: Array<Array<any>> = new Array(rowNum);
     let n = 0;
