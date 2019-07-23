@@ -1,3 +1,4 @@
+import { Page } from 'src/app/shared/page-model';
 import {Venue} from '../shared/venue.model';
 import {Subject} from 'rxjs';
 import {Injectable} from '@angular/core';
@@ -5,18 +6,24 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class VenueService {
 
+  venuePageChanged = new Subject<Page>();
   venuesChanged = new Subject<Venue[]>();
+  private venuePage: Page;
   private venues: Venue[];
 
+  constructor() {}
 
-  constructor(){}
+  setVenuePage(venuePage: Page) {
+    this.venuePage = venuePage;
+    this.venuePageChanged.next(this.venuePage);
+  }
 
-  setVenues(venues: Venue[]){
+  setVenues(venues: Venue[]) {
     this.venues = venues;
     this.venuesChanged.next(this.venues.slice());
   }
 
-  getVenues(): Venue[]{
+  getVenues(): Venue[] {
     return this.venues;
   }
 

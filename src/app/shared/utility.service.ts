@@ -1,9 +1,10 @@
+import { Page } from 'src/app/shared/page-model';
+import { HttpResponse } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
 import {Subject} from 'rxjs';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Image} from './image.model';
-import { Event } from './event.model';
 
 export interface Grid{
   smRows: number;
@@ -72,6 +73,17 @@ export class UtilityService {
     }
     return result;
 
+  }
+
+  pageResponseMapper(response: HttpResponse<any>): Page {
+    const page = new Page();
+    page.totalElements = response['totalElements'];
+    page.totalPages = response['totalPages'];
+    page.first = response['first'];
+    page.last = response['last'];
+    page.currentPage = response['number'];
+    page.objects = response['content'];
+    return page;
   }
 
 

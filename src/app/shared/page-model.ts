@@ -1,11 +1,10 @@
-import { Artist } from './artist.model';
-
-export class ArtistPage {
+export class Page {
     totalElements: number;
     totalPages: number;
     first: boolean;
     last: boolean;
-    artists: Artist[];
+    currentPage: number;
+    objects: Array<any>;
 
     constructor() {}
 }

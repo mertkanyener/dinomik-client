@@ -9,6 +9,7 @@ import { UtilityService, Grid } from './../../shared/utility.service';
 import {ArtistService} from '../artist.service';
 import { Subscription } from 'rxjs';
 import { Event } from 'src/app/shared/event.model';
+import { Page } from 'src/app/shared/page-model';
 
 
 @Component({
@@ -26,7 +27,7 @@ import { Event } from 'src/app/shared/event.model';
 export class ArtistListComponent implements OnInit, OnDestroy {
 
   artists = new Array<Artist>(50);
-  artistPage: ArtistPage;
+  artistPage: Page;
   grid: Grid;
   objectArray: Array<Artist[]>;
   colSize = 5;
@@ -40,13 +41,6 @@ export class ArtistListComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<Artist> = new MatTableDataSource(this.artists);
   displayedColumns = ['name'];
   expandedArtist: Artist;
-  sort;
-  @ViewChild(MatSort) set content(content: ElementRef) {
-    this.sort = content;
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
-    }
-  }
 
   constructor(private artistService: ArtistService,
               private utilityService: UtilityService,
@@ -56,9 +50,9 @@ export class ArtistListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.httpService.getArtists(0, 10);
     this.subscription = this.artistService.artistPageChanged.subscribe(
-      (artistPage: ArtistPage) => {
+      (artistPage: Page) => {
         this.artistPage = artistPage;
-        this.artists = artistPage.artists;
+        this.artists = artistPage.objects;
         this.array = this.utilityService.createNumberArray(artistPage.totalPages);
         this.dataSource.data = this.artists;
         this.dataSource.filterPredicate = this.utilityService.tableFilter();
@@ -85,6 +79,10 @@ export class ArtistListComponent implements OnInit, OnDestroy {
 
   onPage(page: number) {
     this.httpService.getArtists(page - 1, this.pageSize);
+  }
+
+  onFilterFocus() {
+    this.httpService.getArtists(0, this.artistPage.totalElements);
   }
 
 }

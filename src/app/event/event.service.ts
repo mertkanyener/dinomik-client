@@ -1,3 +1,4 @@
+import { Page } from './../shared/page-model';
 import {Subject} from 'rxjs';
 import {Injectable} from '@angular/core';
 import { Event } from '../shared/event.model';
@@ -5,8 +6,10 @@ import { Event } from '../shared/event.model';
 @Injectable()
 export class EventService {
 
+  eventPageChanged = new Subject<Page>();
   eventsChanged = new Subject<Event[]>();
   private events: Event[];
+  private eventPage: Page;
 
 
   setEvents(events: Event[]) {
@@ -18,6 +21,11 @@ export class EventService {
     this.events = this.normalizeEventNames(events, artistName);
     this.events = this.normalizeDateAndTime(events);
     this.eventsChanged.next(this.events.slice());
+  }
+
+  setEventPage(eventPage: Page) {
+    this.eventPage = eventPage;
+    this.eventPageChanged.next(this.eventPage);
   }
 
   getEvents(): Event[] {

@@ -2,15 +2,16 @@ import { ArtistPage } from './../shared/artist-page.model';
 import {Artist} from '../shared/artist.model';
 import {Subject} from 'rxjs';
 import {Injectable} from '@angular/core';
+import { Page } from '../shared/page-model';
 
 @Injectable()
 export class ArtistService {
 
   artistsChanged =  new Subject<Artist[]>();
-  artistPageChanged = new Subject<ArtistPage>();
+  artistPageChanged = new Subject<Page>();
   rowNum: number;
   private artists: Artist[];
-  private artistPage: ArtistPage;
+  private artistPage: Page;
 
   constructor() {}
 
@@ -23,7 +24,7 @@ export class ArtistService {
     this.artistsChanged.next(this.artists.slice());
   }
 
-  setArtistPage(artistPage: ArtistPage) {
+  setArtistPage(artistPage: Page) {
     this.artistPage = artistPage;
     this.artistPageChanged.next(this.artistPage);
   }
