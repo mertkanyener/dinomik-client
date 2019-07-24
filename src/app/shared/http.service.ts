@@ -28,16 +28,7 @@ export class HttpService {
 
   // Artist Operations
 
-  // getArtist(id: number): Artist {
-  //   return this.http.get<any>(this.path + 'artists/' + id).pipe(
-  //     map(
-  //       (response: HttpResponse<any>) => {
-  //         let artist: Artist = response['body'];
-  //         return artist;
-  //       }
-  //     )
-  //   ).toJs();
-  // }
+  
 
   getArtists(page: number, size: number) {
     const url = this.path + 'artists/page/' + page + '/size/' + size;
@@ -124,17 +115,15 @@ export class HttpService {
     );
   }
 
-  getEventsByArtist(id: number, artistName: string, page: number, size: number) {
+  getEventsByArtist(id: number, page: number, size: number) {
     const url = this.path + 'events/artist/' + id + '/page/' + page + '/size/' + size;
     this.http.get<any>(url).pipe(map(
       (response: HttpResponse<any>) => {
-        const events = response['content'];
-        return events;
+        return this.utilityService.pageResponseMapper(response);
       }
     )).subscribe(
-      (events: Event[]) => {
-        this.eventService.setArtistEvents(events, artistName);
-        console.log('Http events: ', events);
+      (pageable: Page) => {
+        this.eventService.setEventPage(pageable);
       },
       (error) => {
         console.log('Http error: ', error);

@@ -1,4 +1,3 @@
-import { ArtistPage } from './../shared/artist-page.model';
 import {Artist} from '../shared/artist.model';
 import {Subject} from 'rxjs';
 import {Injectable} from '@angular/core';
@@ -16,6 +15,7 @@ export class ArtistService {
   constructor() {}
 
   getArtists(): Artist[] {
+
     return this.artists;
   }
 

@@ -1,3 +1,4 @@
+import { Page } from './../../shared/page-model';
 import { MatTableDataSource } from '@angular/material';
 import { HttpService } from 'src/app/shared/http.service';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -20,6 +21,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   id: number;
   image: string;
   avatarStyle: any;
+  eventPage: Page;
   events: Event[];
   displayedColumns = ['name', 'venue', 'date', 'time'];
   dataSource: MatTableDataSource<Event> = new MatTableDataSource(this.events);
@@ -43,10 +45,10 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
       }
     );
     this.artist = this.artistService.getArtist(this.id);
-    this.httpService.getEventsByArtist(this.id, this.artist.name, 0, 50);
-    this.subscription = this.eventService.eventsChanged.subscribe(
-      (events: Event[]) => {
-        this.events = this.eventService.normalizeEventNames(events, this.artist.name);
+    this.httpService.getEventsByArtist(this.id, 0, 50);
+    this.subscription = this.eventService.eventPageChanged.subscribe(
+      (eventPage: Page) => {
+        this.events = this.eventService.normalizeEventNames(eventPage.objects, this.artist.name);
         this.dataSource.data = this.events;
         console.log('Events: ', this.events);
       },

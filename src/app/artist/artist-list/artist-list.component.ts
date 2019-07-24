@@ -1,7 +1,6 @@
-import { ArtistPage } from './../../shared/artist-page.model';
 import { EventService } from 'src/app/event/event.service';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { trigger, transition, animate, state, style } from '@angular/animations';
 import { HttpService } from './../../shared/http.service';
 import {Artist} from '../../shared/artist.model';
@@ -28,9 +27,6 @@ export class ArtistListComponent implements OnInit, OnDestroy {
 
   artists = new Array<Artist>(50);
   artistPage: Page;
-  grid: Grid;
-  objectArray: Array<Artist[]>;
-  colSize = 5;
 
   array: Array<number>;
   currentPage = 0;
@@ -58,9 +54,9 @@ export class ArtistListComponent implements OnInit, OnDestroy {
         this.dataSource.filterPredicate = this.utilityService.tableFilter();
       }
     );
-    this.subscriptionEvents = this.eventService.eventsChanged.subscribe(
-      (events: Event[]) => {
-        this.events = events;
+    this.subscriptionEvents = this.eventService.eventPageChanged.subscribe(
+      (eventPage: Page) => {
+        this.events = eventPage.objects;
       },
       (error) => {
         console.log('Error: ', error);
@@ -73,8 +69,8 @@ export class ArtistListComponent implements OnInit, OnDestroy {
     this.subscriptionEvents.unsubscribe();
   }
 
-  onClick(artistId: number, artistName: string) {
-    this.httpService.getEventsByArtist(artistId, artistName, 0, 3);
+  onClick(artistId: number) {
+    this.httpService.getEventsByArtist(artistId, 0, 3);
   }
 
   onPage(page: number) {
