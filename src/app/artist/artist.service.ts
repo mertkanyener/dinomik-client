@@ -11,12 +11,21 @@ export class ArtistService {
   rowNum: number;
   private artists: Artist[];
   private artistPage: Page;
+  private artist: Artist;
 
   constructor() {}
 
   getArtists(): Artist[] {
 
     return this.artists;
+  }
+
+  setArtist(artist: Artist) {
+    this.artist = artist;
+  }
+
+  getArtist(): Artist {
+    return this.artist;
   }
 
   setArtists(artists: Artist[]){
@@ -29,12 +38,12 @@ export class ArtistService {
     this.artistPageChanged.next(this.artistPage);
   }
 
-  getArtist(id: number): Artist {
+  getArtistById(id: number): Artist {
     return this.artists.find(x => x.id === id);
   }
 
   deleteArtist(id: number) {
-    const index = this.artists.indexOf(this.getArtist(id));
+    const index = this.artists.indexOf(this.getArtistById(id));
     this.artists.splice(index, 1);
     this.artistsChanged.next(this.artists.slice());
   }
@@ -45,7 +54,7 @@ export class ArtistService {
   }
 
   updateArtist(id: number, artist: Artist){
-    const index = this.artists.indexOf(this.getArtist(id));
+    const index = this.artists.indexOf(this.getArtistById(id));
     artist.id = id;
     this.artists[index] = artist;
     this.artistsChanged.next(this.artists.slice());

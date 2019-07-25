@@ -69,8 +69,9 @@ export class ArtistListComponent implements OnInit, OnDestroy {
     this.subscriptionEvents.unsubscribe();
   }
 
-  onClick(artistId: number) {
-    this.httpService.getEventsByArtist(artistId, 0, 3);
+  onClick(artist: Artist) {
+    this.httpService.getEventsByArtist(artist.id, 0, 3);
+    this.artistService.setArtist(artist);
   }
 
   onPage(page: number) {

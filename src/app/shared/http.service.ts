@@ -82,6 +82,18 @@ export class HttpService {
 
   // Event Operations
 
+  getAllEvents() {
+    const url = this.path + 'events';
+    this.http.get<any>(url).subscribe(
+      (events: Event[]) => {
+        this.eventService.setEvents(events);
+      },
+      (error) => {
+        console.log('HttpService error: ', error);
+      }
+    );
+  }
+
   getEventsPage(page: number, size: number) {
     const url = this.path + 'events/page/' + page + '/size/' + size;
     this.http.get<any>(url).pipe(map(

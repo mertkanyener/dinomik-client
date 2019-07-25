@@ -40,7 +40,7 @@ export class AdminArtistEditComponent implements OnInit {
         this.id = +params['id'];
         if(params['id'] != null) {
           this.editMode = true;
-          this.artist = this.artistService.getArtist(this.id);
+          this.artist = this.artistService.getArtistById(this.id);
         }
       }
     );

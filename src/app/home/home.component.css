@@ -30,3 +30,7 @@ p {
 #headerRow {
   margin-bottom: 3rem;
 }
+
+#infiniteScroll {
+  height: 900px;
+}

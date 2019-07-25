@@ -15,6 +15,7 @@ import {
   MatSelectModule,
   MatOptionModule
 } from '@angular/material';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {
     MatGridListModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    ScrollingModule
   ],
   exports: [
     MatButtonModule,
@@ -50,7 +52,8 @@ import {
     MatGridListModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    ScrollingModule
   ]
 })
 export class MaterialModule {

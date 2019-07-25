@@ -7,6 +7,7 @@
 <div fxLayout="row" fxLayoutAlign="center start">
   <span fxFlex="25"></span>
   <div fxLayout="column" fxFlex="50">
+    <cdk-virtual-scroll-viewport id="infiniteScroll" itemSize="3">
     <div id="eventRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of events">
       <mat-card fxFlex="30" *ngFor="let event of row">
         <img mat-card-image [src]="event.artists[0].image" alt="image">
@@ -22,6 +23,7 @@
         </mat-card-content>
       </mat-card>
     </div>
+    </cdk-virtual-scroll-viewport>
   </div>
   <span fxFlex="25"></span>
 </div>

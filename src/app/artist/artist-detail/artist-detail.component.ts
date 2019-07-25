@@ -31,9 +31,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private sanitizer: DomSanitizer,
               private eventService: EventService,
-              private httpService: HttpService) {
-
-               }
+              private httpService: HttpService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -44,7 +42,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
         console.log('ERROR: ', error);
       }
     );
-    this.artist = this.artistService.getArtist(this.id);
+    this.artist = this.artistService.getArtist();
     this.httpService.getEventsByArtist(this.id, 0, 50);
     this.subscription = this.eventService.eventPageChanged.subscribe(
       (eventPage: Page) => {
