@@ -94,6 +94,22 @@ export class HttpService {
     );
   }
 
+  getEventsOnScroll(page: number) {
+    const url = this.path + 'events/page/' + page + '/size/6';
+    this.http.get<any>(url).pipe(map(
+      (response: HttpResponse<any>) => {
+        return this.utilityService.pageResponseMapper(response);
+      }
+    )).subscribe(
+      (eventPage: Page) => {
+        this.eventService.setEvents(eventPage.objects);
+      },
+      (error) => {
+        console.log('HttpService Error: ', error);
+      }
+    );
+  }
+
   getEventsPage(page: number, size: number) {
     const url = this.path + 'events/page/' + page + '/size/' + size;
     this.http.get<any>(url).pipe(map(

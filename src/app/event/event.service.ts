@@ -8,13 +8,15 @@ export class EventService {
 
   eventPageChanged = new Subject<Page>();
   eventsChanged = new Subject<Event[]>();
-  private events: Event[];
+  private events = new Array<Event>();
   private eventPage: Page;
 
 
   setEvents(events: Event[]) {
-    this.events = this.normalizeDateAndTime(events);
+    events = this.normalizeDateAndTime(events);
+    this.events = this.events.concat(events);
     this.eventsChanged.next(this.events.slice());
+    console.log('EventService events: ', this.events);
   }
 
   setArtistEvents(events: Event[], artistName: string) {

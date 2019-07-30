@@ -31,6 +31,14 @@ p {
   margin-bottom: 3rem;
 }
 
-#infiniteScroll {
-  height: 900px;
+i { 
+  color: #c1c1c1;
+}
+
+button {
+  background-color: #19191a;
+}
+
+h5 {
+  color: #c1c1c1;
 }
