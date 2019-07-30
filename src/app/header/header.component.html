@@ -10,7 +10,7 @@
         *ngFor="let link of links"
         (click)="activeLink = link"
         [active]="activeLink == link"
-        [routerLink]="link.url"> {{ link.name }} </a>
+        [routerLink]="link.url"><h1 class="mat-h1">{{ link.name }} </h1> </a>
     </nav>
   </div>
 

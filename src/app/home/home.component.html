@@ -8,7 +8,7 @@
   <span fxFlex="25"></span>
   <div fxLayout="column" fxFlex="50">
     <div id="eventRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of events">
-      <mat-card fxFlex="30" *ngFor="let event of row">
+      <mat-card fxFlex="25" *ngFor="let event of row">
         <img mat-card-image [src]="event.artists[0].image" alt="image">
         <mat-card-content fxLayout="column" fxLayoutGap="1px">
           <h2 class="mat-h2">{{ event.name }}</h2>
@@ -30,4 +30,6 @@
     </div>
   </div>
   <span fxFlex="25"></span>
+  
 </div>
+<br>
