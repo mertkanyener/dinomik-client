@@ -16,7 +16,6 @@ export class ArtistService {
   constructor() {}
 
   getArtists(): Artist[] {
-
     return this.artists;
   }
 

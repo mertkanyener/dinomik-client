@@ -1,6 +1,6 @@
 import { EventService } from 'src/app/event/event.service';
-import { MatTableDataSource } from '@angular/material';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { trigger, transition, animate, state, style } from '@angular/animations';
 import { HttpService } from './../../shared/http.service';
 import {Artist} from '../../shared/artist.model';
@@ -38,22 +38,32 @@ export class ArtistListComponent implements OnInit, OnDestroy {
   displayedColumns = ['name'];
   expandedArtist: Artist;
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(private artistService: ArtistService,
               private utilityService: UtilityService,
               private httpService: HttpService,
               private eventService: EventService) {}
 
   ngOnInit() {
-    this.httpService.getArtists(0, 10);
-    this.subscription = this.artistService.artistPageChanged.subscribe(
-      (artistPage: Page) => {
-        this.artistPage = artistPage;
-        this.artists = artistPage.objects;
-        this.array = this.utilityService.createNumberArray(artistPage.totalPages);
+    this.httpService.getAllArtists();
+    this.subscription = this.artistService.artistsChanged.subscribe(
+      (artists: Artist[]) => {
+        this.artists = artists;
         this.dataSource.data = this.artists;
         this.dataSource.filterPredicate = this.utilityService.tableFilter();
       }
     );
+    // this.httpService.getArtists(0, 10);
+    // this.subscription = this.artistService.artistPageChanged.subscribe(
+    //   (artistPage: Page) => {
+    //     this.artistPage = artistPage;
+    //     this.artists = artistPage.objects;
+    //     this.array = this.utilityService.createNumberArray(artistPage.totalPages);
+    //     this.dataSource.data = this.artists;
+    //     this.dataSource.filterPredicate = this.utilityService.tableFilter();
+    //   }
+    // );
     this.subscriptionEvents = this.eventService.eventPageChanged.subscribe(
       (eventPage: Page) => {
         this.events = eventPage.objects;

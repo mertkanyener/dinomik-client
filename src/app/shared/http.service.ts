@@ -28,7 +28,17 @@ export class HttpService {
 
   // Artist Operations
 
-  
+  getAllArtists() {
+    const url = this.path + 'artists';
+    this.http.get<Artist[]>(url).subscribe(
+      (artists: Artist[]) => {
+        this.artistService.setArtists(artists);
+      },
+      (error) => {
+        console.log('HttpService Error: ', error);
+      }
+    );
+  }
 
   getArtists(page: number, size: number) {
     const url = this.path + 'artists/page/' + page + '/size/' + size;
