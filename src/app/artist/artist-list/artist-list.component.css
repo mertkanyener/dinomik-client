@@ -7,20 +7,12 @@ a {
   color:  #c1c1c1;
 }
 
-mat-card {
-  background-color: #19191a;
-}
-
 img {
   bottom: 0;
 }
 
 #mainRow {
   margin-top: 3rem;
-}
-
-#card-row {
-  margin-bottom: 1.5rem;
 }
 
 #expanded {
@@ -32,10 +24,6 @@ table {
   background-color: black;
 }
 
-#paginator {
-  margin-top: 1rem;
-}
-
 .fill-remaining-space {
   flex: 1 1 auto;
 }
@@ -43,6 +31,11 @@ table {
 mat-select {
   align-self: center;
 }
+
+mat-paginator {
+  background-color: black;
+}
+
 /* 
 .card-img{
   width: 10rem;

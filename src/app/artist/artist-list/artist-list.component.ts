@@ -52,6 +52,7 @@ export class ArtistListComponent implements OnInit, OnDestroy {
         this.artists = artists;
         this.dataSource.data = this.artists;
         this.dataSource.filterPredicate = this.utilityService.tableFilter();
+        this.dataSource.paginator = this.paginator;
       }
     );
     // this.httpService.getArtists(0, 10);
@@ -88,8 +89,12 @@ export class ArtistListComponent implements OnInit, OnDestroy {
     this.httpService.getArtists(page - 1, this.pageSize);
   }
 
-  onFilterFocus() {
-    this.httpService.getArtists(0, this.artistPage.totalElements);
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 }

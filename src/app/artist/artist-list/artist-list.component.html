@@ -6,8 +6,7 @@
         type="text"
         placeholder="Sanatçı Ara"
         matInput
-        (focus)="onFilterFocus()"
-        (keyup)="this.utilityService.applyFilter($event.target.value, this.dataSource)">
+        (keyup)="applyFilter($event.target.value)">
     </mat-form-field>
     <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
       <ng-container matColumnDef="name"> 
@@ -38,8 +37,9 @@
       <tr mat-row *matRowDef="let artist; columns: displayedColumns;" (click)="expandedArtist = artist"></tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedArtist']" style="height:0;"></tr>
     </table>
+    <mat-paginator showFirstLastButtons="true"  [pageSize]="pageSize"></mat-paginator>
     <mat-divider style="margin-top: 3rem;"></mat-divider>
-    <div id="paginator" fxLayout="row">
+    <!-- <div id="paginator" fxLayout="row">
       <span fxFlex="80"></span>
       <div fxFlex="20" fxLayout="row" fxLayoutGap="5%">
         <button mat-icon-button [disabled]="artistPage.first"><mat-icon style="color:white;">arrow_back</mat-icon></button>
@@ -50,7 +50,7 @@
         </mat-select>
         <button mat-icon-button [disabled]="artistPage.last" (click)="onPage()"><mat-icon style="color:white;">arrow_forward</mat-icon></button>    
       </div>
-    </div>
+    </div> -->
   </div>
   <span fxFlex="30"></span>
 </div>
