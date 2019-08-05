@@ -49,6 +49,16 @@ export class VenueService {
     this.venuesChanged.next(this.venues.slice());
   }
 
+  getVenuesByCity(city: string): Venue[] {
+    let venues: Venue[];
+    this.venues.forEach( venue => {
+      if (venue.city === city) {
+        venues.push(venue);
+      }
+    });
+    return venues;
+  }
+
 
 
 

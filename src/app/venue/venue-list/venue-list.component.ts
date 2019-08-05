@@ -1,4 +1,4 @@
-import { MatTableDataSource, MatSort } from '@angular/material';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { trigger, transition, animate, state, style } from '@angular/animations';
 import { VenueService } from '../venue.service';
@@ -6,6 +6,8 @@ import { HttpService } from 'src/app/shared/http.service';
 import { UtilityService } from 'src/app/shared/utility.service';
 import { Subscription } from 'rxjs';
 import { Venue } from 'src/app/shared/venue.model';
+import { EventService } from 'src/app/event/event.service';
+import { Page } from 'src/app/shared/page-model';
 
 
 @Component({
@@ -23,33 +25,35 @@ import { Venue } from 'src/app/shared/venue.model';
 export class VenueListComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
+  subscriptionEvents: Subscription;
   venues: Venue[];
+  events = new Array<Event>();
   expandedVenue: Venue;
   displayedColumns = ['name'];
   dataSource: MatTableDataSource<Venue> = new MatTableDataSource(this.venues);
   zoom = 14;
-  sort;
-  @ViewChild(MatSort) set content(content: ElementRef) {
-    this.sort = content;
-    if (this.sort) {
-      this.dataSource.sort = this.sort;
-    }
-  }
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private venueService: VenueService,
+              private eventService: EventService,
               private http: HttpService,
               private utilService: UtilityService) {
-                this.http.getVenues();
                }
 
   ngOnInit() {
+    this.http.getVenues();
     this.subscription = this.venueService.venuesChanged.subscribe(
       (venues: Venue[]) => {
         this.venues = venues;
-        console.log('Venues: ', this.venues);
-        this.dataSource.filterPredicate = this.utilService.tableFilter();
         this.dataSource.data = venues;
-        this.dataSource.sort = this.sort;
+        this.dataSource.filterPredicate = this.utilService.tableFilter();
+        this.dataSource.paginator = this.paginator;
+      }
+    );
+    this.subscriptionEvents = this.eventService.eventPageChanged.subscribe(
+      (eventPage: Page) => {
+        this.events = eventPage.objects;
       }
     );
 
@@ -57,6 +61,19 @@ export class VenueListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.subscriptionEvents.unsubscribe();
   }
-}
 
+  onClick(venue: Venue) {
+    this.http.getEventsByVenue(venue.id, 0, 3);
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+}

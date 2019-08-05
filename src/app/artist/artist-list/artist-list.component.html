@@ -37,7 +37,7 @@
       <tr mat-row *matRowDef="let artist; columns: displayedColumns;" (click)="expandedArtist = artist"></tr>
       <tr mat-row *matRowDef="let row; columns: ['expandedArtist']" style="height:0;"></tr>
     </table>
-    <mat-paginator showFirstLastButtons="true"  [pageSize]="pageSize"></mat-paginator>
+    <mat-paginator showFirstLastButtons="true" hidePageSize="true"  [pageSize]="pageSize"></mat-paginator>
     <mat-divider style="margin-top: 3rem;"></mat-divider>
     <!-- <div id="paginator" fxLayout="row">
       <span fxFlex="80"></span>

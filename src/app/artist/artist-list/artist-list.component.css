@@ -28,10 +28,6 @@ table {
   flex: 1 1 auto;
 }
 
-mat-select {
-  align-self: center;
-}
-
 mat-paginator {
   background-color: black;
 }

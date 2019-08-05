@@ -1,3 +1,4 @@
+import { MatPaginatorIntl } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -28,6 +29,7 @@ import { MenuComponent } from './menu/menu.component';
 import { ArtistCardComponent } from './artist/artist-list/artist-card/artist-card.component';
 import { TestComponent } from './test/test.component';
 import { AgmCoreModule } from '@agm/core';
+import { getTurkishPaginatorIntl } from './shared/turkish-paginator-intl';
 
 @NgModule({
    declarations: [
@@ -64,7 +66,8 @@ import { AgmCoreModule } from '@agm/core';
       EventService,
       VenueService,
       ArtistService,
-      UtilityService
+      UtilityService,
+      { provide: MatPaginatorIntl, useValue: getTurkishPaginatorIntl() }
    ],
    bootstrap: [
       AppComponent

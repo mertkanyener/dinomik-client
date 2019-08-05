@@ -3,21 +3,38 @@
     <div fxLayout="column" fxFlex="40">
       <table mat-table [dataSource]="dataSource" multiTemplateDataRows>
         <ng-container matColumnDef="name">
-          <td mat-cell *matCellDef="let venue"><b>{{ venue.name }}</b></td>
+          <td mat-cell *matCellDef="let venue"><h2 class="mat-h2">{{ venue.name }}</h2></td>
         </ng-container>
         <ng-container matColumnDef="expandedVenue">
           <td mat-cell *matCellDef="let venue" [attr.colspan]="displayedColumns.length">
-            <div id="expanded" fxLayout="row" [@detailExpand]="venue == expandedVenue ? 'expanded' : 'collapsed'" >              
-              <a [routerLink]="venue.id" routerLinkActive="router-link-active" ><h3 class="mat-h3">{{ venue.name }}</h3></a> 
-              <agm-map [latitude]="venue.latitude" [longitude]="venue.longitude" [zoom]="zoom">
+            <div id="expanded" fxLayout="row" [@detailExpand]="venue == expandedVenue ? 'expanded' : 'collapsed'" >         
+              <h3 class="mat-h3">Yaklaşan Etkinlikler</h3>
+              <div id="cardRow" fxLayout="row" fxLayoutGap="5%">
+                <mat-card fxFlex="30" *ngFor="let event of events">
+                  <img mat-card-image [src]="event.artists[0].image" alt="Image">
+                  <mat-card-content fxLayout="column">
+                    <h3 class="mat-h3">{{ event.name }}</h3>
+                    <div fxLayout="row">
+                      <h4 class="mat-h4">{{ event.date }}</h4>
+                      <span style="flex: 1 1 auto;"></span>
+                      <h4 class="mat-h4">{{ event.time }}</h4>
+                    </div>
+                    <h5 class="mat-h5">{{ event.venue.name }}</h5>
+                  </mat-card-content>
+                </mat-card>
+              </div>
+              <a [routerLink]="venue.id" routerLinkActive="router-link-active">Daha fazlası için tıkla</a> 
+              <!-- <agm-map [latitude]="venue.latitude" [longitude]="venue.longitude" [zoom]="zoom">
                 <agm-marker [latitude]="venue.latitude" [longitude]="venue.longitude"></agm-marker>
-              </agm-map>
+              </agm-map> -->
             </div>
           </td>
         </ng-container>
         <tr mat-row *matRowDef="let venue; columns: displayedColumns;" (click)="expandedVenue = venue"></tr>
         <tr mat-row *matRowDef="let row; columns: ['expandedVenue']" style="height:0;"></tr>
-      </table>      
+      </table>
+      <mat-paginator showFirstLastButtons="true" hidePageSize="true"  [pageSize]="pageSize"></mat-paginator>
+      <mat-divider style="margin-top: 3rem;"></mat-divider>        
     </div>
     <span fxFlex="30"></span>
 </div>
