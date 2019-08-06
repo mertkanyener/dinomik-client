@@ -10,6 +10,11 @@ import { EventService } from 'src/app/event/event.service';
 import { Page } from 'src/app/shared/page-model';
 
 
+export interface City {
+  value: string;
+  viewValue: string;
+}
+
 @Component({
   selector: 'app-venue-list',
   templateUrl: './venue-list.component.html',
@@ -30,8 +35,15 @@ export class VenueListComponent implements OnInit, OnDestroy {
   events = new Array<Event>();
   expandedVenue: Venue;
   displayedColumns = ['name'];
+  pageSize = 10;
   dataSource: MatTableDataSource<Venue> = new MatTableDataSource(this.venues);
   zoom = 14;
+
+  cities: City[] = [
+    { value: 'istanbul', viewValue: 'İstanbul' },
+    { value: 'ankara', viewValue: 'Ankara' },
+    { value: 'izmir', viewValue: 'İzmir' }
+  ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 

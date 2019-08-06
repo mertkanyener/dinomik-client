@@ -6,7 +6,7 @@ const turkishRangeLabel = (page: number, pageSize: number, length: number) => {
     length = Math.max(length, 0);
     page += 1;
 
-    const totalPages = Math.floor(length / pageSize);
+    const totalPages = Math.ceil(length / pageSize);
 
     return `Sayfa ${page}/${totalPages}`;
 }

@@ -19,3 +19,27 @@ h3 {
   margin-top: 1rem;
 }
 
+mat-paginator {
+  background-color: black;
+}
+
+#filter {
+  margin-right: 2rem;
+}
+
+mat-option {
+  background-color: black;
+}
+
+input {
+  color: #c1c1c1;
+}
+
+mat-divider {
+  margin-bottom: 1rem;
+}
+
+mat-icon {
+  margin-right: 1rem;
+  color: #ee2b84;
+}

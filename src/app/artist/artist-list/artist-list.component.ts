@@ -27,7 +27,7 @@ export class ArtistListComponent implements OnInit, OnDestroy {
 
   artists = new Array<Artist>(50);
   artistPage: Page;
-
+  
   array: Array<number>;
   currentPage = 0;
   pageSize = 10;
@@ -37,6 +37,8 @@ export class ArtistListComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<Artist> = new MatTableDataSource(this.artists);
   displayedColumns = ['name'];
   expandedArtist: Artist;
+
+  genres = [ 'rock', 'pop', 'electronic', 'rap'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
