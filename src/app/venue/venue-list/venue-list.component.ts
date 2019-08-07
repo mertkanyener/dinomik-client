@@ -66,6 +66,7 @@ export class VenueListComponent implements OnInit, OnDestroy {
     this.subscriptionEvents = this.eventService.eventPageChanged.subscribe(
       (eventPage: Page) => {
         this.events = eventPage.objects;
+        console.log('Events: ', this.events);
       }
     );
 

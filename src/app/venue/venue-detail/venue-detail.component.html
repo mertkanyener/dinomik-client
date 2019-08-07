@@ -1,3 +1,38 @@
-<p>
-  venue-detail works!
-</p>
+<div fxLayout="row">
+  <span fxFlex="30"></span>
+  <mat-card fxFlex="40">
+    <mat-card-header>
+      <div mat-card-avatar class="avatar"></div>
+      <h1>{{ venue.name }}</h1>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <div fxLayout="row" fxLayoutAlign="center">
+        <div fxLayout="column" fxLayoutAlign="start center" fxFill>
+            <h2>Konserler</h2>
+            <table fxFlexFill mat-table  [dataSource]="dataSource">
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef><mat-icon>audiotrack</mat-icon></th>
+                <td mat-cell *matCellDef="let event"><b>{{ event.name }}</b></td>
+              </ng-container>
+              <ng-container matColumnDef="venue">
+                <th mat-header-cell *matHeaderCellDef><mat-icon>location-on</mat-icon></th>
+                <td mat-cell *matCellDef="let event"><b>{{ event.venue.name }}</b></td>
+              </ng-container>
+              <ng-container matColumnDef="date">
+                <th mat-header-cell *matHeaderCellDef><mat-icon>today</mat-icon></th>
+                <td mat-cell *matCellDef="let event"><b>{{ event.date }} </b></td>
+              </ng-container>
+              <ng-container matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef><mat-icon>access_time</mat-icon></th>
+                <td mat-cell *matCellDef="let event"><b>{{ event.time }} </b></td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let event; columns: displayedColumns;"></tr>
+            </table>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <span fxFlex="30"></span>
+</div>

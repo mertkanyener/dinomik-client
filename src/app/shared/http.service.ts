@@ -173,10 +173,21 @@ export class HttpService {
     const url = this.path + 'events/venue/' + venueId + '/page/' + page + '/size/' + size;
     this.http.get<any>(url).pipe(map(
       (response: HttpResponse<any>) => {
-        const events = response['content'];
-        return events;
+        return this.utilityService.pageResponseMapper(response);
       }
     )).subscribe(
+      (pageable: Page) => {
+        this.eventService.setEventPage(pageable);;
+      },
+      (error) => {
+        console.log('HttpService Error: ', error);
+      }
+    );
+  }
+
+  getAllEventsByVenue(venueId: number) {
+    const url = this.path + 'events/venue/' + venueId;
+    this.http.get<Event[]>(url).subscribe(
       (events: Event[]) => {
         this.eventService.setEvents(events);
       },

@@ -12,15 +12,20 @@ export class EventService {
   private eventPage: Page;
 
 
-  setEvents(events: Event[]) {
-    events = this.normalizeDateAndTime(events);
-    this.events = this.events.concat(events);
-    this.eventsChanged.next(this.events.slice());
-    console.log('EventService events: ', this.events);
-  }
+  // setEvents(events: Event[]) {
+  //   events = this.normalizeDateAndTime(events);
+  //   this.events = this.events.concat(events);
+  //   this.eventsChanged.next(this.events.slice());
+  //   console.log('EventService events: ', this.events);
+  // }
 
   setArtistEvents(events: Event[], artistName: string) {
     this.events = this.normalizeEventNames(events, artistName);
+    this.events = this.normalizeDateAndTime(events);
+    this.eventsChanged.next(this.events.slice());
+  }
+
+  setEvents(events: Event[]) {
     this.events = this.normalizeDateAndTime(events);
     this.eventsChanged.next(this.events.slice());
   }

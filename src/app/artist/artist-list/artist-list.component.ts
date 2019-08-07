@@ -25,7 +25,7 @@ import { Page } from 'src/app/shared/page-model';
 })
 export class ArtistListComponent implements OnInit, OnDestroy {
 
-  artists = new Array<Artist>(50);
+  artists: Artist[];
   artistPage: Page;
   
   array: Array<number>;
