@@ -38,6 +38,7 @@ export class VenueListComponent implements OnInit, OnDestroy {
   pageSize = 10;
   dataSource: MatTableDataSource<Venue> = new MatTableDataSource(this.venues);
   zoom = 14;
+  state = 'collapsed';
 
   cities: City[] = [
     { value: 'istanbul', viewValue: 'İstanbul' },
@@ -79,6 +80,11 @@ export class VenueListComponent implements OnInit, OnDestroy {
 
   onClick(venue: Venue) {
     this.http.getEventsByVenue(venue.id, 0, 3);
+  }
+
+  onCityChange(city: string) {
+    this.expandedVenue = null;
+    this.venueService.getVenuesByCity(city);
   }
 
   applyFilter(filterValue: string) {

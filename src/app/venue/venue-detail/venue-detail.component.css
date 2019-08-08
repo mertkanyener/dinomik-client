@@ -1,0 +1,26 @@
+.avatar{
+    background-size: cover;
+    background-image: url('http://localhost:9999/images/artists/shiba.jpg');
+}
+
+mat-card {
+    margin-top: 3rem;
+    background-color: black;
+}
+
+mat-card-header {
+    margin-bottom: 2rem;
+}
+
+table {
+    background-color: black;
+}
+
+.mat-card-avatar{
+    height: 12rem;
+    width: 12rem;
+}
+
+mat-icon {
+  color: #ee2b84;
+}

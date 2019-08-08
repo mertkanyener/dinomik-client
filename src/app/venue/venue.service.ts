@@ -42,21 +42,21 @@ export class VenueService {
     this.venuesChanged.next(this.venues.slice());
   }
 
-  updateVenue(id: number, venue: Venue){
+  updateVenue(id: number, venue: Venue) {
     const index = this.venues.indexOf(this.getVenue(id));
     venue.id = id;
     this.venues[index] = venue;
     this.venuesChanged.next(this.venues.slice());
   }
 
-  getVenuesByCity(city: string): Venue[] {
-    let venues: Venue[];
+  getVenuesByCity(city: string) {
+    let venues = new Array<Venue>();
     this.venues.forEach( venue => {
       if (venue.city === city) {
         venues.push(venue);
       }
     });
-    return venues;
+    this.venuesChanged.next(venues);
   }
 
 

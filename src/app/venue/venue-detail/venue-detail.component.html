@@ -15,10 +15,6 @@
                 <th mat-header-cell *matHeaderCellDef><mat-icon>audiotrack</mat-icon></th>
                 <td mat-cell *matCellDef="let event"><b>{{ event.name }}</b></td>
               </ng-container>
-              <ng-container matColumnDef="venue">
-                <th mat-header-cell *matHeaderCellDef><mat-icon>location-on</mat-icon></th>
-                <td mat-cell *matCellDef="let event"><b>{{ event.venue.name }}</b></td>
-              </ng-container>
               <ng-container matColumnDef="date">
                 <th mat-header-cell *matHeaderCellDef><mat-icon>today</mat-icon></th>
                 <td mat-cell *matCellDef="let event"><b>{{ event.date }} </b></td>

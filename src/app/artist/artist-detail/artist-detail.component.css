@@ -20,3 +20,7 @@ table {
     height: 12rem;
     width: 12rem;
 }
+
+mat-icon {
+    color: #ee2b84;
+  }
