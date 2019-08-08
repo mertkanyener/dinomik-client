@@ -296,6 +296,18 @@ export class HttpService {
     );
   }
 
+  getVenue(id: number) {
+    const url = this.path + 'venues/' + id;
+    this.http.get<Venue>(url).subscribe(
+      (venue: Venue) => {
+        this.venueService.setVenue(venue);
+      },
+      (error) => {
+        console.log('ERROR: ', error);
+      }
+    );
+  }
+
   getVenuePage(page: number, size: number) {
     const url = this.path + 'venues/page/' + page + '/size/' + size;
     this.http.get<any>(url).pipe(map(

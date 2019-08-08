@@ -8,8 +8,10 @@ export class VenueService {
 
   venuePageChanged = new Subject<Page>();
   venuesChanged = new Subject<Venue[]>();
+  venueChanged = new Subject<Venue>();
   private venuePage: Page;
   private venues: Venue[];
+  private venue: Venue;
 
   constructor() {}
 
@@ -29,6 +31,15 @@ export class VenueService {
 
   getVenue(id: number): Venue {
     return this.venues.find(x => x.id === id);
+  }
+
+  getTheVenue(): Venue {
+    return this.venue;
+  }
+
+  setVenue(venue: Venue) {
+    this.venue = venue;
+    this.venueChanged.next(this.venue);
   }
 
   addVenue(venue: Venue){

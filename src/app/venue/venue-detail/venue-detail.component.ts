@@ -23,6 +23,7 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
   displayedColumns = ['name', 'date', 'time'];
   dataSource: MatTableDataSource<Event> = new MatTableDataSource(this.events);
   subscription: Subscription;
+  subscriptionVenue: Subscription;
   pageSize = 10;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -40,7 +41,16 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
         this.id = +params['id'];
       }
     );
-    this.venue = this.venueService.getVenue(this.id);
+    if (this.venueService.getVenues() === undefined) {
+      this.httpService.getVenue(this.id);
+      this.subscriptionVenue = this.venueService.venueChanged.subscribe(
+        (venue: Venue) => {
+          this.venue = venue;
+        }
+      );
+    } else {
+      this.venue = this.venueService.getVenue(this.id);
+    }
     this.httpService.getAllEventsByVenue(this.id);
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
@@ -58,6 +68,9 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    if (this.subscriptionVenue !== undefined) {
+      this.subscriptionVenue.unsubscribe();
+    }
   }
 
 }

@@ -1,15 +1,18 @@
 <div fxLayout="row">
   <span fxFlex="30"></span>
   <mat-card fxFlex="40">
-    <mat-card-header>
+    <mat-card-header fxLayout="row">
       <div mat-card-avatar class="avatar"></div>
-      <h1>{{ venue.name }}</h1>
+      <div fxLayout="column">
+        <h1 class="mat-h1">{{ venue.name }}</h1>
+        <p class="mat-body">{{ venue.address }}</p>    
+      </div>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
       <div fxLayout="row" fxLayoutAlign="center">
         <div fxLayout="column" fxLayoutAlign="start center" fxFill>
-            <h2>Konserler</h2>
+            <h2 class="mat-h2">Konserler</h2>
             <table fxFlexFill mat-table  [dataSource]="dataSource">
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef><mat-icon>audiotrack</mat-icon></th>
