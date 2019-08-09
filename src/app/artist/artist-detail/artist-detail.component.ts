@@ -26,6 +26,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   displayedColumns = ['name', 'venue', 'date', 'time'];
   dataSource: MatTableDataSource<Event> = new MatTableDataSource(this.events);
   subscription = new Subscription();
+  subscriptionArtist: Subscription;
 
   constructor(private artistService: ArtistService,
               private route: ActivatedRoute,
@@ -42,7 +43,16 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
         console.log('ERROR: ', error);
       }
     );
-    this.artist = this.artistService.getArtistById(this.id);
+    if (this.artistService.getArtists() === undefined) {
+      this.httpService.getArtist(this.id);
+      this.subscriptionArtist = this.artistService.artistChanged.subscribe(
+        (artist: Artist) => {
+          this.artist = artist;
+        }
+      );
+    } else {
+      this.artist = this.artistService.getArtistById(this.id);
+    }
     this.httpService.getEventsByArtist(this.id, 0, 50);
     this.subscription = this.eventService.eventPageChanged.subscribe(
       (eventPage: Page) => {
@@ -63,6 +73,9 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    if (this.subscriptionArtist !== undefined) {
+      this.subscriptionArtist.unsubscribe();
+    }
   }
 
 }

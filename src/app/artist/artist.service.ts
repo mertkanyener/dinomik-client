@@ -7,6 +7,7 @@ import { Page } from '../shared/page-model';
 export class ArtistService {
 
   artistsChanged =  new Subject<Artist[]>();
+  artistChanged = new Subject<Artist>();
   artistPageChanged = new Subject<Page>();
   rowNum: number;
   private artists: Artist[];
@@ -21,6 +22,7 @@ export class ArtistService {
 
   setArtist(artist: Artist) {
     this.artist = artist;
+    this.artistChanged.next(this.artist);
   }
 
   getArtist(): Artist {

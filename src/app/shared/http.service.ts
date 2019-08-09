@@ -56,6 +56,18 @@ export class HttpService {
     );
   }
 
+  getArtist(id: number) {
+    const url = this.path + 'artists/' + id;
+    this.http.get<Artist>(url).subscribe(
+      (artist: Artist) => {
+        this.artistService.setArtist(artist);
+      },
+      (error) => {
+        console.log('HttpService Error: ', error);
+      }
+    );
+  }
+
 
   deleteArtist(id: number) {
     this.http.delete(this.path + 'admin/artists/' + id, this.authService.httpOptions).subscribe(
@@ -197,7 +209,7 @@ export class HttpService {
     );
   }
 
-  getEventsByVenueAndMonth(venueId: number, month: number, year: number, page: number, size: number) {
+  getEventsByVenueAndMonthPage(venueId: number, month: number, year: number, page: number, size: number) {
     const url = this.path + 'events/venue/' + venueId + '/month/' + month + '/year/' + year + '/page/' + page + '/size/' + size;
     this.http.get<any>(url).pipe(map(
       (response: HttpResponse<any>) => {
@@ -205,6 +217,18 @@ export class HttpService {
         return events;
       }
     )).subscribe(
+      (events: Event[]) => {
+        this.eventService.setEvents(events);
+      },
+      (error) => {
+        console.log('HttpService error: ', error);
+      }
+    );
+  }
+
+  getEventsByVenueAndMonth(venueId: number, month: number, year: number) {
+    const url = this.path + 'events/venue/' + venueId + '/month/' + month + '/year/' + year;
+    this.http.get<Event[]>(url).subscribe(
       (events: Event[]) => {
         this.eventService.setEvents(events);
       },

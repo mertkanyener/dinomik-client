@@ -27,6 +27,7 @@ export class EventService {
 
   setEvents(events: Event[]) {
     this.events = this.normalizeDateAndTime(events);
+    this.events = events;
     this.eventsChanged.next(this.events.slice());
   }
 
