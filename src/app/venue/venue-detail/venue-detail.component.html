@@ -10,6 +10,25 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
+      <div fxLayout="row">
+        <mat-form-field fxFlex="30">
+          <mat-label>Ay Seç</mat-label>
+          <mat-select (selectionChange)="onMonthChange($event.value)">
+            <mat-option *ngFor="let month of months" [value]="month.value">{{ month.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="30">
+          <mat-label>Yıl Seç</mat-label>
+          <mat-select (selectionChange)="onYearChange($event.value)">
+            <mat-option *ngFor="let year of years" [value]="year">{{ year }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <div fxLayout="row" fxLayoutAlign="start center">
+            <button id="searchBtn" mat-icon-button color="primary" (click)="onSearch()"><mat-icon>search</mat-icon></button>
+            <label for="searchBtn" class="mat-body">Ara</label>
+
+        </div>
+      </div>
       <div fxLayout="row" fxLayoutAlign="center">
         <div fxLayout="column" fxLayoutAlign="start center" fxFill>
             <h2 class="mat-h2">Konserler</h2>

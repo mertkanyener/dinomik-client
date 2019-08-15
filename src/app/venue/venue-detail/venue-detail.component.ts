@@ -9,12 +9,32 @@ import { VenueService } from '../venue.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { EventService } from 'src/app/event/event.service';
 
+export interface Month {
+  value: number;
+  name: string;
+}
+
 @Component({
   selector: 'app-venue-detail',
   templateUrl: './venue-detail.component.html',
   styleUrls: ['./venue-detail.component.css']
 })
 export class VenueDetailComponent implements OnInit, OnDestroy {
+
+  months: Month[] = [
+    { value: 0, name: 'Ocak' },
+    { value: 1, name: 'Şubat' },
+    { value: 2, name: 'Mart' },
+    { value: 3, name: 'Nisan' },
+    { value: 4, name: 'Mayıs' },
+    { value: 5, name: 'Haziran' },
+    { value: 6, name: 'Temmuz' },
+    { value: 7, name: 'Ağustos' },
+    { value: 8, name: 'Eylül' },
+    { value: 9, name: 'Ekim' },
+    { value: 10, name: 'Kasım' },
+    { value: 11, name: 'Aralık' }
+  ];
 
   venue: Venue;
   id: number;
@@ -25,6 +45,13 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   subscriptionVenue: Subscription;
   pageSize = 10;
+  date = new Date();
+  year = this.date.getFullYear();
+  searchMonth = this.date.getMonth();
+  searchYear = this.year;
+
+  years = [this.year, this.year + 1];
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -36,6 +63,7 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
               private httpService: HttpService) { }
 
   ngOnInit() {
+    console.log('Month: ', this.date.getMonth());
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
@@ -71,6 +99,18 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
     if (this.subscriptionVenue !== undefined) {
       this.subscriptionVenue.unsubscribe();
     }
+  }
+
+  onMonthChange(month: number) {
+    this.searchMonth = month;
+  }
+
+  onYearChange(year: number) {
+    this.searchYear = year;
+  }
+
+  onSearch() {
+    this.httpService.getEventsByVenueAndMonth(this.venue.id, this.searchMonth, this.searchYear);
   }
 
 }

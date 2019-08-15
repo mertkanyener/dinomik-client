@@ -16,6 +16,11 @@ table {
     background-color: black;
 }
 
+.mat-h2 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
 .mat-card-avatar{
     height: 12rem;
     width: 12rem;
