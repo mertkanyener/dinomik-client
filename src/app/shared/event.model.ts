@@ -5,7 +5,7 @@ export class Event {
 
   id: number;
   name: string;
-  date: string;
+  date: Date;
   time: string;
   venue: Venue;
   artists: Artist[];

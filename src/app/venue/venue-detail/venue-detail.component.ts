@@ -83,6 +83,7 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
         this.events = events;
+        console.log('Date: ', this.events[0].date.getMonth());
         this.dataSource.data = this.events;
         this.dataSource.paginator = this.paginator;
       }
