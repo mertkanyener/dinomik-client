@@ -104,6 +104,18 @@ export class HttpService {
 
   // Event Operations
 
+  getEvent(id: number) {
+    const url = this.path + 'events/' + id;
+    this.http.get<Event>(url).subscribe(
+      (event: Event) => {
+        this.eventService.setEvent(event);
+      },
+      (error) => {
+        console.log('HttpService error: ', error);
+      }
+    );
+  }
+
   getAllEvents() {
     const url = this.path + 'events';
     this.http.get<any>(url).subscribe(
@@ -124,7 +136,7 @@ export class HttpService {
       }
     )).subscribe(
       (eventPage: Page) => {
-        this.eventService.setEvents(eventPage.objects);
+        this.eventService.setHomeEvents(eventPage.objects);
       },
       (error) => {
         console.log('HttpService Error: ', error);

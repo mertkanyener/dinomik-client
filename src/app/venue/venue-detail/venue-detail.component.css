@@ -27,5 +27,21 @@ table {
 }
 
 mat-icon {
+  color: whitesmoke;
+}
+
+mat-paginator {
+  background-color: black;
+}
+
+mat-form-field {
+  margin-right: 1rem;  
+}
+
+.table-icon{
   color: #ee2b84;
+}
+
+button {
+    margin-right: 1rem;
 }

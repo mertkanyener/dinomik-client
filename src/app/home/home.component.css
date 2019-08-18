@@ -43,3 +43,8 @@ button {
 h5 {
   color: #c1c1c1;
 }
+
+a {
+  text-decoration: none;
+  color: #c1c1c1;
+}

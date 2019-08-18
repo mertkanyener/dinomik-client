@@ -8,6 +8,7 @@ import { Subscription } from 'rxjs';
 import { VenueService } from '../venue.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { EventService } from 'src/app/event/event.service';
+import { UtilityService } from 'src/app/shared/utility.service';
 
 export interface Month {
   value: number;
@@ -36,7 +37,7 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
     { value: 11, name: 'Aralık' }
   ];
 
-  venue: Venue;
+  venue = new Venue();
   id: number;
   events: Event[];
   avatarStyle: any;
@@ -47,8 +48,8 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
   pageSize = 10;
   date = new Date();
   year = this.date.getFullYear();
-  searchMonth = this.date.getMonth();
-  searchYear = this.year;
+  searchMonth = -1
+  searchYear = -1;
 
   years = [this.year, this.year + 1];
 
@@ -60,7 +61,8 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private sanitizer: DomSanitizer,
               private eventService: EventService,
-              private httpService: HttpService) { }
+              private httpService: HttpService,
+              private utilService: UtilityService) { }
 
   ngOnInit() {
     console.log('Month: ', this.date.getMonth());
@@ -82,10 +84,10 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
     this.httpService.getAllEventsByVenue(this.id);
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
-        this.events = events;
-        console.log('Date: ', this.events[0].date.getMonth());
+        this.events = this.utilService.translateEventDates(events);
         this.dataSource.data = this.events;
         this.dataSource.paginator = this.paginator;
+        this.dataSource.filterPredicate = this.utilService.tableFilter();
       }
     );
 
@@ -111,7 +113,23 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
   }
 
   onSearch() {
-    this.httpService.getEventsByVenueAndMonth(this.venue.id, this.searchMonth, this.searchYear);
+    if (this.searchMonth === -1 || this.searchYear === -1) {
+      alert('Lütfen yıl ve ay seçin.');
+    } else {
+      this.eventService.getEventsByDate(this.searchMonth, this.searchYear);
+    }
+  }
+
+  onReset() {
+    this.eventService.restoreEvents();
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
 }

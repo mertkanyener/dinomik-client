@@ -6,6 +6,8 @@ export class Event {
   id: number;
   name: string;
   date: Date;
+  dateView: string;
+  dayOfWeek: string;
   time: string;
   venue: Venue;
   artists: Artist[];

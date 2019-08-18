@@ -8,24 +8,29 @@ export class EventService {
 
   eventPageChanged = new Subject<Page>();
   eventsChanged = new Subject<Event[]>();
+  eventChanged = new Subject<Event>();
   private events = new Array<Event>();
   private eventPage: Page;
+  private event: Event;
 
-
-  // setEvents(events: Event[]) {
-  //   events = this.normalizeDateAndTime(events);
-  //   this.events = this.events.concat(events);
-  //   this.eventsChanged.next(this.events.slice());
-  //   console.log('EventService events: ', this.events);
-  // }
+  setHomeEvents(events: Event[]) {
+    this.events = this.events.concat(this.dateMapper(events));
+    this.eventsChanged.next(this.events.slice());
+  }
 
   setArtistEvents(events: Event[], artistName: string) {
     this.events = this.normalizeEventNames(events, artistName);
     this.eventsChanged.next(this.events.slice());
   }
 
+  setEvent(event: Event) {
+    this.event = event;
+    this.event.date = new Date(event.date);
+    this.eventChanged.next(this.event);
+  }
+
   setEvents(events: Event[]) {
-    this.events = events;
+    this.events = this.dateMapper(events);
     this.eventsChanged.next(this.events.slice());
   }
 
@@ -34,12 +39,26 @@ export class EventService {
     this.eventPageChanged.next(this.eventPage);
   }
 
+  restoreEvents() {
+    this.eventsChanged.next(this.events.slice());
+  }
+
   getEvents(): Event[] {
     return this.events;
   }
 
   getEvent(id: number): Event {
     return this.events.find(x => x.id === id);
+  }
+
+  getEventsByDate(month: number, year: number) {
+    const events = new Array<Event>();
+    this.events.forEach(event => {
+      if (event.date.getMonth() === month && event.date.getFullYear() === year) {
+        events.push(event);
+      }
+    });
+    this.eventsChanged.next(events);
   }
 
   normalizeEventNames(events: Event[], artistName: string): Event[] {
@@ -69,6 +88,14 @@ export class EventService {
     this.events[index] = event;
     this.eventsChanged.next(this.events.slice());
   }
+
+  dateMapper(events: Event[]): Event[] {
+    events.forEach(event => {
+      event.date = new Date(event.date);
+    });
+    return events;
+  }
+
 
   // normalizeDateAndTime(events: Event[]): Event[] {
   //   const months: string[] = [

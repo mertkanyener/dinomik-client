@@ -14,11 +14,11 @@
           <h2 class="mat-h2">{{ event.name }}</h2>
           <br>
           <div fxLayout="row"> 
-            <h3 class="mat-h3">{{ event.date }}</h3>
+            <h3 class="mat-h3">{{ event.dateView }}</h3>
             <span style="flex: 1 1 auto;"></span>
             <h3 class="mat-h3">{{ event.time }}</h3>
           </div>
-          <h4 class="mat-h4">{{ event.venue.name }}</h4>
+          <a [routerLink]="['mekanlar', event.venue.id]"><h4 class="mat-h4">{{ event.venue.name }}</h4></a>
         </mat-card-content>
       </mat-card>
     </div>

@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material';
 import {Subject} from 'rxjs';
 import {DomSanitizer} from '@angular/platform-browser';
 import {Image} from './image.model';
+import { Event } from './event.model';
 
 export interface Grid{
   smRows: number;
@@ -87,7 +88,31 @@ export class UtilityService {
   }
 
 
+  translateEventDates(events: Event[]): Event[] {
+    const months: string[] = [
+      'Ocak',
+      'Şubat',
+      'Mart',
+      'Nisan',
+      'Mayıs',
+      'Haziran',
+      'Temmuz',
+      'Ağustos',
+      'Eylül',
+      'Ekim',
+      'Kasım',
+      'Aralık'
+    ];
 
+    events.forEach(event => {
+      const splitTime = event.time.split(':');
+      event.time = splitTime[0] + ':' + splitTime[1];
+      event.dateView = event.date.getDate() + ' ' + months[event.date.getMonth()] + ' ' + event.date.getFullYear();
+      events[events.indexOf(event)] = event;
+    });
+    return events;
+
+  }
 
 
 
