@@ -1,0 +1,19 @@
+h1 {
+    color: #c1c1c1;
+}
+
+h2 {
+    color: #c1c1c1;
+}
+
+a {
+    text-decoration: none;
+}
+
+#mainRow {
+    margin-top: 3rem;
+}
+
+.date {
+    margin-right: 1rem;
+}

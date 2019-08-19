@@ -6,6 +6,21 @@ import { Event } from '../shared/event.model';
 @Injectable()
 export class EventService {
 
+  months: string[] = [
+    'Ocak',
+    'Şubat',
+    'Mart',
+    'Nisan',
+    'Mayıs',
+    'Haziran',
+    'Temmuz',
+    'Ağustos',
+    'Eylül',
+    'Ekim',
+    'Kasım',
+    'Aralık'
+  ];
+
   eventPageChanged = new Subject<Page>();
   eventsChanged = new Subject<Event[]>();
   eventChanged = new Subject<Event>();
@@ -14,7 +29,7 @@ export class EventService {
   private event: Event;
 
   setHomeEvents(events: Event[]) {
-    this.events = this.events.concat(this.dateMapper(events));
+    this.events = this.events.concat(this.translateEventDates(events));
     this.eventsChanged.next(this.events.slice());
   }
 
@@ -24,13 +39,13 @@ export class EventService {
   }
 
   setEvent(event: Event) {
-    this.event = event;
-    this.event.date = new Date(event.date);
+    this.event = this.translateSingleEventDate(event);
+    console.log('Translated event: ', this.event);
     this.eventChanged.next(this.event);
   }
 
   setEvents(events: Event[]) {
-    this.events = this.dateMapper(events);
+    this.events = this.translateEventDates(events);
     this.eventsChanged.next(this.events.slice());
   }
 
@@ -89,11 +104,23 @@ export class EventService {
     this.eventsChanged.next(this.events.slice());
   }
 
-  dateMapper(events: Event[]): Event[] {
+  translateEventDates(events: Event[]): Event[] {
     events.forEach(event => {
       event.date = new Date(event.date);
+      const splitTime = event.time.split(':');
+      event.time = splitTime[0] + ':' + splitTime[1];
+      event.dateView = event.date.getDate() + ' ' + this.months[event.date.getMonth()] + ' ' + event.date.getFullYear();
+      events[events.indexOf(event)] = event;
     });
     return events;
+  }
+
+  translateSingleEventDate(event: Event): Event {
+    const splitTime = event.time.split(':');
+    event.date = new Date(event.date);
+    event.time = splitTime[0] + ':' + splitTime[1];
+    event.dateView = event.date.getDate() + ' ' + this.months[event.date.getMonth()] + ' ' + event.date.getFullYear();
+    return event;
   }
 
 

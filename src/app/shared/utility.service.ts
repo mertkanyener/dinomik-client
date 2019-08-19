@@ -86,41 +86,5 @@ export class UtilityService {
     page.objects = response['content'];
     return page;
   }
-
-
-  translateEventDates(events: Event[]): Event[] {
-    const months: string[] = [
-      'Ocak',
-      'Şubat',
-      'Mart',
-      'Nisan',
-      'Mayıs',
-      'Haziran',
-      'Temmuz',
-      'Ağustos',
-      'Eylül',
-      'Ekim',
-      'Kasım',
-      'Aralık'
-    ];
-
-    events.forEach(event => {
-      const splitTime = event.time.split(':');
-      event.time = splitTime[0] + ':' + splitTime[1];
-      event.dateView = event.date.getDate() + ' ' + months[event.date.getMonth()] + ' ' + event.date.getFullYear();
-      events[events.indexOf(event)] = event;
-    });
-    return events;
-
-  }
-
-
-
-
-
-
-
-
-
 }
 

@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
         this.rows = Math.floor(events.length / 3 + 1);
-        this.events = this.utilService.transformObjectArray(this.utilService.translateEventDates(events), 3, this.rows);
+        this.events = this.utilService.transformObjectArray(events, 3, this.rows);
         console.log('Events: ', events);
         this.rowArr = new Array<number>(this.rows);
       },

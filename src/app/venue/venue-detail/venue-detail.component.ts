@@ -48,7 +48,7 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
   pageSize = 10;
   date = new Date();
   year = this.date.getFullYear();
-  searchMonth = -1
+  searchMonth = -1;
   searchYear = -1;
 
   years = [this.year, this.year + 1];
@@ -84,7 +84,7 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
     this.httpService.getAllEventsByVenue(this.id);
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
-        this.events = this.utilService.translateEventDates(events);
+        this.events = events;
         this.dataSource.data = this.events;
         this.dataSource.paginator = this.paginator;
         this.dataSource.filterPredicate = this.utilService.tableFilter();

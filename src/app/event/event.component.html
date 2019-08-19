@@ -1,3 +1,18 @@
-<p>
-  event works!
-</p>
+<div id="mainRow" fxLayout="row">
+  <div fxFlex="25" fxLayout="column">
+    <img [src]="event.image" alt="Image">
+  </div>
+  <div fxFlex="50" fxLayout="column">
+    <div fxLayout="row">
+      <h1 class="mat-h1">{{ event.name }}</h1>      
+    </div>
+    <div fxLayout="row">
+      <h2 class="mat-h2 date">{{ event.dateView }}</h2>
+      <h2 class="mat-h2 date">{{ event.dayOfWeek }}</h2>
+    </div>
+    <h2 class="mat-h2">Kapı Açılış: {{ event.time }}</h2>
+    <a [routerLink]="['mekanlar', event.venue.id ]"><h2 class="mat-h2">{{ event.venue.name }}</h2></a>
+  </div>
+  <div fxFlex="25" fxLayout="column">
+  </div>
+</div>
