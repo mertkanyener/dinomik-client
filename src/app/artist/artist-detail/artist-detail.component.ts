@@ -22,6 +22,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   image: string;
   avatarStyle: any;
   eventPage: Page;
+
   events: Event[];
   displayedColumns = ['name', 'venue', 'date', 'time'];
   dataSource: MatTableDataSource<Event> = new MatTableDataSource(this.events);
