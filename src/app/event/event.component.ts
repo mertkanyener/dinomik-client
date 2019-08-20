@@ -16,6 +16,7 @@ export class EventComponent implements OnInit, OnDestroy {
   id: number;
   subscription: Subscription;
   subscriptionEvent: Subscription;
+  isMulti = false;
 
   constructor(private eventService: EventService,
               private route: ActivatedRoute,
@@ -31,6 +32,9 @@ export class EventComponent implements OnInit, OnDestroy {
     this.subscriptionEvent = this.eventService.eventChanged.subscribe(
       (event: Event) => {
         this.event = event;
+        if (this.event.artists.length > 1) {
+          this.isMulti = true;
+        }
       }
     );
   }

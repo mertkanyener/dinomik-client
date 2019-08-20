@@ -3,7 +3,7 @@
   <img fxFlex="20" [src]="event.artists[0].image" alt="Image">
   <div fxFlex="50" fxLayout="column">
     <div fxLayout="row">
-      <h1 class="mat-h1">{{ event.name }}</h1>      
+       <h1 class="mat-h1">{{ event.name }}</h1>      
     </div>
     <div class="info-row" fxLayout="row" fxLayoutAlign="start center">
       <mat-icon>today</mat-icon>
@@ -12,15 +12,18 @@
     </div>
     <div class="info-row" fxLayout="row" fxLayoutAlign="start center">
       <mat-icon>access_time</mat-icon>
-      <h2 class="mat-h2">Kapı Açılış: {{ event.time }}</h2>
+      <h2 class="mat-h2">Saat: {{ event.time }}</h2>
     </div>
     <div class="info-row" fxLayout="row" fxLayoutAlign="start center">
       <mat-icon>location_city</mat-icon>
       <a [routerLink]="['mekanlar', event.venue.id ]"><h2 class="mat-h2">{{ event.venue.name }}</h2></a>
     </div>
+    <div fxLayout="row">
+      <i class="fas fa-microphone-alt"></i> <h2 class="mat-h2">{{ event.artists[0].name }}</h2>
+    </div>
   </div>
   <div fxFlex="20" fxLayout="column">
-    <iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1DWXZldeyz95hs?si=Cm2SFBVzTNKDNkh5FaUQtw" 
+    <iframe src="https://open.spotify.com/embed/artist/2yMN0IP20GOaN6q0p0zL5k?si=OA68kCdST5yvHorVzPn8yQ" 
             frameborder="0"
             allowtransparency="true"
             allow="encrypted-media"
