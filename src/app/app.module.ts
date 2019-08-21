@@ -10,8 +10,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import {AuthService} from './auth/auth.service';
-import {AngularFontAwesomeModule} from "angular-font-awesome";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {AngularFontAwesomeModule} from 'angular-font-awesome';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
 import { ArtistListComponent } from './artist/artist-list/artist-list.component';
 import { ArtistDetailComponent } from './artist/artist-detail/artist-detail.component';
@@ -30,6 +30,7 @@ import { ArtistCardComponent } from './artist/artist-list/artist-card/artist-car
 import { TestComponent } from './test/test.component';
 import { AgmCoreModule } from '@agm/core';
 import { getTurkishPaginatorIntl } from './shared/turkish-paginator-intl';
+import { RegisterComponent } from './auth/register/register.component';
 
 @NgModule({
    declarations: [
@@ -45,7 +46,8 @@ import { getTurkishPaginatorIntl } from './shared/turkish-paginator-intl';
       HeaderComponent,
       MenuComponent,
       ArtistCardComponent,
-      TestComponent
+      TestComponent,
+      RegisterComponent
    ],
    imports: [
       BrowserModule,
