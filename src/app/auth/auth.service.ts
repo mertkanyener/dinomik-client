@@ -86,7 +86,7 @@ export class AuthService{
 
   saveToken(token) {
     localStorage.setItem('access_token', token.access_token);
-    localStorage.setItem('refresh_token', token.refresh_token);
+    //localStorage.setItem('refresh_token', token.refresh_token);
   }
 
   saveAdminToken(token: Token) {
@@ -95,11 +95,11 @@ export class AuthService{
   }
 
   isAuthenticated(): boolean{
-    return localStorage.getItem('access_token') != null && localStorage.getItem('access_token') != 'undefined';
+    return localStorage.getItem('access_token') != null && localStorage.getItem('access_token') !== 'undefined';
   }
 
   isAdmin(): boolean {
-    return localStorage.getItem('admin_access_token') != null && localStorage.getItem('admin_access_token') != 'undefined';
+    return localStorage.getItem('admin_access_token') != null && localStorage.getItem('admin_access_token') !== 'undefined';
   }
 
   logout(){

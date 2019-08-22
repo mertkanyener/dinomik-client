@@ -71,6 +71,9 @@ export class HomeComponent implements OnInit, OnDestroy {
               public utilService: UtilityService) { }
 
   ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      
+    }
     this.month = this.date.getMonth();
     this.currentMonth = months[this.month];
     this.httpService.getEventsOnScroll(this.count);
