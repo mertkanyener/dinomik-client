@@ -11,8 +11,7 @@ declare var FB: any;
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private http: HttpClient,
-              private authService: AuthService,
+  constructor(private authService: AuthService,
               private router: Router) {}
 
   ngOnInit() {

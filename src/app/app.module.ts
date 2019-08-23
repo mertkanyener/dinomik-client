@@ -31,6 +31,8 @@ import { TestComponent } from './test/test.component';
 import { AgmCoreModule } from '@agm/core';
 import { getTurkishPaginatorIntl } from './shared/turkish-paginator-intl';
 import { RegisterComponent } from './auth/register/register.component';
+import { FacebookModule } from 'ngx-facebook';
+
 
 @NgModule({
    declarations: [
@@ -60,7 +62,8 @@ import { RegisterComponent } from './auth/register/register.component';
       BrowserAnimationsModule,
       AgmCoreModule.forRoot({
          apiKey: 'AIzaSyCUC95iOlSWV3njBfloU8VR3LWIKlQPRLc'
-      })
+      }),
+      FacebookModule.forRoot()
    ],
    providers: [
       AuthService,
