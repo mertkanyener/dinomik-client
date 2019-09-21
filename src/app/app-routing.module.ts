@@ -1,3 +1,4 @@
+import { RegisterComponent } from './auth/register/register.component';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
@@ -7,6 +8,7 @@ import {VenueListComponent} from './venue/venue-list/venue-list.component';
 import {VenueDetailComponent} from './venue/venue-detail/venue-detail.component';
 import {EventComponent} from './event/event.component';
 import { TestComponent } from './test/test.component';
+import { UserLoginComponent } from './auth/user-login/user-login.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -16,7 +18,9 @@ const appRoutes: Routes = [
   { path: 'mekanlar', component: VenueListComponent },
   { path: 'mekanlar/:id', component: VenueDetailComponent},
   { path: 'etkinlikler/:id', component: EventComponent },
-  { path: 'test-path', component: TestComponent }
+  { path: 'test-path', component: TestComponent },
+  { path: 'kayit-ol', component: RegisterComponent },
+  { path: 'giris-yap', component: UserLoginComponent }
 ];
 
 @NgModule({

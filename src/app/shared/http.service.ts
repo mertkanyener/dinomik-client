@@ -1,3 +1,4 @@
+import { User } from 'src/app/shared/user.model';
 import { UtilityService } from './utility.service';
 import {HttpClient, HttpRequest, HttpResponse} from '@angular/common/http';
 import {ArtistService} from 'src/app/artist/artist.service';
@@ -392,6 +393,8 @@ export class HttpService {
       }
     );
   }
+
+  // Async validations
 
   uploadImage(image: File, type: string, name: string): number {
 

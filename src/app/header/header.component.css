@@ -14,3 +14,12 @@ h4 {
 a {
   font-size: large;
 }
+
+.fill {
+  flex: 1 1 auto;
+}
+
+.center {
+  position: fixed;
+  left: 50%;
+}

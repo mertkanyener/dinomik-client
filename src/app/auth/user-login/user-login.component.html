@@ -1,0 +1,32 @@
+<div fxLayout="row">
+  <div fxLayout="column">
+    <h1 class="mat-h1">Kullanıcı Girişi</h1>
+    <form (ngSubmit)="onLogin(f)" #f="ngForm">
+      <mat-form-field>
+        <input 
+          type="email"
+          matInput
+          required
+          email
+          ngModel
+          id="email"
+          name="email">
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input 
+          type="password" 
+          name="password" 
+          id="password"
+          matInput
+          required
+          ngModel  >
+      </mat-form-field>
+      <br>
+      <div fxLayout="row">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!f.valid">Giriş</button>
+        <button mat-raised-button color="warn" type="button" (click)="onCancel()">Vazgeç</button>
+      </div>
+    </form>
+  </div>
+</div>

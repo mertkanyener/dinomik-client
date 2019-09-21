@@ -1,17 +1,22 @@
-<h2 mat-dialog-title align="center">Facebook ile Giriş Yap</h2>
 <mat-dialog-content class="mat-typography">
-    <div id="facebook" *ngIf="!authService.isAuthenticated();" fxLayout="row" fxLayoutAlign="center">
-      <button id="facebookBtn" mat-raised-button type="submit" (click)="onLogin()"><i class="fa fa-4x fa-facebook"></i></button>
-    </div>
+  <div fxLayout="column" fxLayoutAlign="start center">
+    <img id="topLogo" src="../../assets/photos/logo/logo.jpg" alt="Dinomik">
+    <h1 class="mat-h1">Dinomik'e Hoşgeldin</h1>
+    <button id="facebookBtn" mat-raised-button type="button" (click)="onFacebookLogin()"> 
+      <i class="fa fa-2x fa-facebook"></i>
+      <label class="mat-body">Facebook ile Devam Et</label> 
+    </button>
+    <button id="dinoBtn" mat-raised-button color="primary" (click)="onDinomikLogin()">
+      <i class="fa fa-2x fa-user"></i>
+      <label class="mat-body">Dinomik ile Giriş Yap</label>
+    </button>
+    <mat-divider></mat-divider>
+    <h4 class="mat-h4">Hesabın yok mu? <a routerLink="kayit-ol"><b>Kayıt ol!</b></a></h4>
+    <h4 class="mat-h4">Giriş yapmadan devam et</h4>
+    <button mat-fab color="primary" mat-dialog-close><mat-icon>arrow_forward</mat-icon></button>
+  </div>
 </mat-dialog-content>
-<mat-dialog-actions>
-    <div fxLayout="row" fxLayoutAlign="center" fxFill>
-      <h4 class="mat-h4">Giriş yapmadan devam et</h4>
-    </div>
-    <div fxLayout="row" fxLayoutAlign="center" fxFill>
-      <button mat-fab color="primary" mat-dialog-close><mat-icon>arrow_forward</mat-icon></button>
-    </div>
-</mat-dialog-actions>
+
 
 
 

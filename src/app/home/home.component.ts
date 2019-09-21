@@ -71,9 +71,9 @@ export class HomeComponent implements OnInit, OnDestroy {
               public utilService: UtilityService) { }
 
   ngOnInit() {
-    if (this.authService.isAuthenticated()) {
+    // if (this.authService.isAuthenticated()) {
       
-    }
+    // }
     this.month = this.date.getMonth();
     this.currentMonth = months[this.month];
     this.httpService.getEventsOnScroll(this.count);
@@ -89,7 +89,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     );
     if (!this.authService.isAuthenticated()) {
-      const dialogRef = this.dialog.open(LoginComponent, {width: '20rem', height: '20rem'});
+      const dialogRef = this.dialog.open(LoginComponent, {width: '25rem', height: '35rem', panelClass: 'dino-dialog'});
     }
   }
 

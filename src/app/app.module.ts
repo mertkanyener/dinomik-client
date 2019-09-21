@@ -31,7 +31,10 @@ import { TestComponent } from './test/test.component';
 import { AgmCoreModule } from '@agm/core';
 import { getTurkishPaginatorIntl } from './shared/turkish-paginator-intl';
 import { RegisterComponent } from './auth/register/register.component';
-import { FacebookModule } from 'ngx-facebook';
+import { FacebookService } from './shared/facebook.service';
+import { CookieService } from 'ngx-cookie-service';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { UserLoginComponent } from './auth/user-login/user-login.component';
 
 
 @NgModule({
@@ -49,7 +52,8 @@ import { FacebookModule } from 'ngx-facebook';
       MenuComponent,
       ArtistCardComponent,
       TestComponent,
-      RegisterComponent
+      RegisterComponent,
+      UserLoginComponent
    ],
    imports: [
       BrowserModule,
@@ -60,10 +64,11 @@ import { FacebookModule } from 'ngx-facebook';
       AppRoutingModule,
       AngularFontAwesomeModule,
       BrowserAnimationsModule,
+      ReactiveFormsModule,
+      FormsModule,
       AgmCoreModule.forRoot({
          apiKey: 'AIzaSyCUC95iOlSWV3njBfloU8VR3LWIKlQPRLc'
       }),
-      FacebookModule.forRoot()
    ],
    providers: [
       AuthService,
@@ -72,6 +77,8 @@ import { FacebookModule } from 'ngx-facebook';
       VenueService,
       ArtistService,
       UtilityService,
+      FacebookService,
+      CookieService,
       { provide: MatPaginatorIntl, useValue: getTurkishPaginatorIntl() }
    ],
    bootstrap: [

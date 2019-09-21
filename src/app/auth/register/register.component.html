@@ -1,3 +1,67 @@
-<p>
-  register works!
-</p>
+<div fxLayout="row">
+  <span fxFlex="40"></span>
+  <div fxLayout="column" fxFlex="20">
+    <h1 class="mat-h1">Yeni Üye</h1>
+    <form (ngSubmit)="onRegister()" [formGroup]="form">
+      <mat-form-field>
+        <input 
+          type="text"
+          matInput
+          formControlName="firstName"
+          placeholder="Adınız">
+        <mat-error *ngIf="form.hasError('required', 'firstName')">* Lütfen adınızı yazın.</mat-error>
+        <mat-error *ngIf="form.hasError('maxLength', 'firstName')">* Adınız en fazla 50 karakter olabilir.</mat-error>
+        <mat-error *ngIf="form.hasError('pattern', 'firstName')">* Adınız sadece harf içerebilir.</mat-error>  
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input 
+          type="text"
+          matInput
+          formControlName="lastName"
+          placeholder="Soyadınız">
+        <mat-error *ngIf="form.hasError('required', 'lastName')">* Lütfen soyadınızı yazın.</mat-error>
+        <mat-error *ngIf="form.hasError('maxLength', 'lastName')">* Soyadınız en fazla 50 karakter olabilir.</mat-error>
+        <mat-error *ngIf="form.hasError('pattern', 'lastName')">* Soyadınız sadece harf içerebilir.</mat-error>  
+      </mat-form-field>
+      <br>
+      <mat-form-field>
+        <input 
+          type="email"
+          matInput
+          formControlName="email"
+          placeholder="E-Mail">
+        <mat-error *ngIf="form.hasError('required', 'email')">* Lütfen e-mail adresinizi yazın.</mat-error>
+        <mat-error *ngIf="form.hasError('email', 'email')">* Lütfen geçerli bir e-mail adresi girin.</mat-error>
+        <mat-error *ngIf="form.hasError('emailExists', 'email')">* Bu e-mail adresiyle zaten bir hesap var.</mat-error>
+      </mat-form-field>
+      <br>
+      <div formGroupName="passwords">
+        <mat-form-field>
+          <input 
+            type="password"
+            matInput
+            formControlName="password"
+            placeholder="Şifreniz">
+          <mat-error *ngIf="form.get('passwords.password').hasError('required')">* Lütfen bir şifre yazın.</mat-error>
+          <mat-error *ngIf="form.get('passwords.password').hasError('minLength')">* Şifreniz en az 6 karakter uzunluğunda olabilir.</mat-error>
+          <mat-error *ngIf="form.get('passwords.password').hasError('maxLength')">* Şifreniz en fazla 30 karakter uzunluğunda olabilir.</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input 
+            type="password"
+            matInput
+            formControlName="confirmPassword"
+            placeholder="Tekrar şifrenizi yazın">
+          <mat-error *ngIf="form.get('passwords.confirmPassword').hasError('NoPassMatch')">* Şifreler birbiriyle aynı değil.</mat-error>  
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="3rem">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Kayıt Ol</button>
+        <button mat-raised-button color="warn" type="button" (click)="onCancel()">Vazgeç</button>
+      </div>
+    </form>
+  </div>
+  <span fxFlex="40"></span>  
+</div>
