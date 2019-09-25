@@ -23,3 +23,17 @@ a {
   position: fixed;
   left: 50%;
 }
+
+input {
+  color: #c1c1c1;
+}
+
+mat-divider {
+  color: #c1c1c1;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+}
+
+button {
+  margin-bottom: 1rem;
+}

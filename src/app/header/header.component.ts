@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 
@@ -20,7 +21,9 @@ export class HeaderComponent implements OnInit {
     {name: 'Mekanlar', url: 'mekanlar'}
   ];
   activeLink: Link;
-  constructor(private authService: AuthService) { }
+  searchValue = '';
+  constructor(private authService: AuthService,
+              private router: Router) { }
 
   ngOnInit() {
     const path = window.location.pathname;
@@ -31,6 +34,11 @@ export class HeaderComponent implements OnInit {
     } else {
       this.activeLink = this.links[0];
     }
+  }
+
+  onSearch(name: string) {
+    const url = 'arama-sonuclari/' + name;
+    this.router.navigate([url]);
   }
 
 }

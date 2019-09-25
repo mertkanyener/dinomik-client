@@ -32,7 +32,7 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
 
   onLogin(form: NgForm) {
     this.loginClicked = true;
-    this.authService.adminLogin(form.value.username, form.value.password);
+    this.authService.userLogin(form.value.username, form.value.password, 'admin');
     console.log('Error status: ', this.loginStatus);
   }
 

@@ -13,6 +13,7 @@ export interface Token {
   refresh_token: string;
   scope: string;
   token_type: string;
+  userId: number;
 }
 
 @Injectable()
@@ -83,6 +84,7 @@ export class AuthService{
             this.router.navigate(['admin/home']);
           } else {
             this.saveToken('dino_access_token', token.access_token);
+            this.cookieService.set('user_id', token.userId.toString());
             this.setAuthHeaders('user');
           }
         }
@@ -168,7 +170,7 @@ doesEmailExist(email: string): Promise<any> {
         if (res === 1) {
           resolve({'emailExists': true});
         } else {
-          resolve('newUser');
+          resolve();
         }
       }
     );

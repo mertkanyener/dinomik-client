@@ -1,5 +1,5 @@
+import { EventHttpService } from './event-http.service';
 import { Event } from 'src/app/shared/event.model';
-import { HttpService } from './../shared/http.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { EventService } from './event.service';
@@ -20,7 +20,7 @@ export class EventComponent implements OnInit, OnDestroy {
 
   constructor(private eventService: EventService,
               private route: ActivatedRoute,
-              private httpService: HttpService) { }
+              private eventHttpService: EventHttpService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -28,7 +28,7 @@ export class EventComponent implements OnInit, OnDestroy {
         this.id = +params['id'];
       }
     );
-    this.httpService.getEvent(this.id);
+    this.eventHttpService.getEvent(this.id);
     this.subscriptionEvent = this.eventService.eventChanged.subscribe(
       (event: Event) => {
         this.event = event;

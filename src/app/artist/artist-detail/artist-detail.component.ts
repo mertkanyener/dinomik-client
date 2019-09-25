@@ -1,6 +1,7 @@
+import { EventHttpService } from './../../event/event-http.service';
+import { ArtistHttpService } from './../artist-http.service';
 import { Page } from './../../shared/page-model';
 import { MatTableDataSource } from '@angular/material';
-import { HttpService } from 'src/app/shared/http.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Artist } from './../../shared/artist.model';
@@ -33,7 +34,8 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private sanitizer: DomSanitizer,
               private eventService: EventService,
-              private httpService: HttpService) { }
+              private artistHttpService: ArtistHttpService,
+              private eventHttpService: EventHttpService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -45,7 +47,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
       }
     );
     if (this.artistService.getArtists() === undefined) {
-      this.httpService.getArtist(this.id);
+      this.artistHttpService.getArtist(this.id);
       this.subscriptionArtist = this.artistService.artistChanged.subscribe(
         (artist: Artist) => {
           this.artist = artist;
@@ -54,7 +56,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     } else {
       this.artist = this.artistService.getArtistById(this.id);
     }
-    this.httpService.getEventsByArtist(this.id, 0, 50);
+    this.eventHttpService.getEventsByArtist(this.id, 0, 50);
     this.subscription = this.eventService.eventPageChanged.subscribe(
       (eventPage: Page) => {
         this.events = this.eventService.normalizeEventNames(eventPage.objects, this.artist.name);

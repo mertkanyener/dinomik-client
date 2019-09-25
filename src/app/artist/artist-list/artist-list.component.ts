@@ -1,8 +1,9 @@
+import { EventHttpService } from './../../event/event-http.service';
+import { ArtistHttpService } from './../artist-http.service';
 import { EventService } from 'src/app/event/event.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { trigger, transition, animate, state, style } from '@angular/animations';
-import { HttpService } from './../../shared/http.service';
 import {Artist} from '../../shared/artist.model';
 import { UtilityService, Grid } from './../../shared/utility.service';
 import {ArtistService} from '../artist.service';
@@ -44,11 +45,12 @@ export class ArtistListComponent implements OnInit, OnDestroy {
 
   constructor(private artistService: ArtistService,
               private utilityService: UtilityService,
-              private httpService: HttpService,
+              private artistHttpService: ArtistHttpService,
+              private eventHttpService: EventHttpService,
               private eventService: EventService) {}
 
   ngOnInit() {
-    this.httpService.getAllArtists();
+    this.artistHttpService.getAllArtists();
     this.subscription = this.artistService.artistsChanged.subscribe(
       (artists: Artist[]) => {
         this.artists = artists;
@@ -83,12 +85,12 @@ export class ArtistListComponent implements OnInit, OnDestroy {
   }
 
   onClick(artist: Artist) {
-    this.httpService.getEventsByArtist(artist.id, 0, 3);
+    this.eventHttpService.getEventsByArtist(artist.id, 0, 3);
     this.artistService.setArtist(artist);
   }
 
   onPage(page: number) {
-    this.httpService.getArtists(page - 1, this.pageSize);
+    this.artistHttpService.getArtists(page - 1, this.pageSize);
   }
 
   applyFilter(filterValue: string) {

@@ -43,3 +43,7 @@ mat-icon {
   margin-right: 1rem;
   color: #ee2b84;
 }
+
+* {
+  letter-spacing: 2px;
+}

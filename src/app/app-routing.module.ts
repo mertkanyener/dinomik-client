@@ -9,6 +9,7 @@ import {VenueDetailComponent} from './venue/venue-detail/venue-detail.component'
 import {EventComponent} from './event/event.component';
 import { TestComponent } from './test/test.component';
 import { UserLoginComponent } from './auth/user-login/user-login.component';
+import { SearchResultComponent } from './search-result/search-result.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -20,7 +21,8 @@ const appRoutes: Routes = [
   { path: 'etkinlikler/:id', component: EventComponent },
   { path: 'test-path', component: TestComponent },
   { path: 'kayit-ol', component: RegisterComponent },
-  { path: 'giris-yap', component: UserLoginComponent }
+  { path: 'giris-yap', component: UserLoginComponent },
+  { path: 'arama-sonuclari/:name', component: SearchResultComponent }
 ];
 
 @NgModule({

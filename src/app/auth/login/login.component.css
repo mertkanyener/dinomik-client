@@ -1,3 +1,7 @@
+* {
+  letter-spacing: 3px;
+}
+
 #topLogo {
   max-width: 7rem;
   max-height: 7rem;

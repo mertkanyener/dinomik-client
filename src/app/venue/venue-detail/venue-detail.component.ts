@@ -1,4 +1,4 @@
-import { HttpService } from 'src/app/shared/http.service';
+import { VenueHttpService } from './../venue-http.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Venue } from './../../shared/venue.model';
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
@@ -9,11 +9,9 @@ import { VenueService } from '../venue.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { EventService } from 'src/app/event/event.service';
 import { UtilityService } from 'src/app/shared/utility.service';
+import { EventHttpService } from 'src/app/event/event-http.service';
+import { Month } from 'src/app/shared/month.interface';
 
-export interface Month {
-  value: number;
-  name: string;
-}
 
 @Component({
   selector: 'app-venue-detail',
@@ -61,7 +59,8 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute,
               private sanitizer: DomSanitizer,
               private eventService: EventService,
-              private httpService: HttpService,
+              private venueHttpService: VenueHttpService,
+              private eventHttpService: EventHttpService,
               private utilService: UtilityService) { }
 
   ngOnInit() {
@@ -72,7 +71,7 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
       }
     );
     if (this.venueService.getVenues() === undefined) {
-      this.httpService.getVenue(this.id);
+      this.venueHttpService.getVenue(this.id);
       this.subscriptionVenue = this.venueService.venueChanged.subscribe(
         (venue: Venue) => {
           this.venue = venue;
@@ -81,7 +80,7 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
     } else {
       this.venue = this.venueService.getVenue(this.id);
     }
-    this.httpService.getAllEventsByVenue(this.id);
+    this.eventHttpService.getAllEventsByVenue(this.id);
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
         this.events = events;

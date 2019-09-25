@@ -74,4 +74,12 @@ $dinomik-theme-warn: mat-palette($md-dinomik-warn);
 
 $dinomik-theme: mat-dark-theme($dinomik-theme-primary, $dinomik-theme-warn);
 
+
+$custom-typography: mat-typography-config(
+  $font-family: 'Crete Round',
+  $headline: mat-typography-level(32px, 48px, 700),
+  $body-1: mat-typography-level(16px, 24px, 500)
+);
+
 @include angular-material-theme($dinomik-theme);
+@include angular-material-typography($custom-typography);

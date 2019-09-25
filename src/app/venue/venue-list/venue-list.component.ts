@@ -1,8 +1,9 @@
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { VenueHttpService } from './../venue-http.service';
+import { EventHttpService } from './../../event/event-http.service';
+import { MatTableDataSource, MatPaginator } from '@angular/material';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { trigger, transition, animate, state, style } from '@angular/animations';
 import { VenueService } from '../venue.service';
-import { HttpService } from 'src/app/shared/http.service';
 import { UtilityService } from 'src/app/shared/utility.service';
 import { Subscription } from 'rxjs';
 import { Venue } from 'src/app/shared/venue.model';
@@ -50,12 +51,13 @@ export class VenueListComponent implements OnInit, OnDestroy {
 
   constructor(private venueService: VenueService,
               private eventService: EventService,
-              private http: HttpService,
+              private eventHttpService: EventHttpService,
+              private venueHttpService: VenueHttpService,
               private utilService: UtilityService) {
                }
 
   ngOnInit() {
-    this.http.getVenues();
+    this.venueHttpService.getVenues();
     this.subscription = this.venueService.venuesChanged.subscribe(
       (venues: Venue[]) => {
         this.venues = venues;
@@ -79,7 +81,7 @@ export class VenueListComponent implements OnInit, OnDestroy {
   }
 
   onClick(venue: Venue) {
-    this.http.getEventsByVenue(venue.id, 0, 3);
+    this.eventHttpService.getEventsByVenue(venue.id, 0, 3);
   }
 
   onCityChange(city: string) {

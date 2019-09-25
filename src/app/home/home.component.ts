@@ -1,5 +1,5 @@
+import { EventHttpService } from './../event/event-http.service';
 import { Subscription } from 'rxjs';
-import { HttpService } from './../shared/http.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {AuthService} from '../auth/auth.service';
@@ -7,20 +7,21 @@ import {LoginComponent} from '../auth/login/login.component';
 import { EventService } from '../event/event.service';
 import { Event } from '../shared/event.model';
 import { UtilityService } from '../shared/utility.service';
+import { Month } from '../shared/month.interface';
 
-const months: string[] = [
-  'Ocak',
-  'Şubat',
-  'Mart',
-  'Nisan',
-  'Mayıs',
-  'Haziran',
-  'Temmuz',
-  'Ağustos',
-  'Eylül',
-  'Ekim',
-  'Kasım',
-  'Aralık'
+const months: Month[] = [
+  { value: 0, name: 'Ocak' },
+  { value: 1, name: 'Şubat' },
+  { value: 2, name: 'Mart' },
+  { value: 3, name: 'Nisan' },
+  { value: 4, name: 'Mayıs' },
+  { value: 5, name: 'Haziran' },
+  { value: 6, name: 'Temmuz' },
+  { value: 7, name: 'Ağustos' },
+  { value: 8, name: 'Eylül' },
+  { value: 9, name: 'Ekim' },
+  { value: 10, name: 'Kasım' },
+  { value: 11, name: 'Aralık' }
 ];
 
 @Component({
@@ -37,7 +38,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   events: Event[];
   subscription: Subscription;
   subscriptionPage: Subscription;
-  days = [1, 2, 3, 4, 5, 6, 7];
   rows: number;
   rowArr: Array<number>;
   colArr = new Array<number>(3);
@@ -66,7 +66,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(public dialog: MatDialog,
               public authService: AuthService,
-              public httpService: HttpService,
+              public eventHttpService: EventHttpService,
               public eventService: EventService,
               public utilService: UtilityService) { }
 
@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     // }
     this.month = this.date.getMonth();
     this.currentMonth = months[this.month];
-    this.httpService.getEventsOnScroll(this.count);
+    //this.httpService.getEventsOnScroll(this.count);
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
         this.rows = Math.floor(events.length / 3 + 1);
@@ -99,7 +99,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onLoadMore() {
     this.count++;
-    this.httpService.getEventsOnScroll(this.count);
+   // this.httpService.getEventsOnScroll(this.count);
   }
 
 
