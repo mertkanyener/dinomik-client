@@ -32,9 +32,9 @@ const months: Month[] = [
 export class HomeComponent implements OnInit, OnDestroy {
 
   count = 0;
-  currentMonth: string;
+  currentMonth: Month;
   date = new Date();
-  month: number;
+  monthId: number;
   events: Event[];
   subscription: Subscription;
   subscriptionPage: Subscription;
@@ -74,9 +74,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     // if (this.authService.isAuthenticated()) {
       
     // }
-    this.month = this.date.getMonth();
-    this.currentMonth = months[this.month];
-    //this.httpService.getEventsOnScroll(this.count);
+    this.monthId = this.date.getMonth();
+    this.currentMonth = months[this.monthId];
+    this.eventHttpService.filterEvents(this.currentMonth.value + 1);
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
         this.rows = Math.floor(events.length / 3 + 1);
@@ -93,6 +93,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  onPrevClick(month: number) {
+    this.currentMonth = months[this.currentMonth.value - 1];
+    console.log('Current Month: ', this.currentMonth);
+    this.eventHttpService.filterEvents(month);
+  }
+
+  onNextClick(month: number) {
+    this.currentMonth = months[this.currentMonth.value + 1];
+    console.log('Current Month: ', this.currentMonth);
+    this.eventHttpService.filterEvents(month + 2);
+  }
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
@@ -100,6 +112,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   onLoadMore() {
     this.count++;
    // this.httpService.getEventsOnScroll(this.count);
+  }
+
+  hasPrev(): boolean {
+    if (this.currentMonth.value === this.monthId) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
 

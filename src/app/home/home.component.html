@@ -2,7 +2,13 @@
     <h1 class="mat-h1">{{date | date:'MMMM' }}</h1>
   </div> -->  
 <div id="headerRow" fxLayout="row" fxLayoutAlign="center center">
-  <h1 class="mat-h1">{{ currentMonth }}</h1>
+  <button mat-icon-button color="primary" (click)="onPrevClick(currentMonth.value)" [disabled]="!hasPrev()">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+  <h1 class="mat-h1">{{ currentMonth.name }}</h1>
+  <button mat-icon-button color="primary" (click)="onNextClick(currentMonth.value)">
+      <mat-icon>keyboard_arrow_right</mat-icon>
+  </button>
 </div>
 <div fxLayout="row" fxLayoutAlign="center start">
   <span fxFlex="30"></span>
@@ -25,7 +31,7 @@
     <div fxLayout="row" fxLayoutAlign="center start">
       <div fxLayout="column" fxLayoutAlign="start center">
           <h5 class="mat-h4">Daha fazla etkinlik</h5>
-          <button (click)="onLoadMore()" mat-icon-button><i class="fa fa-2x fa-angle-double-down"></i></button>
+          <button id="loadMore" (click)="onLoadMore()" mat-icon-button><i class="fa fa-2x fa-angle-double-down"></i></button>
       </div>
     </div>
   </div>

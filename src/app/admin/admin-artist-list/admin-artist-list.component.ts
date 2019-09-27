@@ -7,6 +7,7 @@ import {Subscription} from 'rxjs';
 import {UtilityService} from '../../shared/utility.service';
 import {DeleteDialogComponent} from '../delete-dialog/delete-dialog.component';
 import { trigger, transition, animate, state, style } from '@angular/animations';
+import { ArtistHttpService } from 'src/app/artist/artist-http.service';
 
 @Component({
   selector: 'app-admin-artist-list',
@@ -35,7 +36,7 @@ export class AdminArtistListComponent implements OnInit, OnDestroy {
     }
   }
 
-  constructor(private httpService: HttpService,
+  constructor(private artistHttpService: ArtistHttpService,
               private artistService: ArtistService,
               private utilService: UtilityService,
               public dialog: MatDialog) { }
@@ -64,7 +65,7 @@ export class AdminArtistListComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.httpService.deleteArtist(id);
+        this.artistHttpService.deleteArtist(id);
       }
     });
   }

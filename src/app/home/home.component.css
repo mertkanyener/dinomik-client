@@ -5,7 +5,7 @@
 
 h1 {
   color: #c1c1c1;
-  margin-top: 3rem;
+  margin: 0;
 }
 
 mat-card {
@@ -29,6 +29,7 @@ p {
 }
 
 #headerRow {
+  margin-top: 3rem;
   margin-bottom: 3rem;
 }
 
@@ -36,7 +37,7 @@ i {
   color: #c1c1c1;
 }
 
-button {
+#loadMore {
   background-color: #19191a;
 }
 

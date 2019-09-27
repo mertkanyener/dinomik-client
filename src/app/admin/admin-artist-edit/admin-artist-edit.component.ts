@@ -10,6 +10,7 @@ import {Subject} from 'rxjs';
 import {Image} from '../../shared/image.model';
 import {MatDialog} from '@angular/material';
 import {DeleteDialogComponent} from '../delete-dialog/delete-dialog.component';
+import { ArtistHttpService } from 'src/app/artist/artist-http.service';
 
 @Component({
   selector: 'app-admin-artist-edit',
@@ -26,7 +27,8 @@ export class AdminArtistEditComponent implements OnInit {
   imageUploaded = false;
   imageChanged = new Subject<Image>();
 
-  constructor(private http: HttpService,
+  constructor(private artistHttpService: ArtistHttpService,
+              private http: HttpService,
               private route: ActivatedRoute,
               private artistService: ArtistService,
               private router: Router,
@@ -90,10 +92,10 @@ export class AdminArtistEditComponent implements OnInit {
       }
     });
     if (this.editMode) {
-      this.http.updateArtist(this.id, this.artist);
+      this.artistHttpService.updateArtist(this.id, this.artist);
       console.log('Artist: ', this.artist);
     } else {
-      this.http.addArtist(this.artist);
+      this.artistHttpService.addArtist(this.artist);
     }
   }
 

@@ -1,6 +1,6 @@
 import { Event } from 'src/app/shared/event.model';
 import { AuthService } from './../auth/auth.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { EventService } from './event.service';
 import { map } from 'rxjs/operators';
 import { Page } from '../shared/page-model';
@@ -74,8 +74,25 @@ export class EventHttpService {
     );
   }
 
-  getEventsThisMonth() {
-
+  filterEvents(month: number, genres?: Array<string>, cities?: Array<string>) {
+    const url = this.path + 'events/filter';
+    const params = new HttpParams().set('month', month.toString());
+    console.log('genres: ', genres);
+    console.log('cities: ', cities);
+    if (genres !== undefined && genres !== null) {
+      params.append('genres', genres.toString());
+    }
+    if (cities !== undefined && cities !== null) {
+      params.append('cities', cities.toString());
+    }
+    this.http.get<Event[]>(url, { params: params }).subscribe(
+      (events: Event[]) => {
+        this.eventService.setEvents(events);
+      },
+      (error) => {
+        console.log('HttpService Error: ', error);
+      }
+    );
   }
 
   getEventsByArtist(id: number, page: number, size: number) {
