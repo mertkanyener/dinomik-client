@@ -43,16 +43,14 @@ export class LoginComponent implements OnInit {
     // }
   }
 
-  onFacebookRegister() {
-
-  }
-
   onDinomikRegister() {
     this.router.navigate(['/kayit-ol']);
     this.dialogRef.close();
   }
 
   onDinomikLogin() {
+    this.router.navigate(['/giris-yap']);
+    this.dialogRef.close();
 
   }
 

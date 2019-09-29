@@ -1,0 +1,16 @@
+#mainRow {
+    color: #c1c1c1;
+    margin-top: 2rem;
+}
+
+mat-form-field {
+    width: 100%; 
+}
+
+input {
+    color: #c1c1c1;
+}
+
+#btnRow {
+    margin-top: 1rem;
+}

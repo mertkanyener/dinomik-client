@@ -16,6 +16,11 @@ export interface Token {
   userId: number;
 }
 
+export interface LoginError {
+  error: string;
+  error_description: string;
+}
+
 @Injectable()
 export class AuthService{
 
@@ -90,7 +95,8 @@ export class AuthService{
         }
       },
       (error) => {
-        console.log('Login Error: ', error);
+        const loginError: LoginError = JSON.parse(error['error']);
+        console.log('Login Error: ', loginError.error_description);
       }
     );
 

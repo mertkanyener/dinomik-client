@@ -1,7 +1,7 @@
-<div fxLayout="row">
-  <div fxLayout="column">
+<div id="mainRow" fxLayout="row" fxLayoutAlign="center">
+  <div fxFlex="20" fxLayout="column" fxLayoutAlign="start center">
     <h1 class="mat-h1">Kullanıcı Girişi</h1>
-    <form (ngSubmit)="onLogin(f)" #f="ngForm">
+    <form fxFlexFill (ngSubmit)="onLogin(f)" #f="ngForm">
       <mat-form-field>
         <input 
           type="email"
@@ -10,7 +10,10 @@
           email
           ngModel
           id="email"
-          name="email">
+          name="email"
+          placeholder="E-Mail Adresiniz">
+          <mat-error *ngIf="f.hasError('required', 'email')">* Lütfen e-mail adresinizi girin</mat-error>
+          <mat-error *ngIf="f.hasError('email', 'email')">* Lütfen geçerli bir e-mail adresi girin</mat-error>
       </mat-form-field>
       <br>
       <mat-form-field>
@@ -18,14 +21,16 @@
           type="password" 
           name="password" 
           id="password"
+          placeholder="Şifreniz"
           matInput
           required
           ngModel  >
+          <mat-error *ngIf="f.hasError('required', 'email')">* Lütfen şifrenizi girin</mat-error>
       </mat-form-field>
       <br>
-      <div fxLayout="row">
-        <button mat-raised-button color="primary" type="submit" [disabled]="!f.valid">Giriş</button>
-        <button mat-raised-button color="warn" type="button" (click)="onCancel()">Vazgeç</button>
+      <div id="btnRow" fxLayout="row" fxLayoutGap="2rem">
+        <button fxFlex="25" mat-raised-button color="primary" type="submit" [disabled]="!f.valid">Giriş</button>
+        <button fxFlex="25" mat-raised-button color="warn" type="button" (click)="onCancel()">Vazgeç</button>
       </div>
     </form>
   </div>

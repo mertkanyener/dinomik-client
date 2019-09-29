@@ -9,12 +9,8 @@ import { Subscription } from 'rxjs';
 import { Venue } from 'src/app/shared/venue.model';
 import { EventService } from 'src/app/event/event.service';
 import { Page } from 'src/app/shared/page-model';
+import { City } from 'src/app/shared/city.interface';
 
-
-export interface City {
-  value: string;
-  viewValue: string;
-}
 
 @Component({
   selector: 'app-venue-list',

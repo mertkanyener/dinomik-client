@@ -54,3 +54,16 @@ mat-icon {
   color: #ee2b84;
 }
 
+i {
+  color: #ee2b84;
+}
+
+#filterRow {
+  margin-bottom: 1rem;
+}
+
+#filterBtn {
+  background-color: #19191a;
+  font-size: large;
+  max-height: 3rem;
+}

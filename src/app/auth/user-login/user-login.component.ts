@@ -18,11 +18,13 @@ export class UserLoginComponent implements OnInit {
   }
 
   onLogin(form: NgForm) {
-
+    const username = form.value.email;
+    const password = form.value.password;
+    this.authService.userLogin(username, password, 'user');
   }
 
   onCancel() {
-    
+    this.router.navigate(['/']);
   }
 
 }

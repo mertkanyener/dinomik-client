@@ -1,3 +1,5 @@
+import { Genre } from './../shared/genre.interface';
+import { FormControl } from '@angular/forms';
 import { EventHttpService } from './../event/event-http.service';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -8,6 +10,7 @@ import { EventService } from '../event/event.service';
 import { Event } from '../shared/event.model';
 import { UtilityService } from '../shared/utility.service';
 import { Month } from '../shared/month.interface';
+import { City } from '../shared/city.interface';
 
 const months: Month[] = [
   { value: 0, name: 'Ocak' },
@@ -35,13 +38,28 @@ export class HomeComponent implements OnInit, OnDestroy {
   currentMonth: Month;
   date = new Date();
   monthId: number;
+  year: number;
   events: Event[];
   subscription: Subscription;
   subscriptionPage: Subscription;
   rows: number;
   rowArr: Array<number>;
-  colArr = new Array<number>(3);
 
+  genres = new FormControl();
+  cities = new FormControl();
+  genreList: Genre[] = [
+    {id: 1, name: 'Pop'},
+    {id: 2, name: 'Electronic'},
+    {id: 3, name: 'Rock'},
+    {id: 4, name: 'Metal'},
+    {id: 5, name: 'Jazz'},
+    {id: 6, name: 'Rap'},
+  ];
+  cityList: City[] = [
+    { value: 'istanbul', viewValue: 'İstanbul' },
+    { value: 'ankara', viewValue: 'Ankara' },
+    { value: 'izmir', viewValue: 'İzmir' }
+  ];
   // @HostListener('window:scroll', ['$event'])
   // onWindowScroll() {
   //   // console.log('Scroll top: ', document.body.scrollTop);
@@ -75,8 +93,9 @@ export class HomeComponent implements OnInit, OnDestroy {
       
     // }
     this.monthId = this.date.getMonth();
+    this.year = this.date.getFullYear();
     this.currentMonth = months[this.monthId];
-    this.eventHttpService.filterEvents(this.currentMonth.value + 1);
+    this.eventHttpService.filterEvents(this.currentMonth.value + 1, this.year);
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
         this.rows = Math.floor(events.length / 3 + 1);
@@ -94,15 +113,27 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   onPrevClick(month: number) {
-    this.currentMonth = months[this.currentMonth.value - 1];
+    if (month === 0) {
+      this.year -= 1;
+      month = 11;
+    } else {
+      month -= 1;
+    }
+    this.currentMonth = months[month];
     console.log('Current Month: ', this.currentMonth);
-    this.eventHttpService.filterEvents(month);
+    this.eventHttpService.filterEvents(month + 1, this.year);
   }
 
   onNextClick(month: number) {
-    this.currentMonth = months[this.currentMonth.value + 1];
+    if (month === 11) {
+      this.year += 1;
+      month = 0;
+    } else {
+      month += 1;
+    }
+    this.currentMonth = months[month];
     console.log('Current Month: ', this.currentMonth);
-    this.eventHttpService.filterEvents(month + 2);
+    this.eventHttpService.filterEvents(month + 1, this.year );
   }
 
   ngOnDestroy() {
@@ -112,6 +143,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   onLoadMore() {
     this.count++;
    // this.httpService.getEventsOnScroll(this.count);
+  }
+
+  onFilter(genres?: number[], cities?: string[]) {
+    this.eventHttpService.filterEvents(this.currentMonth.value + 1, this.year, genres, cities);
   }
 
   hasPrev(): boolean {

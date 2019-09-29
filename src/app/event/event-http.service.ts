@@ -74,19 +74,35 @@ export class EventHttpService {
     );
   }
 
-  filterEvents(month: number, genres?: Array<string>, cities?: Array<string>) {
+  filterEvents(month: number, year: number, genres?: number[], cities?: string[]) {
     const url = this.path + 'events/filter';
-    const params = new HttpParams().set('month', month.toString());
+    let params;
     console.log('genres: ', genres);
     console.log('cities: ', cities);
-    if (genres !== undefined && genres !== null) {
-      params.append('genres', genres.toString());
-    }
-    if (cities !== undefined && cities !== null) {
-      params.append('cities', cities.toString());
+    if (genres !== undefined && genres !== null && genres.length > 0
+      && (cities === null || cities === undefined || cities.length === 0)) {
+
+      params = new HttpParams().set('month', month.toString()).append('year', year.toString()).append('genres', genres.toString());
+
+    } else if (cities !== undefined && cities !== null && cities.length > 0
+      && (genres === null || genres === undefined || genres.length === 0)) {
+
+      params = new HttpParams().set('month', month.toString())
+      .append('year', year.toString())
+      .append('cities', cities.join(',').toLowerCase());
+
+    } else if (genres !== undefined && genres !== null && genres.length > 0
+       && cities !== null && cities !== undefined && cities.length > 0) {
+
+      params = new HttpParams().set('month', month.toString()).append('year', year.toString())
+      .append('genres', genres.toString()).append('cities', cities.join(',').toLowerCase());
+
+    } else {
+      params = new HttpParams().set('month', month.toString()).append('year', year.toString());
     }
     this.http.get<Event[]>(url, { params: params }).subscribe(
       (events: Event[]) => {
+        console.log('Params: ', params);
         this.eventService.setEvents(events);
       },
       (error) => {
