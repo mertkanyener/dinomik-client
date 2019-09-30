@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { FacebookService } from '../shared/facebook.service';
+import { AuthError } from './auth-error.class';
 
 export interface Token {
   access_token: string;
@@ -16,16 +17,12 @@ export interface Token {
   userId: number;
 }
 
-export interface LoginError {
-  error: string;
-  error_description: string;
-}
-
 @Injectable()
 export class AuthService{
 
   private path = 'http://localhost:6060/';
   status = new Subject<number>();
+  authError = new Subject<AuthError>();
   clientId = '647358105696445';
   redirectUri = 'http://localhost:4200/';
   state = 'yr6VZn';
@@ -95,8 +92,8 @@ export class AuthService{
         }
       },
       (error) => {
-        const loginError: LoginError = JSON.parse(error['error']);
-        console.log('Login Error: ', loginError.error_description);
+        const loginError: AuthError = JSON.parse(error['error']);
+        this.authError.next(loginError);
       }
     );
 

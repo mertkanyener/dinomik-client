@@ -6,3 +6,15 @@ h1 {
 input {
     color: #c1c1c1;    
 }
+
+mat-form-field {
+    width: 100%;
+}
+
+mat-option {
+    background-color: #19191a;
+}
+
+mat-calendar {
+    background-color: #19191a;
+}

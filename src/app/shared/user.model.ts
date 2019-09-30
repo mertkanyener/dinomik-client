@@ -1,4 +1,6 @@
 import { Artist } from './artist.model';
+import { Genre } from './genre.interface';
+import { Gender } from './gender.int';
 
 export class User {
     id: number;
@@ -9,8 +11,10 @@ export class User {
     facebookUser: boolean;
     savedEvents: Event[];
     attendingEvents: Event[];
-    likedGenres: string[];
+    likedGenres: Genre[];
     likedArtists: Artist[];
+    gender: Gender;
+    birthDate: string;
 
     constructor(){}
 }

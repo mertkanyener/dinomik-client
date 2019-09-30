@@ -27,6 +27,7 @@
           ngModel  >
           <mat-error *ngIf="f.hasError('required', 'email')">* Lütfen şifrenizi girin</mat-error>
       </mat-form-field>
+      <mat-error *ngIf="loginError.error_description === 'Bad credentials'">Kullanıcı adı veya şifre yanlış!</mat-error>
       <br>
       <div id="btnRow" fxLayout="row" fxLayoutGap="2rem">
         <button fxFlex="25" mat-raised-button color="primary" type="submit" [disabled]="!f.valid">Giriş</button>

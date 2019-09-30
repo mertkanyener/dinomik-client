@@ -4,6 +4,7 @@ import { User } from 'src/app/shared/user.model';
 import { FormBuilder, FormGroup, AbstractControl, ValidationErrors, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth.service';
+import { Gender } from 'src/app/shared/gender.int';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +17,11 @@ export class RegisterComponent implements OnInit {
 
   formBuilder = new FormBuilder();
   form: FormGroup;
+  genders: Gender[] = [
+    { value: 'male', name: 'Erkek' },
+    { value: 'female', name: 'Kadın' }
+  ];
+
 
   constructor(private authService: AuthService,
               private router: Router) { }
@@ -42,6 +48,10 @@ export class RegisterComponent implements OnInit {
     this.user.lastName = value.lastName;
     this.user.email = value.email;
     this.user.password = value.passwords.password;
+    this.user.gender = value.gender;
+    const birthDate: Date = value.birthDate;
+    this.user.birthDate = birthDate.toISOString().split('T')[0];
+    console.log('User: ', this.user);
     this.authService.registerUser(this.user);
   }
 
@@ -58,7 +68,9 @@ export class RegisterComponent implements OnInit {
       passwords: this.formBuilder.group({
         password: [null, [Validators.required, Validators.minLength(6), Validators.maxLength(30)]],
         confirmPassword: [null]
-      }, { validator: this.checkPasswords })
+      }, { validator: this.checkPasswords }),
+      gender: null,
+      birthDate: null
     });
   }
 

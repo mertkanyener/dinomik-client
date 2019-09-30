@@ -13,7 +13,9 @@ import {
   MatToolbarModule,
   MatPaginatorModule,
   MatSelectModule,
-  MatOptionModule
+  MatOptionModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
@@ -22,6 +24,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
   imports: [
     MatButtonModule,
     MatCardModule,
+    MatDatepickerModule,
     MatDialogModule,
     MatIconModule,
     MatToolbarModule,
@@ -35,11 +38,13 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatPaginatorModule,
     MatSelectModule,
     MatOptionModule,
+    MatNativeDateModule,
     ScrollingModule
   ],
   exports: [
     MatButtonModule,
     MatCardModule,
+    MatDatepickerModule,
     MatDialogModule,
     MatIconModule,
     MatToolbarModule,
@@ -53,6 +58,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatPaginatorModule,
     MatSelectModule,
     MatOptionModule,
+    MatNativeDateModule,
     ScrollingModule
   ]
 })

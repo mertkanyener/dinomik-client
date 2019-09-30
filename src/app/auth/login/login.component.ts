@@ -43,8 +43,7 @@ export class LoginComponent implements OnInit {
     // }
   }
 
-  onDinomikRegister() {
-    this.router.navigate(['/kayit-ol']);
+  onRegister() {
     this.dialogRef.close();
   }
 

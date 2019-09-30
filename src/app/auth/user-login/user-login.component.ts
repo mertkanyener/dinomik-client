@@ -2,6 +2,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
+import { AuthError } from '../auth-error.class';
 
 @Component({
   selector: 'app-user-login',
@@ -10,10 +11,18 @@ import { AuthService } from '../auth.service';
 })
 export class UserLoginComponent implements OnInit {
 
+  loginError = new AuthError();
+
   constructor(private authService: AuthService,
               private router: Router) { }
 
   ngOnInit() {
+    this.authService.authError.subscribe(
+      (error: AuthError) => {
+        this.loginError = error;
+        console.log('Error: ', this.loginError.error_description);
+      }
+    );
 
   }
 

@@ -5,11 +5,10 @@
 
 
 .dino-dialog  >
-    mat-dialog-container {
+    mat-dialog-container, mat-calendar {
         background-color: #19191a;
     }
-
-
+    
 * {
     letter-spacing: 2px;
 }
