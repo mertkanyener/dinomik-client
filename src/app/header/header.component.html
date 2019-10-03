@@ -30,5 +30,5 @@
     </nav>
   </div>
   <span fxFlex="20"></span>
-  <h4 *ngIf="this.authService.isAuthenticated();else elseBlock" class="mat-h4">Hoşgeldin, </h4>
+  <h4 *ngIf="this.authService.isAuthenticated();else elseBlock" class="mat-h4">Hoşgeldin, {{ user.firstName }} {{ user.lastName }} </h4>
 </div>

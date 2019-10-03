@@ -1,20 +1,23 @@
+import { AuthService } from './auth.service';
 import { Genre } from './../shared/genre.interface';
 import { Artist } from './../shared/artist.model';
 import { Event } from './../shared/event.model';
 import { UserService } from './user.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Injectable } from '@angular/core';
 import { User } from '../shared/user.model';
+import { retry } from 'rxjs/operators';
 
 @Injectable()
 export class UserHttpService {
 
     private path = 'http://localhost:6060/user/';
 
-    constructor(private cookieService: CookieService,
-                private http: HttpClient,
-                private userService: UserService) {}
+    constructor(public cookieService: CookieService,
+                public http: HttpClient,
+                public userService: UserService,
+                public authService: AuthService) {}
 
     //ASFSDF
 
@@ -29,10 +32,16 @@ export class UserHttpService {
     getUser(id: string) {
         this.http.get<User>(this.path + id, { headers: this.getHeaders() }).subscribe(
             (user: User) => {
+                console.log('User http : ', user);
                 this.userService.setUser(user);
             },
-            (error) => {
+            (error: HttpErrorResponse) => {
                 console.log('UserHttpService error: ', error);
+                this.handleError(error).then(value => { 
+                    if (value === 'tokenRefresh') {
+                        this.getUser(id);
+                    }
+                 });
             }
         );
     }
@@ -45,6 +54,7 @@ export class UserHttpService {
             },
             (error) => {
                 console.log('UserHttpService error: ', error);
+                this.handleError(error);
             }
         );
     }
@@ -57,6 +67,7 @@ export class UserHttpService {
             },
             (error) => {
                 console.log('UserHttpService error: ', error);
+                this.handleError(error);
             }
         );
     }
@@ -69,6 +80,7 @@ export class UserHttpService {
             },
             (error) => {
                 console.log('UserHttpService error: ', error);
+                this.handleError(error);
             }
         );
     }
@@ -81,6 +93,7 @@ export class UserHttpService {
             },
             (error) => {
                 console.log('UserHttpService error: ', error);
+                this.handleError(error);
             }
         );
     }
@@ -93,6 +106,7 @@ export class UserHttpService {
             },
             (error) => {
                 console.log('UserHttpService error: ', error);
+                this.handleError(error);
             }
         );
     }
@@ -105,6 +119,7 @@ export class UserHttpService {
             },
             (error) => {
                 console.log('UserHttpService error: ', error);
+                this.handleError(error);
             }
         );
     }
@@ -117,6 +132,7 @@ export class UserHttpService {
             },
             (error) => {
                 console.log('UserHttpService error: ', error);
+                this.handleError(error);
             }
         );
     }
@@ -129,8 +145,19 @@ export class UserHttpService {
             },
             (error) => {
                 console.log('UserHttpService error: ', error);
+                this.handleError(error);
             }
         );
     }
+
+    handleError(error: HttpErrorResponse): Promise<any> {
+        let result: Promise<any>;
+        if (error.error.error === 'invalid_token') {
+            result = this.authService.refreshToken();
+        }
+        return result;
+    }
+
+
 
 }

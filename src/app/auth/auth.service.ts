@@ -7,6 +7,7 @@ import {Subject} from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthError } from './auth-error.class';
 import { UserHttpService } from './user-http.service';
+import { resolve, reject } from 'q';
 
 export interface Token {
   access_token: string;
@@ -27,9 +28,9 @@ export class AuthService{
   httpOptions: any;
   adminMode = false;
 
-  constructor(private http: HttpClient,
-              private router: Router,
-              private cookieService: CookieService) {}
+  constructor(public http: HttpClient,
+              public router: Router,
+              public cookieService: CookieService) {}
 
 
   //Methods
@@ -87,6 +88,7 @@ export class AuthService{
             this.router.navigate(['admin/home']);
           } else {
             this.saveToken('dino_access_token', token.access_token);
+            this.saveToken('dino_refresh_token', token.refresh_token);
             this.cookieService.set('userId', token.userId.toString());
             this.setAuthHeaders('user');
             console.log('Token: ', this.cookieService.get('dino_access_token'));
@@ -98,32 +100,20 @@ export class AuthService{
         this.authError.next(loginError);
       }
     );
-
   }
 
-  facebookLogin() {
-    const request = new HttpRequest('POST',
-      this.path + 'login/facebook-user',
-      null,
-      {responseType: 'text'});
-    this.http.request(request).pipe(map(
-      (response: HttpResponse<any>) => {
-        const body = response['body'];
-        const token: Token = JSON.parse(body || '{}');
-        return token;
-      }
-    )).subscribe(
-      (token) => {
-        if (token.access_token !== undefined) {
-          console.log('Dino Access Token: ', token.access_token);
+  refreshToken(): Promise<any> {
+    const url = this.path + 'login/refresh_token';
+    const params = new HttpParams().set('refreshToken', this.cookieService.get('dino_refresh_token'));
+    const promise = new Promise<any>((resolve, reject) => {
+      this.http.get<Token>(url, { params: params }).toPromise().then(
+        (token: Token) => {
           this.saveToken('dino_access_token', token.access_token);
-          this.setAuthHeaders('user');
+          resolve('tokenRefresh');
         }
-      },
-      (error) => {
-        console.log('Login Error: ', error);
-      }
-    );
+      );
+    });
+    return promise;
   }
 
   saveToken(tokenName: string, token: string) {
