@@ -68,23 +68,23 @@ export class LoginComponent implements OnInit {
         { fields: 'first_name,last_name,email', access_token: this.cookieService.get('access_token') }}).subscribe(
           (response: any) => {
             console.log('Response: ', response);
-            this.authService.doesEmailExist(response.email).then(value => {
+            const email: string = response.email;
+            this.authService.doesEmailExist2(response.email).then(value => {
               if (value === 'newUser') {
                 const user = new User();
                 user.firstName = response.first_name;
                 user.lastName = response.last_name;
-                user.password = '123456';
                 user.facebookUser = true;
                 user.email = response.email;
                 this.authService.registerUser(user);
               }
+              this.authService.userLogin(email, null, 'user');
             });
           },
           (error) =>{
             console.log('HTTP ERROR: ', error);
           }
         );
-        this.authService.facebookLogin();
         this.dialogRef.close();
       })
       .catch((error) => {

@@ -1,6 +1,10 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth/auth.service';
+import { UserService } from '../auth/user.service';
+import { UserHttpService } from '../auth/user-http.service';
+import { User } from '../shared/user.model';
+import { CookieService } from 'ngx-cookie-service';
 
 export interface Link {
 
@@ -15,6 +19,7 @@ export interface Link {
 })
 export class HeaderComponent implements OnInit {
 
+  user: User;
   links: Link[] = [
     {name: 'Etkinlikler', url: ''},
     {name: 'Sanatçılar', url: 'sanatcilar'},
@@ -22,10 +27,23 @@ export class HeaderComponent implements OnInit {
   ];
   activeLink: Link;
   searchValue = '';
-  constructor(private authService: AuthService,
-              private router: Router) { }
+  constructor(public authService: AuthService,
+              public userService: UserService,
+              public userHttpService: UserHttpService,
+              public cookieService: CookieService,
+              public router: Router) { }
 
   ngOnInit() {
+    if (this.authService.isAuthenticated() && this.userService.getUser() === undefined) {
+      this.userHttpService.getUser(this.cookieService.get('userId'));
+    }
+    this.user = this.userService.getUser();
+    this.userService.userChanged.subscribe(
+      (user: User) => {
+        this.user = user;
+      }
+    );
+    console.log('User: ', this.user);
     const path = window.location.pathname;
     if (path === '/sanatcilar') {
       this.activeLink = this.links[1];

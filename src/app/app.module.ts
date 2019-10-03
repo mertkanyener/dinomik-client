@@ -37,6 +37,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserLoginComponent } from './auth/user-login/user-login.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { VenueHttpService } from './venue/venue-http.service';
+import { UserService } from './auth/user.service';
+import { UserHttpService } from './auth/user-http.service';
 
 
 @NgModule({
@@ -83,6 +85,8 @@ import { VenueHttpService } from './venue/venue-http.service';
       UtilityService,
       FacebookService,
       CookieService,
+      UserService,
+      UserHttpService,
       { provide: MatPaginatorIntl, useValue: getTurkishPaginatorIntl() }
    ],
    bootstrap: [

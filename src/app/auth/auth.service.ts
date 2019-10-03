@@ -5,8 +5,8 @@ import {Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-import { FacebookService } from '../shared/facebook.service';
 import { AuthError } from './auth-error.class';
+import { UserHttpService } from './user-http.service';
 
 export interface Token {
   access_token: string;
@@ -23,17 +23,13 @@ export class AuthService{
   private path = 'http://localhost:6060/';
   status = new Subject<number>();
   authError = new Subject<AuthError>();
-  clientId = '647358105696445';
-  redirectUri = 'http://localhost:4200/';
-  state = 'yr6VZn';
 
   httpOptions: any;
   adminMode = false;
 
   constructor(private http: HttpClient,
               private router: Router,
-              private cookieService: CookieService,
-              private fbService: FacebookService) {}
+              private cookieService: CookieService) {}
 
 
   //Methods
@@ -64,7 +60,12 @@ export class AuthService{
   }
 
   userLogin(username: string, password: string, userType: string) {
-    const params = new HttpParams().set('username', username).append('password', password);
+    let params;
+    if (password === null) {
+      params = new HttpParams().set('username', username);
+    } else {
+      params = new HttpParams().set('username', username).append('password', password);
+    }
     const request = new HttpRequest('GET',
       this.path + 'login',
       null,
@@ -86,8 +87,9 @@ export class AuthService{
             this.router.navigate(['admin/home']);
           } else {
             this.saveToken('dino_access_token', token.access_token);
-            this.cookieService.set('user_id', token.userId.toString());
+            this.cookieService.set('userId', token.userId.toString());
             this.setAuthHeaders('user');
+            console.log('Token: ', this.cookieService.get('dino_access_token'));
           }
         }
       },
@@ -100,7 +102,7 @@ export class AuthService{
   }
 
   facebookLogin() {
-    const request = new HttpRequest('GET',
+    const request = new HttpRequest('POST',
       this.path + 'login/facebook-user',
       null,
       {responseType: 'text'});
@@ -124,7 +126,7 @@ export class AuthService{
     );
   }
 
-  saveToken(token: string, tokenName: string) {
+  saveToken(tokenName: string, token: string) {
     this.cookieService.set(tokenName, token, null, null, null, null, null);
   }
 
@@ -174,6 +176,22 @@ doesEmailExist(email: string): Promise<any> {
           resolve({'emailExists': true});
         } else {
           resolve();
+        }
+      }
+    );
+  });
+  return promise;
+}
+
+doesEmailExist2(email: string): Promise<any> {
+  const path = this.path + 'validation/email/' + email;
+  const promise = new Promise<any>((resolve, reject) => {
+    this.http.get<number>(path).toPromise().then(
+      (res) => {
+        if (res === 1) {
+          resolve('emailExists');
+        } else {
+          resolve('newUser');
         }
       }
     );

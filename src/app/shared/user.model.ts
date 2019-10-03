@@ -1,3 +1,4 @@
+import { Event } from 'src/app/shared/event.model';
 import { Artist } from './artist.model';
 import { Genre } from './genre.interface';
 import { Gender } from './gender.int';
@@ -8,13 +9,13 @@ export class User {
     lastName: string;
     email: string;
     password: string;
+    gender: Gender;
+    birthDate: string;
     facebookUser: boolean;
     savedEvents: Event[];
     attendingEvents: Event[];
     likedGenres: Genre[];
     likedArtists: Artist[];
-    gender: Gender;
-    birthDate: string;
 
     constructor(){}
 }

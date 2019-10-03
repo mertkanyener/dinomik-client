@@ -53,6 +53,7 @@ export class RegisterComponent implements OnInit {
     this.user.birthDate = birthDate.toISOString().split('T')[0];
     console.log('User: ', this.user);
     this.authService.registerUser(this.user);
+    this.router.navigate(['/giris-yap']);
   }
 
   onCancel() {

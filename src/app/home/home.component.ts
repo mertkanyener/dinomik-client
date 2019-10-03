@@ -1,3 +1,4 @@
+import { UserService } from './../auth/user.service';
 import { Genre } from './../shared/genre.interface';
 import { FormControl } from '@angular/forms';
 import { EventHttpService } from './../event/event-http.service';
@@ -11,6 +12,9 @@ import { Event } from '../shared/event.model';
 import { UtilityService } from '../shared/utility.service';
 import { Month } from '../shared/month.interface';
 import { City } from '../shared/city.interface';
+import { UserHttpService } from '../auth/user-http.service';
+import { User } from '../shared/user.model';
+import { CookieService } from 'ngx-cookie-service';
 
 const months: Month[] = [
   { value: 0, name: 'Ocak' },
@@ -41,9 +45,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   year: number;
   events: Event[];
   subscription: Subscription;
-  subscriptionPage: Subscription;
+  subscriptionUser: Subscription;
   rows: number;
   rowArr: Array<number>;
+  user: User;
 
   genres = new FormControl();
   cities = new FormControl();
@@ -86,12 +91,23 @@ export class HomeComponent implements OnInit, OnDestroy {
               public authService: AuthService,
               public eventHttpService: EventHttpService,
               public eventService: EventService,
-              public utilService: UtilityService) { }
+              public utilService: UtilityService,
+              public userService: UserService,
+              public userHttpService: UserHttpService,
+              public cookieService: CookieService) { }
 
   ngOnInit() {
-    // if (this.authService.isAuthenticated()) {
-      
-    // }
+     if (this.authService.isAuthenticated()) {
+      if (this.userService.getUser() === undefined) {
+        this.userHttpService.getUser(this.cookieService.get('userId'));
+      }
+      this.subscriptionUser = this.userService.userChanged.subscribe(
+        (user: User) => {
+          this.user = user;
+          console.log('User: ', this.user);
+        }
+      );
+    }
     this.monthId = this.date.getMonth();
     this.year = this.date.getFullYear();
     this.currentMonth = months[this.monthId];
@@ -138,6 +154,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    if (this.subscriptionUser !== undefined) {
+      this.subscriptionUser.unsubscribe();
+    }
   }
 
   onLoadMore() {
