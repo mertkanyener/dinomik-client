@@ -1,13 +1,12 @@
-import { AuthService } from './auth.service';
-import { Genre } from './../shared/genre.interface';
-import { Artist } from './../shared/artist.model';
-import { Event } from './../shared/event.model';
+import { AuthService } from '../auth/auth.service';
+import { Genre } from '../shared/genre.interface';
+import { Artist } from '../shared/artist.model';
+import { Event } from '../shared/event.model';
 import { UserService } from './user.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Injectable } from '@angular/core';
 import { User } from '../shared/user.model';
-import { retry } from 'rxjs/operators';
 
 @Injectable()
 export class UserHttpService {

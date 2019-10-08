@@ -106,10 +106,10 @@ export class EventService {
 
   translateEventDates(events: Event[]): Event[] {
     events.forEach(event => {
-      event.date = new Date(event.date);
+      const date = new Date(event.date);
       const splitTime = event.time.split(':');
       event.time = splitTime[0] + ':' + splitTime[1];
-      event.dateView = event.date.getDate() + ' ' + this.months[event.date.getMonth()] + ' ' + event.date.getFullYear();
+      event.dateView = date.getDate() + ' ' + this.months[date.getMonth()] + ' ' + date.getFullYear();
       events[events.indexOf(event)] = event;
     });
     return events;
@@ -117,9 +117,9 @@ export class EventService {
 
   translateSingleEventDate(event: Event): Event {
     const splitTime = event.time.split(':');
-    event.date = new Date(event.date);
+    const date = new Date(event.date);
     event.time = splitTime[0] + ':' + splitTime[1];
-    event.dateView = event.date.getDate() + ' ' + this.months[event.date.getMonth()] + ' ' + event.date.getFullYear();
+    event.dateView = date.getDate() + ' ' + this.months[date.getMonth()] + ' ' + date.getFullYear();
     return event;
   }
 

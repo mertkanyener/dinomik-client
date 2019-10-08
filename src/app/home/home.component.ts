@@ -1,8 +1,7 @@
-import { UserService } from './../auth/user.service';
 import { Genre } from './../shared/genre.interface';
 import { FormControl } from '@angular/forms';
 import { EventHttpService } from './../event/event-http.service';
-import { Subscription } from 'rxjs';
+import { Subscription, from } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {AuthService} from '../auth/auth.service';
@@ -12,9 +11,11 @@ import { Event } from '../shared/event.model';
 import { UtilityService } from '../shared/utility.service';
 import { Month } from '../shared/month.interface';
 import { City } from '../shared/city.interface';
-import { UserHttpService } from '../auth/user-http.service';
 import { User } from '../shared/user.model';
 import { CookieService } from 'ngx-cookie-service';
+import { UserService } from '../user/user.service';
+import { UserHttpService } from '../user/user-http.service';
+
 
 const months: Month[] = [
   { value: 0, name: 'Ocak' },
@@ -65,6 +66,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     { value: 'ankara', viewValue: 'Ankara' },
     { value: 'izmir', viewValue: 'İzmir' }
   ];
+  
   // @HostListener('window:scroll', ['$event'])
   // onWindowScroll() {
   //   // console.log('Scroll top: ', document.body.scrollTop);
@@ -97,26 +99,23 @@ export class HomeComponent implements OnInit, OnDestroy {
               public cookieService: CookieService) { }
 
   ngOnInit() {
-     if (this.authService.isAuthenticated()) {
-      if (this.userService.getUser() === undefined) {
-        this.userHttpService.getUser(this.cookieService.get('userId'));
-      }
-      this.subscriptionUser = this.userService.userChanged.subscribe(
-        (user: User) => {
-          this.user = user;
-          console.log('User: ', this.user);
-        }
-      );
-    }
     this.monthId = this.date.getMonth();
     this.year = this.date.getFullYear();
     this.currentMonth = months[this.monthId];
     this.eventHttpService.filterEvents(this.currentMonth.value + 1, this.year);
+
+    this.user = this.userService.getUser();
+    this.subscriptionUser = this.userService.userChanged.subscribe(
+      (user: User) => {
+        this.user = user;
+        console.log('User: ', this.user);
+      }
+    );
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
         this.rows = Math.floor(events.length / 3 + 1);
         this.events = this.utilService.transformObjectArray(events, 3, this.rows);
-        console.log('Events: ', events);
+        console.log('Events: ', this.events);
         this.rowArr = new Array<number>(this.rows);
       },
       (error) => {
@@ -128,7 +127,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
-  onPrevClick(month: number) {
+  onPrevClick(month: number, genres?: number[], cities?: string[]) {
     if (month === 0) {
       this.year -= 1;
       month = 11;
@@ -136,11 +135,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       month -= 1;
     }
     this.currentMonth = months[month];
-    console.log('Current Month: ', this.currentMonth);
-    this.eventHttpService.filterEvents(month + 1, this.year);
+    this.eventHttpService.filterEvents(month + 1, this.year, genres, cities);
   }
 
-  onNextClick(month: number) {
+  onNextClick(month: number, genres?: number[], cities?: string[] ) {
     if (month === 11) {
       this.year += 1;
       month = 0;
@@ -148,8 +146,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       month += 1;
     }
     this.currentMonth = months[month];
-    console.log('Current Month: ', this.currentMonth);
-    this.eventHttpService.filterEvents(month + 1, this.year );
+    this.eventHttpService.filterEvents(month + 1, this.year, genres, cities );
   }
 
   ngOnDestroy() {

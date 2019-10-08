@@ -9,10 +9,10 @@ import { LoginComponent } from './auth/login/login.component';
 import {MaterialModule} from './material.module';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {HttpClientModule} from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {AppRoutingModule} from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import {AuthService} from './auth/auth.service';
-import {AngularFontAwesomeModule} from 'angular-font-awesome';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
 import { ArtistListComponent } from './artist/artist-list/artist-list.component';
@@ -37,8 +37,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { UserLoginComponent } from './auth/user-login/user-login.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { VenueHttpService } from './venue/venue-http.service';
-import { UserService } from './auth/user.service';
-import { UserHttpService } from './auth/user-http.service';
+import { UserService } from './user/user.service';
+import { UserHttpService } from './user/user-http.service';
+import { SavedEventsComponent } from './user/saved-events/saved-events.component';
+import { AttendingEventsComponent } from './user/attending-events/attending-events.component';
+import { FriendsComponent } from './user/friends/friends.component';
+import { LikedArtistsComponent } from './user/liked-artists/liked-artists.component';
 
 
 @NgModule({
@@ -56,7 +60,11 @@ import { UserHttpService } from './auth/user-http.service';
       TestComponent,
       RegisterComponent,
       UserLoginComponent,
-      SearchResultComponent
+      SearchResultComponent,
+      SavedEventsComponent,
+      AttendingEventsComponent,
+      FriendsComponent,
+      LikedArtistsComponent
    ],
    imports: [
       BrowserModule,
@@ -65,7 +73,7 @@ import { UserHttpService } from './auth/user-http.service';
       FlexLayoutModule,
       HttpClientModule,
       AppRoutingModule,
-      AngularFontAwesomeModule,
+      FontAwesomeModule,
       BrowserAnimationsModule,
       ReactiveFormsModule,
       FormsModule,

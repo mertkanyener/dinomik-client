@@ -33,10 +33,6 @@ p {
   margin-bottom: 3rem;
 }
 
-i { 
-  color: #c1c1c1;
-}
-
 #loadMore {
   background-color: #19191a;
 }
@@ -66,4 +62,12 @@ i {
   background-color: #19191a;
   font-size: large;
   max-height: 3rem;
+}
+
+.attend-button {
+  font-size: 1rem;
+}
+
+mat-option {
+  background-color: #19191a;
 }

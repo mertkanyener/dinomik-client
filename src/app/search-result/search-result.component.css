@@ -9,10 +9,13 @@ a {
     color: #c1c1c1;
 }
 
-mat-icon {
-    color: #ee2b84;
+.card-icon {
     margin-right: 1rem;
     margin-left: 2rem;
+}
+
+mat-icon {
+    color: #ee2b84;
 }
 
 #eventName {
@@ -23,3 +26,11 @@ h1 {
     color: #c1c1c1;
     margin-top: 2rem;
 }
+
+.attend-button {
+    font-size: 1rem;
+  }
+
+  i {
+    color: #ee2b84;
+  }

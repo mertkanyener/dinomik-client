@@ -1,7 +1,25 @@
-<app-header></app-header>
-<div >
-  <router-outlet></router-outlet>
-  <!--<span class="fill-remaining-space"></span>-->
-  <!--<app-menu></app-menu>-->
-</div>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over" position="end">
+    <div id="sidenavCont" fxLayout="column" *ngIf="authService.isAuthenticated()">
+      <h2 class="mat-h2">Hoşgeldin, <b>{{ userService.getUser().firstName }}</b></h2>
+      <mat-divider></mat-divider>
+      <a routerLink="/kaydedilenler"><h3 class="mat-h3">Kaydedilenler</h3></a>
+      <a routerLink="/gidilecekler"><h3 class="mat-h3">Gidilecekler</h3></a>
+      <a routerLink="/sanatcilar/kaydedilenler"><h3 class="mat-h3">Sanatçılar</h3></a>
+      <a routerLink="/arkadaslar"><h3 class="mat-h3">Arkadaşlar</h3></a> 
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div fxLayout="row" style="width: 100%;">
+      <app-header fxFlex="90"></app-header>
+      <span style="flex: 1 1 auto;"></span>
+      <div fxLayout="column" fxLayoutAlign="end end"  fxFlex="10">
+        <button *ngIf="authService.isAuthenticated()" color="primary" mat-fab (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>      
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
 

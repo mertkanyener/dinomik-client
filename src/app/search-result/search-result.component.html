@@ -7,23 +7,42 @@
     <mat-card *ngFor="let event of events">
       <div fxLayout="row">
         <img fxFlex="30" mar-card-image [src]="event.artists[0].image" alt="image">
-        <div fxLayout="column">
+        <div fxLayout="column" style="width: 100%;">
           <div fxLayout="row">
               <a [routerLink]="['etkinlikler', event.id]">
                   <h2 id="eventName" class="mat-h2">{{ event.name }}</h2>        
               </a>
-          </div>
+              <span style="flex: 1 1 auto;"></span>
+              <div *ngIf="authService.isAuthenticated" fxLayout="row">
+                <button *ngIf="userService.isSavedEvent(event.id);else notSaved" mat-icon-button (click)="userService.removeSavedEvent(event.id)">
+                  <mat-icon>bookmark</mat-icon>
+                </button>
+                <ng-template #notSaved>
+                  <button mat-icon-button (click)="userService.addSavedEvent(event)">
+                    <i class="material-icons-outlined">bookmark_border</i>
+                  </button>
+                </ng-template>
+                <button class="attend-button" mat-icon-button *ngIf="userService.isAttendingEvent(event.id); else notGoing" (click)="userService.removeAttendingEvent(event.id)">
+                  <i class="fas fa-lg fa-calendar-check calendar"></i>
+                </button>
+                <ng-template #notGoing>
+                  <button class="attend-button" mat-icon-button (click)="userService.addAttendingEvent(event)">
+                    <i class="far fa-lg fa-calendar-check calendar"></i>
+                  </button>
+                </ng-template>
+              </div>
+            </div>
           <div fxLayout="row">
-            <mat-icon>today</mat-icon>
+            <mat-icon class="card-icon">today</mat-icon>
             <h3 class="mat-h3">{{ event.dateView }}</h3>
             <h3 class="mat-h3">{{ event.dayOfWeek }}</h3>
           </div>
           <div fxLayout="row">
-            <mat-icon>access_time</mat-icon>
+            <mat-icon class="card-icon">access_time</mat-icon>
             <h3 class="mat-h3">Saat: {{ event.time }}</h3>
           </div>
           <div fxLayout="row">
-            <mat-icon>location_city</mat-icon>
+            <mat-icon class="card-icon">location_city</mat-icon>
             <a [routerLink]="['mekanlar', event.venue.id ]"><h3 class="mat-h3">{{ event.venue.name }}</h3></a>
           </div>
         </div>

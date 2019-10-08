@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { AuthError } from './auth-error.class';
-import { UserHttpService } from './user-http.service';
+import { UserHttpService } from '../user/user-http.service';
 import { resolve, reject } from 'q';
 
 export interface Token {
@@ -92,6 +92,7 @@ export class AuthService{
             this.cookieService.set('userId', token.userId.toString());
             this.setAuthHeaders('user');
             console.log('Token: ', this.cookieService.get('dino_access_token'));
+            location.reload();
           }
         }
       },
