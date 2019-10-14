@@ -65,7 +65,8 @@ export class UtilityService {
     return array;
   }
 
-  transformObjectArray(objectArray: Array<any>, colSize: number, rowNum: number ): Array<any> {
+  transformObjectArray(objectArray: Array<any>, colSize: number ): Array<any> {
+    const rowNum = Math.floor(objectArray.length / colSize + 1);
     const result: Array<Array<any>> = new Array(rowNum);
     let n = 0;
     for (let i = 0; i < result.length; i++) {

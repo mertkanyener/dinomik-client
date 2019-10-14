@@ -15,6 +15,7 @@ export class RegisterComponent implements OnInit {
 
   private user = new User();
 
+  height = window.innerHeight;
   formBuilder = new FormBuilder();
   form: FormGroup;
   genders: Gender[] = [

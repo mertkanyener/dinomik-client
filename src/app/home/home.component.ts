@@ -47,8 +47,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   events: Event[];
   subscription: Subscription;
   subscriptionUser: Subscription;
-  rows: number;
-  rowArr: Array<number>;
   user: User;
 
   genres = new FormControl();
@@ -113,10 +111,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
-        this.rows = Math.floor(events.length / 3 + 1);
-        this.events = this.utilService.transformObjectArray(events, 3, this.rows);
-        console.log('Events: ', this.events);
-        this.rowArr = new Array<number>(this.rows);
+        this.events = this.utilService.transformObjectArray(events, 3);
       },
       (error) => {
         console.log('ERROR: ', error);

@@ -1,4 +1,4 @@
-<div id="mainRow" fxLayout="row" fxLayoutAlign="center">
+<div id="mainRow" [style.height.px]="height" fxLayout="row" fxLayoutAlign="center">
   <div fxFlex="20" fxLayout="column" fxLayoutAlign="start center">
     <h1 class="mat-h1">Kullanıcı Girişi</h1>
     <form fxFlexFill (ngSubmit)="onLogin(f)" #f="ngForm">

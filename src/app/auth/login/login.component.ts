@@ -1,4 +1,3 @@
-import { HttpService } from 'src/app/shared/http.service';
 import { MatDialogRef } from '@angular/material';
 import { LoginResponse } from './../../shared/login-response.int';
 import { LoginOptions } from './../../shared/login-options.int';
@@ -59,19 +58,23 @@ export class LoginComponent implements OnInit {
       return_scopes: true,
       enable_profile_selector: true
     };
+    const url = 'https://graph.facebook.com/me';
+    const testUrl = 'https://graph.facebook.com/';
 
     this.fbService.login(options)
       .then((res: LoginResponse) => {
         console.log('Login successful: ', res);
         this.cookieService.set('access_token', res.authResponse.accessToken, null, null, null, null, null);
-        this.http.get('https://graph.facebook.com/me', { params:
-        { fields: 'first_name,last_name,email', access_token: this.cookieService.get('access_token') }}).subscribe(
+        this.http.get(testUrl + res.authResponse.userID, { params:
+        { fields: 'first_name,last_name,email,friends', access_token: this.cookieService.get('access_token') }}).subscribe(
           (response: any) => {
             console.log('Response: ', response);
+            debugger;
             const email: string = response.email;
             this.authService.doesEmailExist2(response.email).then(value => {
               if (value === 'newUser') {
                 const user = new User();
+                user.id = response.id;
                 user.firstName = response.first_name;
                 user.lastName = response.last_name;
                 user.facebookUser = true;

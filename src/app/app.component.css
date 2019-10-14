@@ -33,11 +33,32 @@ mat-divider {
   margin-bottom: 1rem;
 }
 
-#sidenavCont {
+.sidenav-container {
   margin: 3rem;
   text-align: center;
 }
 
 a {
   text-decoration: none;
+}
+
+#login {
+  background-color: #19191a;
+}
+
+#logout {
+  background-color: #19191a;
+  text-align: center;
+}
+
+#logoutIcon {
+  margin-right: 1rem;
+}
+
+#menu {
+  margin-right: 1rem;
+}
+
+router-outlet {
+  min-height: ;
 }

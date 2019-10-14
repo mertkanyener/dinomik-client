@@ -21,6 +21,7 @@ export class SearchResultComponent implements OnInit, OnDestroy {
   eventName: string;
   subscription: Subscription;
   subscriptionUser: Subscription;
+  height = window.innerHeight;
 
   constructor(public eventService: EventService,
               public route: ActivatedRoute,

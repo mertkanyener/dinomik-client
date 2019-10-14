@@ -1,20 +1,29 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="over" position="end">
-    <div id="sidenavCont" fxLayout="column" *ngIf="authService.isAuthenticated()">
+    <div class="sidenav-container" fxLayout="column" *ngIf="authService.isAuthenticated();else notLoggedIn">
       <h2 class="mat-h2">Hoşgeldin, <b>{{ userService.getUser().firstName }}</b></h2>
       <mat-divider></mat-divider>
-      <a routerLink="/kaydedilenler"><h3 class="mat-h3">Kaydedilenler</h3></a>
-      <a routerLink="/gidilecekler"><h3 class="mat-h3">Gidilecekler</h3></a>
-      <a routerLink="/sanatcilar/kaydedilenler"><h3 class="mat-h3">Sanatçılar</h3></a>
-      <a routerLink="/arkadaslar"><h3 class="mat-h3">Arkadaşlar</h3></a> 
+      <a (click)="sidenav.toggle()" routerLink="/kaydedilenler"><h3 class="mat-h3">Kaydedilenler</h3></a>
+      <a (click)="sidenav.toggle()" routerLink="/gidilecekler"><h3 class="mat-h3">Gidilecekler</h3></a>
+      <a (click)="sidenav.toggle()" routerLink="/sanatcilar/kaydedilenler"><h3 class="mat-h3">Sanatçılar</h3></a>
+      <a (click)="sidenav.toggle()" routerLink="/arkadaslar"><h3 class="mat-h3">Arkadaşlar</h3></a>
+      <mat-divider></mat-divider>
+      <button id="logout" mat-flat-button (click)="sidenav.toggle();authService.logout()"><mat-icon id="logoutIcon">power_settings_new</mat-icon>Çıkış Yap</button> 
     </div>
+    <ng-template #notLoggedIn>
+      <div class="sidenav-container" fxLayout="column">
+        <h2 class="mat-h2">Hoşgeldin!</h2>
+        <mat-divider></mat-divider>
+        <button id="login" mat-flat-button (click)="sidenav.toggle();onRegisterLogin()">Giriş Yap / Kayıt Ol</button> 
+      </div>
+    </ng-template>
   </mat-sidenav>
   <mat-sidenav-content>
     <div fxLayout="row" style="width: 100%;">
       <app-header fxFlex="90"></app-header>
       <span style="flex: 1 1 auto;"></span>
       <div fxLayout="column" fxLayoutAlign="end end"  fxFlex="10">
-        <button *ngIf="authService.isAuthenticated()" color="primary" mat-fab (click)="sidenav.toggle()">
+        <button id="menu" color="primary" mat-fab (click)="sidenav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>      
       </div>

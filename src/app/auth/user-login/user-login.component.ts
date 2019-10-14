@@ -12,6 +12,7 @@ import { AuthError } from '../auth-error.class';
 export class UserLoginComponent implements OnInit {
 
   loginError = new AuthError();
+  height = window.innerHeight;
 
   constructor(private authService: AuthService,
               private router: Router) { }
