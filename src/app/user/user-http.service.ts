@@ -1,9 +1,11 @@
+import { EventService } from 'src/app/event/event.service';
+import { Friend } from './../shared/friend.model';
 import { AuthService } from '../auth/auth.service';
 import { Genre } from '../shared/genre.interface';
 import { Artist } from '../shared/artist.model';
 import { Event } from '../shared/event.model';
 import { UserService } from './user.service';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { Injectable } from '@angular/core';
 import { User } from '../shared/user.model';
@@ -16,20 +18,13 @@ export class UserHttpService {
     constructor(public cookieService: CookieService,
                 public http: HttpClient,
                 public userService: UserService,
-                public authService: AuthService) {}
+                public authService: AuthService,
+                public eventService: EventService) {}
 
     //ASFSDF
 
-    getHeaders(): HttpHeaders {
-        const headers = new HttpHeaders(
-            { 'Authorization': 'Bearer ' + this.cookieService.get('dino_access_token') }
-        );
-
-        return headers;
-    }
-
     getUser(id: string) {
-        this.http.get<User>(this.path + id, { headers: this.getHeaders() }).subscribe(
+        this.http.get<User>(this.path + id, { headers: this.authService.getHeaders() }).subscribe(
             (user: User) => {
                 console.log('User http : ', user);
                 this.userService.setUser(user);
@@ -45,9 +40,37 @@ export class UserHttpService {
         );
     }
 
+    getFriends() {
+        const url = this.path + this.cookieService.get('userId') + '/friends';
+        this.http.get<Friend[]>(url, { headers: this.authService.getHeaders() }).subscribe(
+            (friends: Friend[]) => {
+                this.userService.setFriends(friends);
+            },
+            (error) => {
+                console.log('UserHttpService error: ', error);
+                this.handleError(error);
+            }
+        );
+
+    }
+
+    searchFriends(firstName: string, lastName: string) {
+        const url = this.path + '/friends/find';
+        const params = new HttpParams().set('firstName', firstName).append('lastName', lastName);
+        this.http.get<Friend[]>(url, { headers: this.authService.getHeaders(), params: params }).subscribe(
+            (friends: Friend[]) => {
+                this.userService.setSearchFriends(friends);
+            },
+            (error) => {
+                console.log('UserHttpService error: ', error);
+                this.handleError(error);
+            }
+        );
+    }
+
     addSavedEvent(event: Event) {
         const url = this.path + this.cookieService.get('userId') + '/events/saved/' + event.id;
-        this.http.post(url, null, { headers: this.getHeaders() }).subscribe(
+        this.http.post(url, null, { headers: this.authService.getHeaders() }).subscribe(
             (res) => {
                 this.userService.addSavedEvent(event);
             },
@@ -60,7 +83,7 @@ export class UserHttpService {
 
     addAttendingEvent(event: Event) {
         const url = this.path + this.cookieService.get('userId') + '/events/attending/' + event.id;
-        this.http.post(url, null, { headers: this.getHeaders() } ).subscribe(
+        this.http.post(url, null, { headers: this.authService.getHeaders() } ).subscribe(
             (res) => {
                 this.userService.addAttendingEvent(event);
             },
@@ -73,7 +96,7 @@ export class UserHttpService {
 
     addLikedArtist(artist: Artist) {
         const url = this.path + this.cookieService.get('userId') + '/artists/' + artist.id;
-        this.http.post(url, null, { headers: this.getHeaders() }).subscribe(
+        this.http.post(url, null, { headers: this.authService.getHeaders() }).subscribe(
             (res) => {
                 this.userService.addLikedArtist(artist);
             },
@@ -86,7 +109,7 @@ export class UserHttpService {
 
     addLikedGenre(genre: Genre) {
         const url = this.path + this.cookieService.get('userId') + '/genres/' + genre.id;
-        this.http.post(url, null, { headers: this.getHeaders() }).subscribe(
+        this.http.post(url, null, { headers: this.authService.getHeaders() }).subscribe(
             (res) => {
                 this.userService.addLikedGenre(genre);
             },
@@ -97,9 +120,36 @@ export class UserHttpService {
         );
     }
 
+    addFriend(friend: Friend) {
+        const url = this.path + this.cookieService.get('userId') + '/friends/add/' + friend.id;
+        this.http.post(url, null, { headers: this.authService.getHeaders() }).subscribe(
+            (res) => {
+                this.userService.addFriend(friend);
+            },
+            (error) => {
+                console.log('UserHttpService error: ', error);
+                this.handleError(error);
+            }
+        );
+    }
+
+    deleteFriend(id: number) {
+        const url = this.path + this.cookieService.get('userId') + '/friends/delete/' + id;
+        this.http.delete(url, { headers: this.authService.getHeaders() }).subscribe(
+            (res) => {
+                this.userService.removeFriend(id);
+            },
+            (error) => {
+                console.log('UserHttpService error: ', error);
+                this.handleError(error);
+            }
+        );
+    }
+
+
     deleteSavedEvent(id: number) {
         const url = this.path + this.cookieService.get('userId') + '/events/saved/' + id;
-        this.http.delete(url, { headers: this.getHeaders() }).subscribe(
+        this.http.delete(url, { headers: this.authService.getHeaders() }).subscribe(
             (res) => {
                 this.userService.removeSavedEvent(id);
             },
@@ -112,7 +162,7 @@ export class UserHttpService {
 
     deleteAttendingEvent(id: number) {
         const url = this.path + this.cookieService.get('userId') + '/events/attending/' + id;
-        this.http.delete(url, { headers: this.getHeaders() }).subscribe(
+        this.http.delete(url, { headers: this.authService.getHeaders() }).subscribe(
             (res) => {
                 this.userService.removeAttendingEvent(id);
             },
@@ -125,7 +175,7 @@ export class UserHttpService {
 
     deleteLikedArtist(id: number) {
         const url = this.path + this.cookieService.get('userId') + '/artists/' + id;
-        this.http.delete(url, { headers: this.getHeaders() }).subscribe(
+        this.http.delete(url, { headers: this.authService.getHeaders() }).subscribe(
             (res) => {
                 this.userService.removeLikedArtist(id);
             },
@@ -138,7 +188,7 @@ export class UserHttpService {
 
     deleteLikedGenre(id: number) {
         const url = this.path + this.cookieService.get('userId') + '/genres/' + id;
-        this.http.delete(url, { headers: this.getHeaders() }).subscribe(
+        this.http.delete(url, { headers: this.authService.getHeaders() }).subscribe(
             (res) => {
                 this.userService.removeLikedGenre(id);
             },

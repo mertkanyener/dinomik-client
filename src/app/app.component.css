@@ -59,6 +59,7 @@ a {
   margin-right: 1rem;
 }
 
-router-outlet {
-  min-height: ;
+#profilePic {
+  margin-right: 1rem;
 }
+

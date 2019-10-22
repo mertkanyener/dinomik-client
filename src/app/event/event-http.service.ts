@@ -218,6 +218,18 @@ export class EventHttpService {
     );
   }
 
+  getAttendingEventsByUserId(userId: number) {
+    const url = this.path + 'user/' + userId + '/events/attending';
+    this.http.get<Event[]>(url, { headers: this.authService.getHeaders()}).subscribe(
+      (events: Event[]) => {
+        this.eventService.setEvents(events);
+      },
+      (error) => {
+        console.log('HttpService error: ', error);
+      }
+    );
+  }
+
   searchEventsByName(name: string) {
     const url = this.path + 'events/search/' + name;
     this.http.get<Event[]>(url).subscribe(
@@ -231,8 +243,8 @@ export class EventHttpService {
   }
 
   deleteEvent(id: number) {
-
-    this.http.delete(this.path + 'admin/events/' + id, this.authService.httpOptions).subscribe(
+    const url = this.path + 'admin/events/' + id;
+    this.http.delete(url, {headers: this.authService.getHeaders()}).subscribe(
       (res) => {
         this.eventService.deleteEvent(id);
       },
@@ -243,7 +255,8 @@ export class EventHttpService {
   }
 
   updateEvent(id: number, event: Event) {
-    this.http.put(this.path + 'admin/events/' + id, event, this.authService.httpOptions).subscribe(
+    const url = this.path + 'admin/events/' + id;
+    this.http.put(url, event, {headers: this.authService.getHeaders()}).subscribe(
       (res) => {
         this.eventService.updateEvent(id, event);
       },
@@ -254,7 +267,8 @@ export class EventHttpService {
   }
 
   addEvent(event: Event) {
-    this.http.post(this.path + 'admin/events/', event, this.authService.httpOptions).subscribe(
+    const url = this.path + 'admin/events/';
+    this.http.post(url, event, {headers: this.authService.getHeaders()}).subscribe(
       (res) => {
         this.eventService.addEvent(event);
       },

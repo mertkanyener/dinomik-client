@@ -1,3 +1,4 @@
+import { Friend } from './../shared/friend.model';
 import { Event } from 'src/app/shared/event.model';
 import { Genre } from '../shared/genre.interface';
 import { Artist } from '../shared/artist.model';
@@ -10,7 +11,12 @@ import { EventService } from '../event/event.service';
 export class UserService {
 
     private user: User;
+    private friends: Friend[];
+    private searchFriends: Friend[];
     userChanged = new Subject<User>();
+    friendsChanged = new Subject<Friend[]>();
+    searchFriendsChanged = new Subject<Friend[]>();
+
 
     constructor(public eventService: EventService) {}
 
@@ -21,9 +27,30 @@ export class UserService {
         this.userChanged.next(this.user);
     }
 
+    setFriends(friends: Friend[]) {
+        this.friends = friends;
+        this.friendsChanged.next(this.friends.slice());
+    }
+
+    setSearchFriends(friends: Friend[]) {
+        this.searchFriends = friends;
+        this.searchFriendsChanged.next(this.searchFriends.slice());
+    }
+
+    addFriend(friend: Friend) {
+        this.friends.push(friend);
+        this.friendsChanged.next(this.friends.slice());
+    }
+
     addSavedEvent(event: Event) {
         this.user.savedEvents.push(event);
         this.userChanged.next(this.user);
+    }
+
+    removeFriend(id: number) {
+        const index = this.friends.indexOf(this.friends.find(x => x.id === id));
+        this.friends.splice(index, 1);
+        this.friendsChanged.next(this.friends.slice());
     }
 
     removeSavedEvent(id: number) {
@@ -79,6 +106,10 @@ export class UserService {
 
     getUser(): User {
         return this.user;
+    }
+
+    getFriends(): Friend[] {
+        return this.friends;
     }
 
     

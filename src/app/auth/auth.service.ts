@@ -35,6 +35,14 @@ export class AuthService{
 
   //Methods
 
+  getHeaders(): HttpHeaders {
+    const headers = new HttpHeaders(
+        { 'Authorization': 'Bearer ' + this.cookieService.get('dino_access_token') }
+    );
+
+    return headers;
+}
+
   registerUser(user: User) {
     this.http.post(this.path + 'register', user).subscribe(
       (res) => {
@@ -80,20 +88,11 @@ export class AuthService{
     )).subscribe(
       (token) => {
         if (token.access_token !== undefined) {
-          if (userType === 'admin') {
-            this.saveToken('admin_access_token', token.access_token);
-            this.saveToken('admin_refresh_token', token.refresh_token);
-            this.setAuthHeaders('admin');
-            this.adminMode = true;
-            this.router.navigate(['admin/home']);
-          } else {
             this.saveToken('dino_access_token', token.access_token);
             this.saveToken('dino_refresh_token', token.refresh_token);
             this.cookieService.set('userId', token.userId.toString());
-            this.setAuthHeaders('user');
             console.log('Token: ', this.cookieService.get('dino_access_token'));
             location.reload();
-          }
         }
       },
       (error) => {

@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
         console.log('Login successful: ', res);
         this.cookieService.set('access_token', res.authResponse.accessToken, null, null, null, null, null);
         this.http.get(testUrl + res.authResponse.userID, { params:
-        { fields: 'first_name,last_name,email,friends', access_token: this.cookieService.get('access_token') }}).subscribe(
+        { fields: 'first_name,last_name,email,friends,picture', access_token: this.cookieService.get('access_token') }}).subscribe(
           (response: any) => {
             console.log('Response: ', response);
             debugger;

@@ -1,7 +1,10 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="over" position="end">
     <div class="sidenav-container" fxLayout="column" *ngIf="authService.isAuthenticated();else notLoggedIn">
-      <h2 class="mat-h2">Hoşgeldin, <b>{{ userService.getUser().firstName }}</b></h2>
+      <div fxLayout="row">
+        <img id="profilePic" [src]="pictureUrl" alt="image">  
+        <h2 class="mat-h2">Hoşgeldin, <b>{{ userService.getUser().firstName }}</b></h2>
+      </div>
       <mat-divider></mat-divider>
       <a (click)="sidenav.toggle()" routerLink="/kaydedilenler"><h3 class="mat-h3">Kaydedilenler</h3></a>
       <a (click)="sidenav.toggle()" routerLink="/gidilecekler"><h3 class="mat-h3">Gidilecekler</h3></a>

@@ -16,6 +16,7 @@ export class User {
     attendingEvents: Event[];
     likedGenres: Genre[];
     likedArtists: Artist[];
+    friends: number[];
 
     constructor(){}
 }
