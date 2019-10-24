@@ -1,3 +1,4 @@
+import { UtilityService } from './../../shared/utility.service';
 import { Friend } from './../../shared/friend.model';
 import { Subscription } from 'rxjs';
 import { UserService } from './../user.service';
@@ -16,19 +17,26 @@ export class FriendsComponent implements OnInit, OnDestroy {
   friends: Friend[];
 
   constructor(public userHttpService: UserHttpService,
-              public userService: UserService ) { }
+              public userService: UserService,
+              public utilService: UtilityService) { }
 
   ngOnInit() {
     this.userHttpService.getFriends();
     this.subscription = this.userService.friendsChanged.subscribe(
       (friends: Friend[]) => {
-        this.friends = friends;
+        this.friends = this.utilService.transformObjectArray(friends, 4);
       }
     );
+  }
+
+  getPictureUrl(userId: number) {
+    return 'https://graph.facebook.com/' + userId + '/picture?type=square';
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
+
+
 
 }

@@ -1,8 +1,30 @@
 <div [style.height.px]="height" fxLayout="row">
   <span fxFlex="25"></span>  
   <div fxLayout="column" fxFlex="50">
-    <h1 class="mat-h1">Arkadaşlarım</h1>
-    
+    <div id="titleRow" fxLayout="row" fxLayoutAlign="center">
+      <h1 class="mat-h1">Arkadaşlarım</h1>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start end">
+      <mat-form-field>
+        <input 
+          id="search"
+          type="text"
+          placeholder="Kullanıcı Ara"
+          matInput
+          [(ngModel)]="searchValue"
+          [value]="searchValue"
+          (keyup.enter)="onSearch($event.target.value)">
+      </mat-form-field>
+      <button id="searchBtn" mat-icon-button color="primary" (click)="onSearch(searchValue)">
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+    <div id="friendsRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of events">
+      <mat-card fxFlex="20" *ngFor="let event of row">
+        <img src="" alt="">
+      </mat-card>
+    </div>
   </div>
   <span fxFlex="25"></span>  
+
 </div>
