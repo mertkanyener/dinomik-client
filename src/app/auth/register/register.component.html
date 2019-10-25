@@ -67,6 +67,15 @@
             placeholder="Tekrar şifrenizi yazın">
           <mat-error *ngIf="form.get('passwords.confirmPassword').hasError('NoPassMatch')">* Şifreler birbiriyle aynı değil.</mat-error>  
         </mat-form-field>
+        <mat-form-field>
+          <input
+          color="primary" 
+          type="file"
+          id="image"
+          accept="image/*"
+          (change)="changeListener($event)">
+        </mat-form-field>          
+        <img [src]="this.image.dataUrl" alt="Image">
       </div>
       <div fxLayout="row" fxLayoutGap="3rem">
         <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Kayıt Ol</button>

@@ -133,6 +133,21 @@ export class UserHttpService {
         );
     }
 
+    saveImage(imageLink: string) {
+        const url = this.path + this.cookieService.get('userId') + '/image/save';
+        const params = new HttpParams().set('imageLink', imageLink);
+        this.http.put(url, null, {headers: this.authService.getHeaders(), params: params}).subscribe(
+            (res) => {
+                this.userService.saveImage(imageLink);
+            },
+            (error) => {
+                console.log('UserHttpService error: ', error);
+            }
+        );
+    }
+
+    postImage(){}
+
     deleteFriend(id: number) {
         const url = this.path + this.cookieService.get('userId') + '/friends/delete/' + id;
         this.http.delete(url, { headers: this.authService.getHeaders() }).subscribe(

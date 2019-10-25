@@ -47,6 +47,11 @@ export class UserService {
         this.userChanged.next(this.user);
     }
 
+    saveImage(imageUrl: string) {
+        this.user.image = imageUrl;
+        this.userChanged.next(this.user);
+    }
+
     removeFriend(id: number) {
         const index = this.friends.indexOf(this.friends.find(x => x.id === id));
         this.friends.splice(index, 1);
