@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { UserHttpService } from './../user-http.service';
 import { UtilityService } from 'src/app/shared/utility.service';
 import { Event } from 'src/app/shared/event.model';
@@ -16,16 +17,32 @@ export class SavedEventsComponent implements OnInit, OnDestroy {
   events: Event[];
   subscription: Subscription;
   height = window.innerHeight;
+  path: string;
 
   constructor(public userService: UserService,
               public userHttpService: UserHttpService,
-              public utilService: UtilityService) { }
+              public utilService: UtilityService,
+              public route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.events = this.utilService.transformObjectArray(this.userService.getUser().savedEvents, 3);
+    this.route.url.subscribe(
+      (url: any) => {
+        this.path = url[0].path;
+      }
+    );
+    if (this.path === 'kaydedilenler') {
+      this.events = this.utilService.transformObjectArray(this.userService.getUser().savedEvents, 3);
+    } else {
+      this.events = this.utilService.transformObjectArray(this.userService.getUser().attendingEvents, 3);
+    }
     this.subscription = this.userService.userChanged.subscribe(
       (user: User) => {
-        this.events = this.utilService.transformObjectArray(user.savedEvents, 3);
+        console.log('url: ', this.path);
+        if (this.path === 'kaydedilenler') {
+          this.events = this.utilService.transformObjectArray(user.savedEvents, 3);
+        } else {
+          this.events = this.utilService.transformObjectArray(user.attendingEvents, 3);
+        }
       }
     );
   }

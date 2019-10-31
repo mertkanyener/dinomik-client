@@ -133,20 +133,18 @@ export class UserHttpService {
         );
     }
 
-    saveImage(imageLink: string) {
+    saveImage(image: File) {
         const url = this.path + this.cookieService.get('userId') + '/image/save';
-        const params = new HttpParams().set('imageLink', imageLink);
-        this.http.put(url, null, {headers: this.authService.getHeaders(), params: params}).subscribe(
+        const formData = new FormData().append('image', image);
+        this.http.put(url, formData, {headers: this.authService.getHeaders()}).subscribe(
             (res) => {
-                this.userService.saveImage(imageLink);
+                this.userService.saveImage('http://localhost:9999/images/users/' + this.cookieService.get('userId'));
             },
             (error) => {
                 console.log('UserHttpService error: ', error);
             }
         );
     }
-
-    postImage(){}
 
     deleteFriend(id: number) {
         const url = this.path + this.cookieService.get('userId') + '/friends/delete/' + id;

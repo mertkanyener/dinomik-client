@@ -40,7 +40,6 @@ import { VenueHttpService } from './venue/venue-http.service';
 import { UserService } from './user/user.service';
 import { UserHttpService } from './user/user-http.service';
 import { SavedEventsComponent } from './user/saved-events/saved-events.component';
-import { AttendingEventsComponent } from './user/attending-events/attending-events.component';
 import { FriendsComponent } from './user/friends/friends.component';
 import { LikedArtistsComponent } from './user/liked-artists/liked-artists.component';
 import { FriendDetailComponent } from './user/friend-detail/friend-detail.component';
@@ -63,7 +62,6 @@ import { FriendDetailComponent } from './user/friend-detail/friend-detail.compon
       UserLoginComponent,
       SearchResultComponent,
       SavedEventsComponent,
-      AttendingEventsComponent,
       FriendsComponent,
       LikedArtistsComponent,
       FriendDetailComponent

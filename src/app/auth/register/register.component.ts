@@ -64,11 +64,7 @@ export class RegisterComponent implements OnInit {
     this.user.gender = value.gender;
     const birthDate: Date = value.birthDate;
     this.user.birthDate = birthDate.toISOString().split('T')[0];
-    if (this.image !== null && this.image !== undefined) {
-      this.authService.registerUser(this.user, this.image.file);
-    } else {
-      this.authService.registerUser(this.user);
-    }
+    this.authService.registerUser(this.user);
     this.router.navigate(['/giris-yap']);
   }
 

@@ -11,14 +11,13 @@ import { TestComponent } from './test/test.component';
 import { UserLoginComponent } from './auth/user-login/user-login.component';
 import { SearchResultComponent } from './search-result/search-result.component';
 import { SavedEventsComponent } from './user/saved-events/saved-events.component';
-import { AttendingEventsComponent } from './user/attending-events/attending-events.component';
 import { FriendsComponent } from './user/friends/friends.component';
 import { LikedArtistsComponent } from './user/liked-artists/liked-artists.component';
 
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
   { path: 'admin', loadChildren: './admin/admin.module#AdminModule'},
-  { path: 'sanatcilar', component: ArtistListComponent },
+  { path: 'sanatcilar', component: ArtistListComponent, pathMatch: 'full' },
   { path: 'sanatcilar/:id', component: ArtistDetailComponent },
   { path: 'mekanlar', component: VenueListComponent },
   { path: 'mekanlar/:id', component: VenueDetailComponent},
@@ -28,9 +27,9 @@ const appRoutes: Routes = [
   { path: 'giris-yap', component: UserLoginComponent },
   { path: 'arama-sonuclari/:name', component: SearchResultComponent },
   { path: 'kaydedilenler', component: SavedEventsComponent },
-  { path: 'gidilecekler', component: AttendingEventsComponent },
+  { path: 'gidilecekler', component: SavedEventsComponent },
   { path: 'arkadaslar', component: FriendsComponent},
-  { path: 'sanatcilar/kaydedilenler', component: LikedArtistsComponent}
+  { path: 'sevilen-sanatcilar', component: LikedArtistsComponent, pathMatch: 'full'}
 ];
 
 @NgModule({

@@ -31,6 +31,7 @@ export class UserLoginComponent implements OnInit {
     const username = form.value.email;
     const password = form.value.password;
     this.authService.userLogin(username, password, 'user');
+    this.router.navigate(['/']);
   }
 
   onCancel() {

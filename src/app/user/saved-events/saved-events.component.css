@@ -15,7 +15,10 @@ mat-card {
     background-color: #19191a;
 }
 
-
 mat-icon, i {
     color: #ee2b84;
+}
+
+#eventRow {
+    margin-bottom: 2rem;
 }
