@@ -19,9 +19,10 @@
         <mat-icon>search</mat-icon>
       </button>
     </div>
-    <div id="friendsRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of events">
-      <mat-card fxFlex="20" *ngFor="let event of row">
-        <img src="" alt="">
+    <div id="friendsRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of friends">
+      <mat-card fxFlex="20" *ngFor="let friend of friends">
+        <img [src]="friend.image" alt="Image">
+        <a href=""></a>
       </mat-card>
     </div>
   </div>

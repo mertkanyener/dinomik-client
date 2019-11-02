@@ -135,10 +135,12 @@ export class UserHttpService {
 
     saveImage(image: File) {
         const url = this.path + this.cookieService.get('userId') + '/image/save';
-        const formData = new FormData().append('image', image);
-        this.http.put(url, formData, {headers: this.authService.getHeaders()}).subscribe(
-            (res) => {
-                this.userService.saveImage('http://localhost:9999/images/users/' + this.cookieService.get('userId'));
+        const formData = new FormData();
+        formData.append('image', image);
+        this.http.post(url, formData, {headers: this.authService.getHeaders(), responseType: 'text'}).subscribe(
+            (fileName: any) => {
+                console.log('Fİle name: ', fileName);
+                this.userService.saveImage('http://localhost:9999/images/users/' + fileName);
             },
             (error) => {
                 console.log('UserHttpService error: ', error);

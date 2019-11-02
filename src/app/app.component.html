@@ -2,8 +2,19 @@
   <mat-sidenav #sidenav mode="over" position="end">
     <div class="sidenav-container" fxLayout="column" *ngIf="authService.isAuthenticated();else notLoggedIn">
       <div fxLayout="row">
-        <img id="profilePic" [src]="pictureUrl" alt="image">  
-        <h2 class="mat-h2">Hoşgeldin, <b>{{ userService.getUser().firstName }}</b></h2>
+        <img *ngIf="hasPhoto; else noPhoto" id="profilePic" [src]="pictureUrl" alt="image">  
+        <ng-template #noPhoto>
+          <button mat-icon-button type="button" (click)="photoInput.click()">
+            <mat-icon>add_a_photo</mat-icon>
+          </button>
+          <input 
+            type="file" 
+            (change)="onPhotoSelected($event)"
+            #photoInput
+            hidden
+            accept="image/*">
+        </ng-template>
+        <h2 class="mat-h2">Hoşgeldin, <b>{{ user.firstName }}</b></h2>
       </div>
       <mat-divider></mat-divider>
       <a (click)="sidenav.toggle()" routerLink="/kaydedilenler"><h3 class="mat-h3">Kaydedilenler</h3></a>

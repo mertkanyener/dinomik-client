@@ -1,3 +1,5 @@
+import { UserHttpService } from './user/user-http.service';
+import { UtilityService } from './shared/utility.service';
 import { User } from 'src/app/shared/user.model';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material';
@@ -15,13 +17,16 @@ export class AppComponent implements OnInit {
 
   title = 'dinomik-client';
   routerHeight = window.innerHeight;
-  userId: number;
+  user: User;
   pictureUrl: string;
   subscription: Subscription;
+  hasPhoto = true;
 
 
   constructor(public authService: AuthService,
               public userService: UserService,
+              public userHttpService: UserHttpService,
+              public utilService: UtilityService,
               public dialog: MatDialog) {
 
               }
@@ -30,14 +35,27 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.subscription = this.userService.userChanged.subscribe(
       (user: User) => {
-        this.userId = user.id;
-        this.pictureUrl = 'https://graph.facebook.com/' + this.userId + '/picture?width=50&height=50';
+        this.user = user;
+        if (user.facebookUser) {
+          this.pictureUrl = user.image + '?width=50&height=50';
+        } else {
+          this.pictureUrl = user.image;
+          if (this.pictureUrl === null || this.pictureUrl === undefined) {
+            this.hasPhoto = false;
+          } else {
+            this.hasPhoto = true;
+          }
+        }
       }
     );
   }
 
   onRegisterLogin() {
     this.dialog.open(LoginComponent, {width: '25rem', height: '35rem', panelClass: 'dino-dialog'});
+  }
+
+  onPhotoSelected($event) {
+    this.userHttpService.saveImage($event.target.files[0]);
   }
 
 

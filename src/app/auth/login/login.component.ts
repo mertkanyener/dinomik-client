@@ -69,7 +69,6 @@ export class LoginComponent implements OnInit {
         { fields: 'first_name,last_name,email,friends,picture', access_token: this.cookieService.get('access_token') }}).subscribe(
           (response: any) => {
             console.log('Response: ', response);
-            debugger;
             const email: string = response.email;
             this.authService.doesEmailExist2(response.email).then(value => {
               if (value === 'newUser') {
@@ -79,6 +78,7 @@ export class LoginComponent implements OnInit {
                 user.lastName = response.last_name;
                 user.facebookUser = true;
                 user.email = response.email;
+                user.image = 'https://graph.facebook.com/' + response.id + '/picture';
                 this.authService.registerUser(user);
               }
               this.authService.userLogin(email, null, 'user');
