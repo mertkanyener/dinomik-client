@@ -1,3 +1,13 @@
+<mat-toolbar *ngIf="isAdminView();else notAdmin" color="primary">
+  <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%;">
+    <h1 class="mat-h1">Dinomik Admin Panel</h1>
+    <span class="fill"></span>
+    <button *ngIf="authService.isAdmin()" mat-button type="button" (click)="onLogout()">
+      <h4 class="mat-h4">Çıkış</h4>
+    </button>
+  </div>
+</mat-toolbar>
+<ng-template #notAdmin>
 <div fxLayout="row">
   <a routerLink="/"><img id="logo" src="../../assets/photos/logo/logo.jpg" alt="Dinomik"></a>
   <span fxFlex="20"></span>
@@ -31,5 +41,6 @@
   </div>
   <span fxFlex="20"></span>
 </div>
+</ng-template>
 
 

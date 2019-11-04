@@ -1,3 +1,33 @@
-<p>
-  liked-artists works!
-</p>
+<div [style.height.px]="height" fxLayout="row" fxLayoutAlign="center start">
+  <span fxFlex="25"></span>
+  <div fxFlex="50" fxLayout="column">
+    <div id="headerDiv" fxLayout="row" fxLayoutAlign="center start">
+      <h1 class="mat-h1">Sevdiğin Sanatçılar</h1>
+    </div>
+    <div fxLayout="row" fxLayoutAlign="start center">
+      <mat-icon id="searchIcon">search</mat-icon>
+      <mat-form-field>
+        <input 
+          id="search"
+          type="text"
+          placeholder="Sanatçı Ara"
+          matInput
+          (keyup)="onSearch($event.target.value)">
+      </mat-form-field>
+    </div>
+    <div id="artistRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of artists">
+      <mat-card fxFlex="30" *ngFor="let artist of row">
+        <img mat-card-image [src]="artist.image" alt="Image">
+        <div fxLayout="row">
+          <a [routerLink]="['sanatcilar', artist.id]"><h2 class="mat-h2">{{ artist.name }}</h2></a>
+          <span style="flex: 1 1 auto;"></span>
+          <button mat-icon-button color="primary" (click)="onRemoveArtist(artist.id)">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+  <span fxFlex="25"></span>
+
+</div>

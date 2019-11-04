@@ -44,6 +44,7 @@ h5 {
 a {
   text-decoration: none;
   color: #c1c1c1;
+  height: fit-content;
 }
 
 mat-icon {
@@ -70,4 +71,8 @@ i {
 
 mat-option {
   background-color: #19191a;
+}
+
+#eventName {
+  margin-bottom: 0;
 }

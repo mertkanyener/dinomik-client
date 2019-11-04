@@ -43,7 +43,7 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
   ],
   entryComponents: [
     DeleteDialogComponent
-  ]
+  ],
 })
 export class AdminModule {
 
