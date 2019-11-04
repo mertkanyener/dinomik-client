@@ -34,9 +34,9 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <div fxLayout="row" style="width: 100%;">
-      <app-header fxFlex="90"></app-header>
+      <app-header style="width: 100%;" [fxFlex]="headerWidth"></app-header>
       <span style="flex: 1 1 auto;"></span>
-      <div fxLayout="column" fxLayoutAlign="end end"  fxFlex="10">
+      <div *ngIf="!isAdminView()" fxLayout="column" fxLayoutAlign="end end"  fxFlex="10">
         <button id="menu" color="primary" mat-fab (click)="sidenav.toggle()">
           <mat-icon>menu</mat-icon>
         </button>      

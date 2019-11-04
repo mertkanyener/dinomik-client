@@ -1,4 +1,4 @@
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 import { UserService } from '../user/user.service';
@@ -31,7 +31,8 @@ export class HeaderComponent implements OnInit {
               public userService: UserService,
               public userHttpService: UserHttpService,
               public cookieService: CookieService,
-              public router: Router) { }
+              public router: Router,
+              public route: ActivatedRoute) { }
 
   ngOnInit() {
     if (this.authService.isAuthenticated() && this.userService.getUser() === undefined) {
@@ -43,7 +44,6 @@ export class HeaderComponent implements OnInit {
         this.user = user;
       }
     );
-    console.log('User: ', this.user);
     const path = window.location.pathname;
     if (path === '/sanatcilar') {
       this.activeLink = this.links[1];
@@ -58,5 +58,11 @@ export class HeaderComponent implements OnInit {
     const url = 'arama-sonuclari/' + name;
     this.router.navigate([url]);
   }
+
+  isAdminView(): boolean {
+    const arr = window.location.pathname.split('/');
+    return arr[1] === 'admin';
+  }
+  
 
 }

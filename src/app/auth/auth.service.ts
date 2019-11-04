@@ -88,11 +88,15 @@ export class AuthService{
     )).subscribe(
       (token) => {
         if (token.access_token !== undefined) {
+          if (userType === 'admin') {
+            this.saveToken('admin_access_token', token.access_token);
+            this.saveToken('admin_refresh_token', token.refresh_token);
+          } else {
             this.saveToken('dino_access_token', token.access_token);
             this.saveToken('dino_refresh_token', token.refresh_token);
             this.cookieService.set('userId', token.userId.toString());
-            console.log('Token: ', this.cookieService.get('dino_access_token'));
             location.reload();
+          }
         }
       },
       (error) => {

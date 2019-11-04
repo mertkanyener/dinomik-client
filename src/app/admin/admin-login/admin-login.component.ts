@@ -1,3 +1,4 @@
+import { AuthError } from './../../auth/auth-error.class';
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from '../../auth/auth.service';
 import {NgForm} from '@angular/forms';
@@ -11,8 +12,7 @@ import {Subscription} from 'rxjs';
 })
 export class AdminLoginComponent implements OnInit, OnDestroy {
 
-  loginStatus = 0;
-  loginClicked = false;
+  loginError = new AuthError();
   subscription: Subscription;
 
   constructor(private authService: AuthService,
@@ -20,20 +20,20 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.subscription = this.authService.status.subscribe(
-      (status) => {
-        this.loginStatus = status;
-      }
-    );
-    if (this.authService.adminMode){
+    if (this.authService.isAdmin()){
+      console.log('Admin!');
       this.router.navigate(['home'], {relativeTo: this.route });
     }
+    this.subscription = this.authService.authError.subscribe(
+      (error: AuthError) => {
+        this.loginError = error;
+      }
+    );
   }
 
   onLogin(form: NgForm) {
-    this.loginClicked = true;
     this.authService.userLogin(form.value.username, form.value.password, 'admin');
-    console.log('Error status: ', this.loginStatus);
+    this.router.navigate(['home'], {relativeTo: this.route });
   }
 
   onCancel() {

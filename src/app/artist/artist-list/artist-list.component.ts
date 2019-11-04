@@ -43,11 +43,11 @@ export class ArtistListComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private artistService: ArtistService,
-              private utilityService: UtilityService,
-              private artistHttpService: ArtistHttpService,
-              private eventHttpService: EventHttpService,
-              private eventService: EventService) {}
+  constructor(public artistService: ArtistService,
+              public utilityService: UtilityService,
+              public artistHttpService: ArtistHttpService,
+              public eventHttpService: EventHttpService,
+              public eventService: EventService) {}
 
   ngOnInit() {
     this.artistHttpService.getAllArtists();

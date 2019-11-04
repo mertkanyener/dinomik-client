@@ -1,0 +1,17 @@
+a {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+mat-card {
+    background-color: #19191a;
+}
+
+#headerDiv {
+    margin-top: 2rem;
+}
+
+#searchIcon {
+    margin-right: 1rem;
+    color: #ee2b84;
+}

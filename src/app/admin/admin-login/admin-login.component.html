@@ -27,8 +27,7 @@
         >
         <mat-error *ngIf="f.hasError('required', 'password')">* Şifre gerekli</mat-error>
       </mat-form-field>
-      <mat-error *ngIf="loginClicked && loginStatus === 400">* Username or password is wrong!</mat-error>
-      <mat-error *ngIf="loginClicked && loginStatus === 401">* Something went wrong!</mat-error>
+      <mat-error *ngIf="loginError.error_description === 'Bad credentials'">Kullanıcı adı veya şifre yanlış!</mat-error>
       <br>
       <div fxLayout="row" fxLayoutGap="3rem">
         <button mat-raised-button color="primary" type="submit" [disabled]="!f.valid">Giriş</button>

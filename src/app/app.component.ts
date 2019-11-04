@@ -21,6 +21,7 @@ export class AppComponent implements OnInit {
   pictureUrl: string;
   subscription: Subscription;
   hasPhoto = true;
+  headerWidth = 90;
 
 
   constructor(public authService: AuthService,
@@ -56,6 +57,15 @@ export class AppComponent implements OnInit {
 
   onPhotoSelected($event) {
     this.userHttpService.saveImage($event.target.files[0]);
+  }
+
+  isAdminView(): boolean {
+    const arr = window.location.pathname.split('/');
+    const result = arr[1] === 'admin'; 
+    if (result) {
+      this.headerWidth = 100;
+    }
+    return result;
   }
 
 
