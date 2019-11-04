@@ -14,7 +14,11 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   height = window.innerHeight;
   subscription: Subscription;
+  subscriptionSearch: Subscription;
   friends: Friend[];
+  searchFriends: Friend[];
+  showFriends = true;
+  searchValue = '';
 
   constructor(public userHttpService: UserHttpService,
               public userService: UserService,
@@ -24,9 +28,23 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.userHttpService.getFriends();
     this.subscription = this.userService.friendsChanged.subscribe(
       (friends: Friend[]) => {
+        console.log('Friends: ', friends);
         this.friends = this.utilService.transformObjectArray(friends, 4);
       }
     );
+    this.subscriptionSearch = this.userService.searchFriendsChanged.subscribe(
+      (friends: Friend[]) => {
+        this.searchFriends = friends;
+      }
+    );
+  }
+
+  onAddFriend(friend: Friend) {
+    this.userHttpService.addFriend(friend);
+  }
+
+  onRemoveFriend(id: number) {
+    this.userHttpService.deleteFriend(id);
   }
 
   getPictureUrl(userId: number) {
@@ -35,7 +53,10 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.subscriptionSearch.unsubscribe();
   }
+
+  
 
 
 

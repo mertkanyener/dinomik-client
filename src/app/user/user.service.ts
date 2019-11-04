@@ -109,6 +109,10 @@ export class UserService {
         return this.user.likedArtists.find(x => x.id === id) !== undefined;
     }
 
+    isFriend(id: number): boolean {
+        return this.friends.find(x => x.id === id) !== undefined;
+    }
+
     getUser(): User {
         return this.user;
     }

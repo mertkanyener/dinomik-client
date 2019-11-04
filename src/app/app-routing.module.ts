@@ -1,3 +1,4 @@
+import { FriendDetailComponent } from './user/friend-detail/friend-detail.component';
 import { RegisterComponent } from './auth/register/register.component';
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
@@ -29,6 +30,7 @@ const appRoutes: Routes = [
   { path: 'kaydedilenler', component: SavedEventsComponent },
   { path: 'gidilecekler', component: SavedEventsComponent },
   { path: 'arkadaslar', component: FriendsComponent},
+  { path: 'kullanicilar/:id', component: FriendDetailComponent},
   { path: 'sevilen-sanatcilar', component: LikedArtistsComponent, pathMatch: 'full'}
 ];
 

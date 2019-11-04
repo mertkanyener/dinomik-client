@@ -18,13 +18,44 @@
       <button id="searchBtn" mat-icon-button color="primary" (click)="onSearch(searchValue)">
         <mat-icon>search</mat-icon>
       </button>
+      <span style="flex: 1 1 auto;"></span>
+      <button *ngIf="!showFriends" (click)="onShowFriends()" color="primary"><label class="mat-body">Arkadaşları Göster</label></button>
     </div>
-    <div id="friendsRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of friends">
-      <mat-card fxFlex="20" *ngFor="let friend of friends">
-        <img [src]="friend.image" alt="Image">
-        <a href=""></a>
+    <h2 class="mat-h2" *ngIf="!showFriends">Arama Sonuçları: </h2>
+    <div class="friends-row" fxLayout="row" fxLayoutGap="5%" *ngIf="showFriends;else searchResults" *ngFor="let row of friends">
+      <mat-card fxFlex="20" *ngFor="let friend of row">
+        <img mar-card-image [src]="friend.image" alt="Image">
+        <div fxLayout="row">
+          <a [routerLink]="['kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>
+          <span style="flex: 1 1 auto;"></span>
+          <button mat-raised-button color="primary" (click)="onRemoveFriend(friend.id)">
+            <mat-icon>clear</mat-icon>
+            <label class="mat-body">Arkadaşlıktan Çıkar</label>
+          </button>
+        </div>
       </mat-card>
     </div>
+    <ng-template #searchResults>
+      <div class="friends-row" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of searchFriends">
+        <mat-card fxFlex="20" *ngFor="let friend of row">
+          <img mat-card-image [src]="friend.image" alt="Image">
+          <div fxLayout="row">
+            <a [routerLink]="['kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>
+          <span style="flex: 1 1 auto;"></span>
+          <button id="alreadyFriend" mat-flat-button *ngIf="userService.isFriend(friend.id);else notFriend">
+            <mat-icon>how_to_reg</mat-icon>
+            <label class="mat-body">Arkadaşsınız</label>
+          </button>
+          <ng-template #notFriend>
+            <button type="button" mat-raised-button color="primary" (click)="onAddFriend(friend)">
+              <mat-icon>person_add</mat-icon>
+              <label class="mat-body">Ekle</label>
+            </button>
+          </ng-template>
+          </div>
+        </mat-card>
+      </div>
+    </ng-template>
   </div>
   <span fxFlex="25"></span>  
 
