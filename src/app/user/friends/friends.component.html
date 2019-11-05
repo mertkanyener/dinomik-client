@@ -22,19 +22,22 @@
       <button *ngIf="!showFriends" (click)="onShowFriends()" color="primary"><label class="mat-body">Arkadaşları Göster</label></button>
     </div>
     <h2 class="mat-h2" *ngIf="!showFriends">Arama Sonuçları: </h2>
-    <div class="friends-row" fxLayout="row" fxLayoutGap="5%" *ngIf="showFriends;else searchResults" *ngFor="let row of friends">
-      <mat-card fxFlex="20" *ngFor="let friend of row">
-        <img mar-card-image [src]="friend.image" alt="Image">
-        <div fxLayout="row">
-          <a [routerLink]="['kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>
-          <span style="flex: 1 1 auto;"></span>
-          <button mat-raised-button color="primary" (click)="onRemoveFriend(friend.id)">
-            <mat-icon>clear</mat-icon>
-            <label class="mat-body">Arkadaşlıktan Çıkar</label>
-          </button>
-        </div>
-      </mat-card>
+    <div *ngIf="showFriends;else searchResults">
+      <div class="friends-row" fxLayout="row" fxLayoutGap="5%"  *ngFor="let row of friends">
+        <mat-card fxFlex="20" *ngFor="let friend of row">
+          <img mar-card-image [src]="friend.image" alt="Image">
+          <div fxLayout="row">
+            <a [routerLink]="['kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>
+            <span style="flex: 1 1 auto;"></span>
+            <button mat-raised-button color="primary" (click)="onRemoveFriend(friend.id)">
+              <mat-icon>clear</mat-icon>
+              <label class="mat-body">Arkadaşlıktan Çıkar</label>
+            </button>
+          </div>
+        </mat-card>
+      </div>
     </div>
+    
     <ng-template #searchResults>
       <div class="friends-row" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of searchFriends">
         <mat-card fxFlex="20" *ngFor="let friend of row">

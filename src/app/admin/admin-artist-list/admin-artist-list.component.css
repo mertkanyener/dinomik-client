@@ -21,6 +21,11 @@ h1 {
 }
 
 
+mat-paginator {
+  width: 100%;
+  background-color: #19191a;
+}
+
 i {
   color: #c1c1c1;
 
@@ -28,4 +33,13 @@ i {
 
 .fill-remaining-space {
   flex: 1 1 auto;
+}
+
+table {
+  background-color: #19191a;   
+  width: 100%;
+}
+
+.btn-row {
+  width: 100%;
 }

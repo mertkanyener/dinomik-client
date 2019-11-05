@@ -33,7 +33,7 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
 
   onLogin(form: NgForm) {
     this.authService.userLogin(form.value.username, form.value.password, 'admin');
-    this.router.navigate(['home'], {relativeTo: this.route });
+    this.router.navigate(['admin/home']);
   }
 
   onCancel() {

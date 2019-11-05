@@ -16,3 +16,7 @@
 .outlined {
     font-family: 'Material Icons Outlined';
 }
+
+.mat-menu-content {
+    background-color: #19191a;   
+}

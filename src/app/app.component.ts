@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
 
   isAdminView(): boolean {
     const arr = window.location.pathname.split('/');
-    const result = arr[1] === 'admin'; 
+    const result = arr[1] === 'admin' || this.authService.isAdmin(); 
     if (result) {
       this.headerWidth = 100;
     }

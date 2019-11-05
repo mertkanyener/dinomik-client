@@ -1,6 +1,18 @@
-<mat-toolbar *ngIf="isAdminView();else notAdmin" color="primary">
+<mat-toolbar *ngIf="isAdminView() || authService.isAdmin();else notAdmin" color="primary">
   <div fxLayout="row" fxLayoutAlign="start center" style="width: 100%;">
     <h1 class="mat-h1">Dinomik Admin Panel</h1>
+    <button mat-button [matMenuTriggerFor]="admin" [disabled]="!authService.isAdmin()">Admin</button>
+    <mat-menu #admin="matMenu">
+      <button mat-menu-item routerLink="/admin/events">Etkinlikler</button>
+      <button mat-menu-item routerLink="/admin/artists">Sanatçılar</button>
+      <button mat-menu-item routerLink="/admin/venues">Mekanlar</button>
+    </mat-menu>
+    <button mat-button [matMenuTriggerFor]="website">Dinomik</button>
+    <mat-menu #website="matMenu">
+      <button mat-menu-item routerLink="/">Anasayfa</button>
+      <button mat-menu-item routerLink="/sanatcilar">Sanatçılar</button>
+      <button mat-menu-item routerLink="/mekanlar">Mekanlar</button>
+    </mat-menu>
     <span class="fill"></span>
     <button *ngIf="authService.isAdmin()" mat-button type="button" (click)="onLogout()">
       <h4 class="mat-h4">Çıkış</h4>
@@ -33,7 +45,7 @@
           [value]="searchValue"
           (keyup.enter)="onSearch($event.target.value)">
         </mat-form-field>
-        <button mat-icon-button color="primary" (click)="onSearch(searchValue)">
+        <button id="searchBtn" mat-icon-button color="primary" (click)="onSearch(searchValue)">
           <mat-icon>search</mat-icon>
         </button>  
       </div>

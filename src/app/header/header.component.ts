@@ -59,6 +59,11 @@ export class HeaderComponent implements OnInit {
     this.router.navigate([url]);
   }
 
+  onLogout() {
+    this.authService.adminLogout();
+    this.router.navigate(['admin']);
+  }
+
   isAdminView(): boolean {
     const arr = window.location.pathname.split('/');
     return arr[1] === 'admin';

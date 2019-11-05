@@ -1,30 +1,31 @@
 <div fxLayout="row" fxLayoutAlign="center">
-  <div fxLayout="column">
+  <span fxFlex="15" fxFlex.gt-lg="25"></span>
+  <div fxFlex="70" fxFlex.gt-lg="50" fxLayout="column" fxLayoutAlign="start center">
+    <h1 class="mat-h1">Dinomik Admin Paneli</h1>
+    <mat-divider></mat-divider>
     <div class="card-row" fxLayout="row">
-      <a class="card-option" routerLink="/admin/events">
+      <a fxFlex="30" class="card-option" routerLink="/admin/events">
         <mat-card>
-          <mat-card-header><mat-card-title>Etkinlikler</mat-card-title><span class="fill-remaining-space"></span></mat-card-header>
-          <mat-card-content>
-            <p>Yeni etkinlik ekleme, etkinlikleri düzenleme ve görüntüleme işlemlerini buradan yapabilirsin.</p>
-          </mat-card-content>
+          <h2 class="mat-h2">Etkinlikler</h2>
+          <mat-divider></mat-divider>
+          <p class="mat-body">Yeni etkinlik ekleme, etkinlikleri düzenleme ve silme</p>
         </mat-card>
       </a>
-      <a class="card-option" routerLink="/admin/venues">
+      <a fxFlex="30" class="card-option" routerLink="/admin/venues">
         <mat-card>
-          <mat-card-header><mat-card-title>Mekanlar</mat-card-title></mat-card-header>
-          <mat-card-content>
-            <p>Yeni mekan ekleme, mekanları düzenleme ve görüntüleme işlemlerini buradan yapabilirsin.</p>
-          </mat-card-content>
+          <h2 class="mat-h2">Mekanlar</h2>
+          <mat-divider></mat-divider>
+          <p class="mat-body">Yeni mekan ekleme, mekanları düzenleme ve silme</p>
         </mat-card>
       </a>
-      <a class="card-option" routerLink="/admin/artists">
+      <a fxFlex="30" class="card-option" routerLink="/admin/artists">
         <mat-card>
-          <mat-card-header><mat-card-title>Sanatçılar</mat-card-title></mat-card-header>
-          <mat-card-content>
-            <p>Yeni sanatçı ekleme, sanatçıları düzenleme ve görüntüleme işlemlerini buradan yapabilirsin.</p>
-          </mat-card-content>
+          <h2 class="mat-h2">Sanatçılar</h2>
+          <mat-divider></mat-divider>
+          <p class="mat-body">Yeni sanatçı ekleme, sanatçıları düzenleme ve silme</p>
         </mat-card>
       </a>
     </div>
   </div>
+  <span fxFlex="15" fxFlex.gt-lg="25"></span>
 </div>

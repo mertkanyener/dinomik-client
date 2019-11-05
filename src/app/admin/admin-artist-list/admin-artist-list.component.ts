@@ -2,7 +2,7 @@ import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core
 import {HttpService} from '../../shared/http.service';
 import {ArtistService} from '../../artist/artist.service';
 import {Artist} from '../../shared/artist.model';
-import {MatDialog, MatSort, MatTableDataSource} from '@angular/material';
+import { MatDialog, MatSort, MatTableDataSource, MatPaginator } from '@angular/material';
 import {Subscription} from 'rxjs';
 import {UtilityService} from '../../shared/utility.service';
 import {DeleteDialogComponent} from '../delete-dialog/delete-dialog.component';
@@ -12,17 +12,11 @@ import { ArtistHttpService } from 'src/app/artist/artist-http.service';
 @Component({
   selector: 'app-admin-artist-list',
   templateUrl: './admin-artist-list.component.html',
-  styleUrls: ['./admin-artist-list.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ])
-  ]
+  styleUrls: ['./admin-artist-list.component.css']
 })
 export class AdminArtistListComponent implements OnInit, OnDestroy {
 
+  pageSize = 10;
   artists: Artist[];
   expandedArtist: Artist;
   dataSource: MatTableDataSource<Artist> = new MatTableDataSource(this.artists);
@@ -35,24 +29,22 @@ export class AdminArtistListComponent implements OnInit, OnDestroy {
       this.dataSource.sort = this.sort;
     }
   }
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private artistHttpService: ArtistHttpService,
-              private artistService: ArtistService,
-              private utilService: UtilityService,
+  constructor(public artistHttpService: ArtistHttpService,
+              public artistService: ArtistService,
+              public utilService: UtilityService,
               public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.artists = this.artistService.getArtists();
-    console.log('Artists: ', this.artists);
-    this.dataSource = new MatTableDataSource(this.artists);
-    this.dataSource.filterPredicate = this.utilService.tableFilter();
-    this.dataSource.sort = this.sort;
+    this.artistHttpService.getAllArtists();
     this.subscription = this.artistService.artistsChanged.subscribe(
       (artists: Artist[]) => {
         this.artists = artists;
+        this.dataSource.sort = this.sort;
         this.dataSource.data = artists;
         this.dataSource.filterPredicate = this.utilService.tableFilter();
-        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       }
     );
   }
@@ -61,7 +53,7 @@ export class AdminArtistListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  onDelete(id: number){
+  onDelete(id: number) {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -70,10 +62,13 @@ export class AdminArtistListComponent implements OnInit, OnDestroy {
     });
   }
 
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
-
-
-
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
 
 
 }
