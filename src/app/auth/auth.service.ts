@@ -42,6 +42,13 @@ export class AuthService{
 
     return headers;
 }
+  getAdminHeaders(): HttpHeaders {
+    const headers = new HttpHeaders(
+      { 'Authorization': 'Bearer ' + this.cookieService.get('admin_access_token') }
+    );
+
+    return headers;
+  }
 
   registerUser(user: User) {
     this.http.post(this.path + 'register', user).subscribe(

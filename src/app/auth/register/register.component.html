@@ -68,13 +68,6 @@
           <mat-error *ngIf="form.get('passwords.confirmPassword').hasError('NoPassMatch')">* Şifreler birbiriyle aynı değil.</mat-error>  
         </mat-form-field>
       </div>
-          <input
-          color="primary" 
-          type="file"
-          id="image"
-          accept="image/*"
-          (change)="changeListener($event)">
-        <img [src]="this.image.dataUrl" alt="Image">
       <div fxLayout="row" fxLayoutGap="3rem">
         <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Kayıt Ol</button>
         <button mat-raised-button color="warn" type="button" (click)="onCancel()">Vazgeç</button>

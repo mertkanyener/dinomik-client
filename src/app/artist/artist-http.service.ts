@@ -1,3 +1,4 @@
+import { HttpService } from './../shared/http.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ArtistService } from 'src/app/artist/artist.service';
 import { Injectable } from "@angular/core";
@@ -11,11 +12,13 @@ import { AuthService } from '../auth/auth.service';
 export class ArtistHttpService {
 
     private path = 'http://localhost:6060/';
+    private imageServerPath = 'http://localhost:9999/images/aritsts/';
 
-    constructor(private artistService: ArtistService,
-                private http: HttpClient,
-                private utilityService: UtilityService,
-                private authService: AuthService) {}
+    constructor(public artistService: ArtistService,
+                public http: HttpClient,
+                public utilityService: UtilityService,
+                public authService: AuthService,
+                public httpService: HttpService) {}
 
     getAllArtists() {
         const url = this.path + 'artists';
@@ -69,9 +72,11 @@ export class ArtistHttpService {
         );
       }
 
-      updateArtist(id: number, artist: Artist) {
+      updateArtist(id: number, artist: Artist, image: File) {
         this.http.put(this.path + 'admin/artists/' + id, artist, this.authService.httpOptions).subscribe(
           (res) => {
+            const fileName = this.httpService.uploadImage(image, 'artist', id);
+            artist.image = this.imageServerPath + fileName;
             this.artistService.updateArtist(id, artist);
           },
           (error) => {
@@ -80,9 +85,12 @@ export class ArtistHttpService {
         );
       }
 
-      addArtist(artist: Artist) {
-        this.http.post(this.path + 'admin/artists', artist, this.authService.httpOptions).subscribe(
-          (res) => {
+      addArtist(artist: Artist, image: File) {
+        this.http.post(this.path + 'admin/artists', artist, {headers: this.authService.getAdminHeaders(), responseType: 'text'}).subscribe(
+          (id: string) => {
+            artist.id = Number(id);
+            const fileName = this.httpService.uploadImage(image, 'artist', artist.id);
+            artist.image = this.imageServerPath + fileName;
             this.artistService.addArtist(artist);
           },
           (error) => {

@@ -27,13 +27,13 @@ export class AdminArtistEditComponent implements OnInit {
   imageUploaded = false;
   imageChanged = new Subject<Image>();
 
-  constructor(private artistHttpService: ArtistHttpService,
-              private http: HttpService,
-              private route: ActivatedRoute,
-              private artistService: ArtistService,
-              private router: Router,
-              private utilService: UtilityService,
-              private sanitizer: DomSanitizer,
+  constructor(public artistHttpService: ArtistHttpService,
+              public http: HttpService,
+              public route: ActivatedRoute,
+              public artistService: ArtistService,
+              public router: Router,
+              public utilService: UtilityService,
+              public sanitizer: DomSanitizer,
               public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -72,30 +72,10 @@ export class AdminArtistEditComponent implements OnInit {
     const value = this.form.value;
     this.artist.name = value.name;
     this.artist.image = value.imgPath;
-    const dialogRef = this.dialog.open(DeleteDialogComponent, {});
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        if (this.editMode) {
-          if (this.imageUploaded) {  // If an image is uploaded
-            const status = this.http.uploadImage(this.image.file, 'artists', this.image.file.name);
-            if (status === 200 ) {
-              this.artist.image = 'http://localhost:9999/images/artists/' + this.image.file.name;
-              console.log('Path: ', this.artist.image);
-            } else {
-              console.log('An error occured. Status: ', status);
-            }
-          }
-        } else {
-          
-
-        }
-      }
-    });
     if (this.editMode) {
-      this.artistHttpService.updateArtist(this.id, this.artist);
-      console.log('Artist: ', this.artist);
+      this.artistHttpService.updateArtist(this.id, this.artist, this.image.file);
     } else {
-      this.artistHttpService.addArtist(this.artist);
+      this.artistHttpService.addArtist(this.artist, this.image.file);
     }
   }
 

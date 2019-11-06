@@ -1,37 +1,31 @@
-import {HttpClient, HttpRequest, HttpResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
-import {map} from 'rxjs/operators';
 
 @Injectable()
 export class HttpService {
 
   private path = 'http://localhost:6060/';
 
-  constructor(private http: HttpClient,
-              private authService: AuthService) {
+  constructor(public http: HttpClient,
+              public authService: AuthService ) {
 
   }
 
-  uploadImage(image: File, type: string, name: string): number {
-
-    let status: number;
-    const req = new HttpRequest('POST', this.path + 'admin/images/' + type, image, this.authService.httpOptions );
-    this.http.request(req).pipe(map(
-      (res: HttpResponse<any>) => {
-        status = res.status;
-        console.log('Status: ', status);
-      }
-   )).subscribe(
-      (resp) => {
-        console.log('Image uploaded successfully!');
+  uploadImage(image: File, type: string, id: number): string {
+    let result = 'failed';
+    const url = this.path + type + '/' + id;
+    const formData = new FormData();
+    formData.append('image', image);
+    this.http.post(url, formData, {headers: this.authService.getAdminHeaders()}).subscribe(
+      (fileName: string) => {
+        result = fileName;
       },
       (error) => {
-        console.log('ERROR: ', error);
+        console.log('HttpService error: ', error);
       }
     );
-
-    return status;
+    return result;
   }
 
 
