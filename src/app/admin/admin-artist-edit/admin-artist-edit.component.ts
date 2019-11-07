@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {HttpService} from '../../shared/http.service';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {Artist} from '../../shared/artist.model';
@@ -6,7 +6,7 @@ import {ArtistService} from '../../artist/artist.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {UtilityService} from '../../shared/utility.service';
 import {DomSanitizer} from '@angular/platform-browser';
-import {Subject} from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import {Image} from '../../shared/image.model';
 import {MatDialog} from '@angular/material';
 import {DeleteDialogComponent} from '../delete-dialog/delete-dialog.component';
@@ -17,7 +17,7 @@ import { ArtistHttpService } from 'src/app/artist/artist-http.service';
   templateUrl: './admin-artist-edit.component.html',
   styleUrls: ['./admin-artist-edit.component.css']
 })
-export class AdminArtistEditComponent implements OnInit {
+export class AdminArtistEditComponent implements OnInit, OnDestroy {
 
   editMode = false;
   id: number;
@@ -26,6 +26,9 @@ export class AdminArtistEditComponent implements OnInit {
   image = new Image('', null);
   imageUploaded = false;
   imageChanged = new Subject<Image>();
+  viewedImageUrl: any;
+  imageSubscription: Subscription;
+  artistSubscription: Subscription;
 
   constructor(public artistHttpService: ArtistHttpService,
               public http: HttpService,
@@ -40,15 +43,28 @@ export class AdminArtistEditComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
-        if(params['id'] != null) {
+        if (params['id'] != null) {
           this.editMode = true;
-          this.artist = this.artistService.getArtistById(this.id);
+          if (this.artistService.getArtistById(this.id) === undefined) {
+            this.artistHttpService.getArtist(this.id);
+            this.artistSubscription = this.artistService.artistChanged.subscribe(
+              (artist: Artist) => {
+                this.artist = artist;
+              }
+            );
+          } else {
+            this.artist = this.artistService.getArtistById(this.id);
+          }
         }
       }
     );
+    if (this.editMode) {
+      this.viewedImageUrl = this.artist.image;
+    }
     this.imageChanged.subscribe(
       (image: Image) => {
         this.image = image;
+        console.log('Image changed: ', this.image);
       }
     );
     this.initForm();
@@ -88,8 +104,15 @@ export class AdminArtistEditComponent implements OnInit {
   }
 
   changeListener($event) {
-    this.imageUploaded = true;
     this.utilService.readImage($event.target, this.imageChanged, this.sanitizer, this.image);
+    this.viewedImageUrl = this.image.dataUrl;
+    console.log('Image url : ', this.image.dataUrl);
+  }
+
+  ngOnDestroy() {
+    if (this.artistSubscription !== undefined) {
+      this.artistSubscription.unsubscribe();
+    }
   }
 
 }

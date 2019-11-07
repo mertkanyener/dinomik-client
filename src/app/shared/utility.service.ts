@@ -37,6 +37,8 @@ export class UtilityService {
       const newImage = new Image(sanitizer.bypassSecurityTrustUrl(reader.result.toString()), image.file);
       fileChanged.next(newImage);
       image.dataUrl = reader.result.toString();
+      console.log('Image url : ', image.dataUrl);
+      
     };
     reader.readAsDataURL(image.file);
 
