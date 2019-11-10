@@ -17,6 +17,9 @@ export interface Grid{
 @Injectable()
 export class UtilityService {
 
+  private image: Image;
+  imageChanged = new Subject<Image>();
+
   tableFilter(): (data: any, filter:string) => boolean {
     const filterFn = function (data, filter) {
       return data.name.toLowerCase().trim().indexOf(filter) !== -1;
@@ -28,17 +31,16 @@ export class UtilityService {
     dataSource.filter = value.trim().toLowerCase();
   }
 
-  readImage(input: any, fileChanged: Subject<any>, sanitizer: DomSanitizer, image: Image){
+  readImage(input: any, sanitizer: DomSanitizer, image: Image){
 
     image.file = input.files[0];
     const reader: FileReader = new FileReader();
 
     reader.onloadend = (e) => {
       const newImage = new Image(sanitizer.bypassSecurityTrustUrl(reader.result.toString()), image.file);
-      fileChanged.next(newImage);
+      this.image = newImage;
+      this.imageChanged.next(newImage);
       image.dataUrl = reader.result.toString();
-      console.log('Image url : ', image.dataUrl);
-      
     };
     reader.readAsDataURL(image.file);
 

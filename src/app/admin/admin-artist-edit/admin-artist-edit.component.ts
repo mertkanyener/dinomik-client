@@ -6,10 +6,9 @@ import {ArtistService} from '../../artist/artist.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {UtilityService} from '../../shared/utility.service';
 import {DomSanitizer} from '@angular/platform-browser';
-import { Subject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import {Image} from '../../shared/image.model';
 import {MatDialog} from '@angular/material';
-import {DeleteDialogComponent} from '../delete-dialog/delete-dialog.component';
 import { ArtistHttpService } from 'src/app/artist/artist-http.service';
 
 @Component({
@@ -25,7 +24,6 @@ export class AdminArtistEditComponent implements OnInit, OnDestroy {
   form: FormGroup;
   image = new Image('', null);
   imageUploaded = false;
-  imageChanged = new Subject<Image>();
   viewedImageUrl: any;
   imageSubscription: Subscription;
   artistSubscription: Subscription;
@@ -59,12 +57,11 @@ export class AdminArtistEditComponent implements OnInit, OnDestroy {
       }
     );
     if (this.editMode) {
-      this.viewedImageUrl = this.artist.image;
+      this.image.dataUrl = this.artist.image;
     }
-    this.imageChanged.subscribe(
+    this.imageSubscription = this.utilService.imageChanged.subscribe(
       (image: Image) => {
         this.image = image;
-        console.log('Image changed: ', this.image);
       }
     );
     this.initForm();
@@ -104,14 +101,17 @@ export class AdminArtistEditComponent implements OnInit, OnDestroy {
   }
 
   changeListener($event) {
-    this.utilService.readImage($event.target, this.imageChanged, this.sanitizer, this.image);
-    this.viewedImageUrl = this.image.dataUrl;
+    this.utilService.readImage($event.target, this.sanitizer, this.image);
     console.log('Image url : ', this.image.dataUrl);
   }
 
   ngOnDestroy() {
     if (this.artistSubscription !== undefined) {
       this.artistSubscription.unsubscribe();
+    }
+
+    if (this.imageSubscription !== undefined) {
+      this.imageSubscription.unsubscribe();
     }
   }
 
