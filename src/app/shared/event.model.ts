@@ -9,6 +9,7 @@ export class Event {
   dateView: string;
   dayOfWeek: string;
   time: string;
+  image: string;
   venue: Venue;
   artists: Artist[];
   webLink: string;

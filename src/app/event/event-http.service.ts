@@ -1,3 +1,4 @@
+import { HttpService } from './../shared/http.service';
 import { Event } from 'src/app/shared/event.model';
 import { AuthService } from './../auth/auth.service';
 import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
@@ -12,10 +13,11 @@ export class EventHttpService {
 
     private path = 'http://localhost:6060/';
 
-    constructor(private http: HttpClient,
-                private eventService: EventService,
-                private authService: AuthService,
-                private utilityService: UtilityService) {}
+    constructor(public http: HttpClient,
+                public eventService: EventService,
+                public authService: AuthService,
+                public utilityService: UtilityService,
+                public httpService: HttpService) {}
 
 
   getEvent(id: number) {

@@ -1,6 +1,5 @@
 .avatar{
     background-size: cover;
-    background-image: url('http://localhost:9999/images/artists/shiba.jpg');
 }
 
 mat-card {

@@ -62,7 +62,7 @@ export class ArtistHttpService {
 
 
       deleteArtist(id: number) {
-        this.http.delete(this.path + 'admin/artists/' + id, this.authService.httpOptions).subscribe(
+        this.http.delete(this.path + 'admin/artists/' + id, {headers: this.authService.getAdminHeaders()}).subscribe(
           (res) => {
             this.artistService.deleteArtist(id);
           },
@@ -73,11 +73,14 @@ export class ArtistHttpService {
       }
 
       updateArtist(id: number, artist: Artist, image: File) {
-        this.http.put(this.path + 'admin/artists/' + id, artist, this.authService.httpOptions).subscribe(
+        this.httpService.uploadImage(image, 'artist', id).then(value => {
+          artist.image = this.imageServerPath + value;
+        });
+        this.http.put(this.path + 'admin/artists/' + id, artist, {headers: this.authService.getAdminHeaders()}).subscribe(
           (res) => {
-            const fileName = this.httpService.uploadImage(image, 'artist', id);
-            artist.image = this.imageServerPath + fileName;
-            this.artistService.updateArtist(id, artist);
+            if (this.artistService.getArtists() !== undefined) {
+              this.artistService.updateArtist(id, artist);
+            }
           },
           (error) => {
             console.log('ERROR: ', error);
@@ -89,9 +92,12 @@ export class ArtistHttpService {
         this.http.post(this.path + 'admin/artists', artist, {headers: this.authService.getAdminHeaders(), responseType: 'text'}).subscribe(
           (id: string) => {
             artist.id = Number(id);
-            const fileName = this.httpService.uploadImage(image, 'artist', artist.id);
-            artist.image = this.imageServerPath + fileName;
-            this.artistService.addArtist(artist);
+            this.httpService.uploadImage(image, 'artist', Number(id)).then(value => {
+              artist.image = this.imageServerPath + value;
+            });
+            if (this.artistService.getArtists() !== undefined) {
+              this.artistService.addArtist(artist);
+            }
           },
           (error) => {
             console.log('ERROR: ', error);

@@ -1,3 +1,4 @@
+import { HttpService } from './../shared/http.service';
 import { UtilityService } from './../shared/utility.service';
 import { AuthService } from './../auth/auth.service';
 import { VenueService } from 'src/app/venue/venue.service';
@@ -10,14 +11,16 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class VenueHttpService {
 
+    private imageServerPath = 'http://localhost:9999/images/venues/';
     private path = 'http://localhost:6060/';
 
-    constructor(private http: HttpClient,
-                private venueService: VenueService,
-                private authService: AuthService,
-                private utilityService: UtilityService) {}
+    constructor(public http: HttpClient,
+                public venueService: VenueService,
+                public authService: AuthService,
+                public utilityService: UtilityService,
+                public httpService: HttpService) {}
 
-    
+
 getVenues() {
     this.http.get<Venue[]>(this.path + 'venues').subscribe(
       (venues) => {
@@ -58,7 +61,7 @@ getVenues() {
   }
 
   deleteVenue(id: number) {
-    this.http.delete(this.path + 'admin/venues/' + id, this.authService.httpOptions).subscribe(
+    this.http.delete(this.path + 'admin/venues/' + id, {headers: this.authService.getAdminHeaders()}).subscribe(
       (res) => {
         this.venueService.deleteVenue(id);
       },
@@ -68,10 +71,15 @@ getVenues() {
     );
   }
 
-  updateVenue(id: number, venue: Venue) {
-    this.http.put(this.path + 'admin/venues/' + id, venue, this.authService.httpOptions).subscribe(
+  updateVenue(id: number, venue: Venue, image: File) {
+    this.httpService.uploadImage(image, 'venue', id).then(value => {
+      venue.image = this.imageServerPath + value;
+    });
+    this.http.put(this.path + 'admin/venues/' + id, venue, {headers: this.authService.getAdminHeaders()}).subscribe(
       (res) => {
-        this.venueService.updateVenue(id, venue);
+        if (this.venueService.getVenues() !== undefined) {
+          this.venueService.updateVenue(id, venue);
+        }
       },
       (error) => {
         console.log('ERROR: ', error);
@@ -79,10 +87,17 @@ getVenues() {
     );
   }
 
-  addVenue(venue: Venue) {
-    this.http.post(this.path + 'admin/venues', venue, this.authService.httpOptions).subscribe(
-      (res) => {
-        this.venueService.addVenue(venue);
+  addVenue(venue: Venue, image: File) {
+    this.http.post(this.path + 'admin/venues', venue, {headers: this.authService.getAdminHeaders(), responseType: 'text'}).subscribe(
+      (id: string) => {
+        const idLong = Number(id);
+        venue.id = idLong;
+        this.httpService.uploadImage(image, 'venue', idLong).then(value => {
+          venue.image = this.imageServerPath + value;
+        });
+        if (this.venueService.getVenues() !== undefined) {
+          this.venueService.addVenue(venue);
+        }
       },
       (error) => {
         console.log('ERROR: ', error);

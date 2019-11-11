@@ -2,7 +2,7 @@
   <span fxFlex="30"></span>
   <mat-card fxFlex="40">
     <mat-card-header>
-      <div mat-card-avatar class="avatar"></div>
+      <div mat-card-avatar class="avatar" [ngStyle]="{ 'background-image': 'url(' + artist.image + ')'}"></div>
       <h1>{{ artist.name }}</h1>
     </mat-card-header>
     <mat-divider></mat-divider>
