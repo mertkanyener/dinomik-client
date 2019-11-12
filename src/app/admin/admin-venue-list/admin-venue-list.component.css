@@ -1,0 +1,45 @@
+a {
+    text-decoration: none;
+    color: #c1c1c1;
+  
+  
+  }
+  
+  h1 {
+    margin-top: 3rem;
+    color: #c1c1c1;
+    margin-bottom: 1rem;
+    font-size: 200%;
+  }
+  
+  #mainDiv{
+    margin-top: 2rem;
+  }
+  
+  #btn-add{
+    margin-right: 1rem;
+  }
+  
+  
+  mat-paginator {
+    width: 100%;
+    background-color: #19191a;
+  }
+  
+  i {
+    color: #c1c1c1;
+  
+  }
+  
+  .fill-remaining-space {
+    flex: 1 1 auto;
+  }
+  
+  table {
+    background-color: #19191a;   
+    width: 100%;
+  }
+  
+  .btn-row {
+    width: 100%;
+  }

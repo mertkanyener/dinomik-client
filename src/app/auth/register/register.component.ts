@@ -22,8 +22,6 @@ export class RegisterComponent implements OnInit {
   height = window.innerHeight;
   formBuilder = new FormBuilder();
   form: FormGroup;
-  image = new Image('', null);
-  imageChanged = new Subject<Image>();
   genders: Gender[] = [
     { value: 'male', name: 'Erkek' },
     { value: 'female', name: 'Kadın' }
@@ -37,11 +35,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.imageChanged.subscribe(
-      (image: Image) => {
-        this.image = image;
-      }
-    );
   }
 
   checkPasswords(c: AbstractControl) {
@@ -86,10 +79,6 @@ export class RegisterComponent implements OnInit {
       gender: null,
       birthDate: null
     });
-  }
-
-  changeListener($event) {
-    this.utilService.readImage($event.target, this.imageChanged, this.sanitizer, this.image);
   }
 
 
