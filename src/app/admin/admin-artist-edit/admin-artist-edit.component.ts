@@ -29,7 +29,6 @@ export class AdminArtistEditComponent implements OnInit, OnDestroy {
   artistSubscription: Subscription;
 
   constructor(public artistHttpService: ArtistHttpService,
-              public http: HttpService,
               public route: ActivatedRoute,
               public artistService: ArtistService,
               public router: Router,

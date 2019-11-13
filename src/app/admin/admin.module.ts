@@ -1,3 +1,4 @@
+import { AgmCoreModule } from '@agm/core';
 import {NgModule} from '@angular/core';
 import {AdminComponent} from './admin.component';
 import {AdminStartComponent} from './admin-start/admin-start.component';
@@ -16,7 +17,6 @@ import {HttpClientModule} from '@angular/common/http';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
-
 
 @NgModule({
   declarations: [
@@ -39,7 +39,10 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
     AngularFontAwesomeModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCUC95iOlSWV3njBfloU8VR3LWIKlQPRLc'
+   })
   ],
   entryComponents: [
     DeleteDialogComponent
