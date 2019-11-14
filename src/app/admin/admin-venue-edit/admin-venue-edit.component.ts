@@ -111,11 +111,12 @@ export class AdminVenueEditComponent implements OnInit, OnDestroy {
   }
 
   private initForm() {
+    const regex = new RegExp(/^\d+\.\d+$/);
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
       address: ['', [Validators.required, Validators.maxLength(100)]],
-      latitude: ['', [Validators.required, Validators.pattern('^\d+\.\d+$')]],
-      longitude: ['', [Validators.required, Validators.pattern('^\d+\.\d+$')]],
+      latitude: ['', [Validators.required, Validators.pattern(regex)]],
+      longitude: ['', [Validators.required, Validators.pattern(regex)]],
       city: [null, [Validators.required]]
     });
   }
@@ -125,6 +126,7 @@ export class AdminVenueEditComponent implements OnInit, OnDestroy {
     this.form.controls.address.setValue(venue.address);
     this.form.controls.latitude.setValue(venue.latitude);
     this.form.controls.longitude.setValue(venue.longitude);
+    this.form.controls.city.setValue(venue.city);
     this.image.dataUrl = venue.image;
   }
 

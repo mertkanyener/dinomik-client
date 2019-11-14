@@ -55,13 +55,13 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(private venueService: VenueService,
-              private route: ActivatedRoute,
-              private sanitizer: DomSanitizer,
-              private eventService: EventService,
-              private venueHttpService: VenueHttpService,
-              private eventHttpService: EventHttpService,
-              private utilService: UtilityService) { }
+  constructor(public venueService: VenueService,
+              public route: ActivatedRoute,
+              public sanitizer: DomSanitizer,
+              public eventService: EventService,
+              public venueHttpService: VenueHttpService,
+              public eventHttpService: EventHttpService,
+              public utilService: UtilityService) { }
 
   ngOnInit() {
     console.log('Month: ', this.date.getMonth());

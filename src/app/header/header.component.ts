@@ -61,7 +61,6 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this.authService.adminLogout();
-    this.router.navigate(['admin']);
   }
 
   isAdminView(): boolean {

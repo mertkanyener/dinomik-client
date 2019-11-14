@@ -145,8 +145,8 @@ export class AuthService{
   }
 
   adminLogout() {
-    this.cookieService.delete('admin_access_token');
-    this.cookieService.delete('admin_refresh_token');
+    this.cookieService.delete('admin_access_token', '/', '/');
+    this.cookieService.delete('admin_refresh_token', '/', '/');
     console.log('Is admin: ', this.isAdmin());
     this.router.navigate(['/admin']);
   }
