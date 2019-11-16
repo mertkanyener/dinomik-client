@@ -32,8 +32,13 @@ export class EventHttpService {
     );
   }
 
-  getAllEvents() {
-    const url = this.path + 'events';
+  getAllEvents(param?: string) {
+    let url = this.path + 'events';
+    if (param === 'coming') {
+      url = this.path + 'events/' + param;
+    } else if (param === 'past') {
+      url = this.path + 'events/' + param;
+    }
     this.http.get<any>(url).subscribe(
       (events: Event[]) => {
         this.eventService.setEvents(events);

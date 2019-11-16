@@ -60,6 +60,7 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
     this.subscription = this.eventService.eventPageChanged.subscribe(
       (eventPage: Page) => {
         this.events = this.eventService.normalizeEventNames(eventPage.objects, this.artist.name);
+        this.events = this.eventService.translateEventDates(this.events);
         this.dataSource.data = this.events;
         console.log('Events: ', this.events);
       },
