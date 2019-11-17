@@ -14,10 +14,11 @@ import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component'
 })
 export class AdminEventListComponent implements OnInit, OnDestroy {
 
+  pageSize = 10;
   events: Event[];
   dataSource: MatTableDataSource<Event> = new MatTableDataSource(this.events);
   subscription: Subscription;
-  displayedColumns = ['id', 'name', 'date', 'genre'];
+  displayedColumns = ['id', 'name', 'date', 'edit', 'delete'];
   sort;
   @ViewChild(MatSort) set content(content: ElementRef) {
     this.sort = content;

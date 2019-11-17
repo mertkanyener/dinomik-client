@@ -22,11 +22,12 @@
         <td mat-cell *matCellDef="let event">{{ event.id }}</td>
       </ng-container>
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sanatçı</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Etkinlik</th>
         <td mat-cell *matCellDef="let event"><a [routerLink]="['/etkinlikler', event.id]">{{ event.name }}</a></td>
       </ng-container>
       <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tarih</th>
+        <td mat-cell *matCellDef="let event">{{ event.dateView }}</td>
       </ng-container>
       <ng-container matColumnDef="edit">
         <th mat-header-cell *matHeaderCellDef>Düzenle</th>
