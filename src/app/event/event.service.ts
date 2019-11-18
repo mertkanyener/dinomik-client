@@ -110,6 +110,7 @@ export class EventService {
       const splitTime = event.time.split(':');
       event.time = splitTime[0] + ':' + splitTime[1];
       event.dateView = date.getDate() + ' ' + this.months[date.getMonth()] + ' ' + date.getFullYear();
+      event.dayOfWeek = this.getDayOfWeek(date.getDay());
       events[events.indexOf(event)] = event;
     });
     return events;
@@ -121,6 +122,11 @@ export class EventService {
     event.time = splitTime[0] + ':' + splitTime[1];
     event.dateView = date.getDate() + ' ' + this.months[date.getMonth()] + ' ' + date.getFullYear();
     return event;
+  }
+
+  getDayOfWeek(day: number): string {
+    const days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+    return days[day];
   }
 
 

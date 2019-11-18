@@ -1,7 +1,7 @@
 import { HttpService } from './../shared/http.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ArtistService } from 'src/app/artist/artist.service';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Artist } from '../shared/artist.model';
 import { map } from 'rxjs/operators';
 import { Page } from '../shared/page-model';

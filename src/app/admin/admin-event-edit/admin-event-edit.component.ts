@@ -34,6 +34,11 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
+  private initForm() {
+    let name = '';
+    
+  }
+
   ngOnDestroy() {
 
   }

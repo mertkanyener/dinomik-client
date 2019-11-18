@@ -57,6 +57,9 @@
             <span style="flex: 1 1 auto;"></span>
             <h3 class="mat-h3">{{ event.time }}</h3>
           </div>
+          <div fxLayout="row">
+            <h4 class="mat-h4">{{ event.dayOfWeek }}</h4>
+          </div>
           <a [routerLink]="['mekanlar', event.venue.id]"><h4 class="mat-h4">{{ event.venue.name }}</h4></a>
         </mat-card-content>
       </mat-card>
