@@ -12,6 +12,8 @@ import { Injectable } from '@angular/core';
 export class EventHttpService {
 
     private path = 'http://localhost:6060/';
+    private imageServerPath = 'http://localhost:9999/images/events/';
+
 
     constructor(public http: HttpClient,
                 public eventService: EventService,
@@ -261,11 +263,18 @@ export class EventHttpService {
     );
   }
 
-  updateEvent(id: number, event: Event) {
+  updateEvent(id: number, event: Event, image?: File) {
+    if (image !== null && image !== undefined) {
+      this.httpService.uploadImage(image, 'event', id).then(value => {
+        event.image = this.imageServerPath + value;
+      });
+    }
     const url = this.path + 'admin/events/' + id;
-    this.http.put(url, event, {headers: this.authService.getHeaders()}).subscribe(
+    this.http.put(url, event, {headers: this.authService.getAdminHeaders()}).subscribe(
       (res) => {
-        this.eventService.updateEvent(id, event);
+        if (this.eventService.getEvent(id) !== undefined) {
+          this.eventService.updateEvent(id, event);
+        }
       },
       (error) => {
         console.log('ERROR: ', error);
@@ -273,11 +282,20 @@ export class EventHttpService {
     );
   }
 
-  addEvent(event: Event) {
+  addEvent(event: Event, image?: File) {
     const url = this.path + 'admin/events/';
-    this.http.post(url, event, {headers: this.authService.getHeaders()}).subscribe(
-      (res) => {
-        this.eventService.addEvent(event);
+    this.http.post(url, event, {headers: this.authService.getAdminHeaders(), responseType: 'text'}).subscribe(
+      (id: string) => {
+        const idLong  = Number(id);
+        event.id = idLong;
+        if (image !== null && image !== undefined) {
+          this.httpService.uploadImage(image, 'event', idLong).then(value => {
+            event.image = this.imageServerPath + value;
+          });
+        }
+        if (this.eventService.getEvent(idLong) !== undefined) {
+          this.eventService.addEvent(event);
+        }
       },
       (error) => {
         console.log('ERROR: ', error);

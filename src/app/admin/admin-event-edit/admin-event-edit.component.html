@@ -1,3 +1,42 @@
-<p>
-  admin-event-edit works!
-</p>
+<div fxLayout="row" fxLayoutAlign="center start">
+  <span fxFlex="15" fxFlex.gt-md="25"></span>
+  <div fxFlex="70" fxFlex.gt-md="50" fxLayout="column">
+    <h1 class="mat-h1">{{ editMode ? 'Etkinlik Düzenleme' : 'Yeni Etkinlik Ekle' }}</h1>
+    <form (ngSubmit)="onSave()" [formGroup]="form">
+      <mat-form-field fxFlexFill>
+        <input 
+          type="text"
+          matInput
+          id="name"
+          formControlName="name"
+          placeholder="Etkinlik Adı">
+        <mat-error *ngIf="form.hasError('required', 'name')">* Etkinlik ismi gerekli</mat-error>
+        <mat-error *ngIf="form.hasError('maxLength', 'name')">* Etkinlik ismi çok uzun</mat-error>
+      </mat-form-field>
+      <br>
+      <div fxLayout="row" fxLayoutGap="2rem">
+        <mat-form-field>
+          <input
+            matInput
+            [matDatePicker]="picker"
+            placeholder="Tarih"
+            formControlName="date">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker [panelClass]="dino-class" #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="hour" placeholder="Saat">
+            <mat-option *ngFor="let hour of hours">{{ hour }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="minute" placeholder="Dakika">
+            <mat-option *ngFor="let minute of minutes">{{ minute }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      
+    </form>
+  </div>
+  <span fxFlex="15" fxFlex.gt-md="25"></span>
+</div>

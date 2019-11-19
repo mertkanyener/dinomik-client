@@ -4,7 +4,7 @@
     <h1 class="mat-h2">"{{ eventName }}" için sonuçlar: </h1>
     <mat-card *ngFor="let event of events">
       <div fxLayout="row">
-        <img fxFlex="30" mar-card-image [src]="event.artists[0].image" alt="image">
+        <img fxFlex="30" mar-card-image [src]="event.image" alt="image">
         <div fxLayout="column" style="width: 100%;">
           <div fxLayout="row">
               <a [routerLink]="['etkinlikler', event.id]">

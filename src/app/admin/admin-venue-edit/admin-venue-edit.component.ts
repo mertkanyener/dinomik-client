@@ -86,6 +86,7 @@ export class AdminVenueEditComponent implements OnInit, OnDestroy {
     this.venue.address = value.address;
     this.venue.latitude = value.latitude;
     this.venue.longitude = value.longitude;
+    this.venue.city = value.city;
     if (this.editMode) {
       this.venueHttp.updateVenue(this.id, this.venue, this.image.file);
     } else {
