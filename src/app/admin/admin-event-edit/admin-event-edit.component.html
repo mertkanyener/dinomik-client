@@ -35,7 +35,46 @@
           </mat-select>
         </mat-form-field>
       </div>
-      
+      <mat-form-field>
+        <mat-chip-list #chipList>
+          <mat-chip
+            *ngFor="let artist of artists"
+            selectable="false"
+            removable="true"
+            (removed)="remove(artist)">
+            {{ artist.name }}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            placeholder="Sanatçılar"
+            #artistInput
+            [formControl]="artistCtrl"
+            [matAutoComplete]="autoArtist"
+            [matChipInputFor]="chipList">
+        </mat-chip-list>
+        <mat-autocomplete #autoArtist="matAutoCompArtist" (optionSelected)="selected($event , 'artist')">
+          <mat-option *ngFor="let artist of filteredArtists | async" [value]="artist">
+            {{ artist.name }}
+          </mat-option>
+        </mat-autocomplete>  
+      </mat-form-field>
+      <mat-form-field>
+        <input 
+          type="text"
+          placeholder="Mekan"
+          matInput
+          [formControl]="venueCtrl"
+          [matAutoComplete]="autoVenue">
+        <mat-autocomplete #autoVenue="matAutoCompVenue" (optionSelected)="selected($event, 'venue')">
+          <mat-option *ngFor="let venue of filteredVenues | async" [value]="venue">
+            {{ venue.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="2rem">
+        <input type="file" id="image" accept="image/*" (change)="changeListener($event)">
+        <mat-checkbox [(ngModel)]="useArtistImage" [disabled]="isMultiArtistEvent()">Sanatçının Resmini Kullan</mat-checkbox>
+      </div>
     </form>
   </div>
   <span fxFlex="15" fxFlex.gt-md="25"></span>

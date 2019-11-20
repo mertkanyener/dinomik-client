@@ -9,12 +9,13 @@ import { UtilityService } from 'src/app/shared/utility.service';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { EventHttpService } from 'src/app/event/event-http.service';
 import { EventService } from 'src/app/event/event.service';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Image } from './../../shared/image.model';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { Event } from 'src/app/shared/event.model';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent } from '@angular/material';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-event-edit',
@@ -32,8 +33,10 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
   event = new Event();
   artists: Artist[];
   allArtists: Artist[];
+  filteredArtists: Observable<Artist[]>;
   venue: Venue;
   allVenues: Venue[];
+  filteredVenues: Observable<Venue[]>;
   form: FormGroup;
   fb = new FormBuilder();
   artistCtrl = new FormControl();
@@ -47,7 +50,8 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
 
   @ViewChild('artistInput') artistInput: ElementRef<HTMLInputElement>;
   @ViewChild('venueInput') venueInput: ElementRef<HTMLInputElement>;
-  @ViewChild('auto') matAutoComp: MatAutocomplete;
+  @ViewChild('autoArtist') matAutoCompArtist: MatAutocomplete;
+  @ViewChild('autoVenue') matAutoCompVenue: MatAutocomplete;
 
   constructor(public eventService: EventService,
               public eventHttpService: EventHttpService,
@@ -58,7 +62,21 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
               public route: ActivatedRoute,
               public router: Router,
               public utilService: UtilityService,
-              public sanitizer: DomSanitizer) { }
+              public sanitizer: DomSanitizer) {
+
+                this.filteredArtists = this.artistCtrl.valueChanges.pipe(
+                  startWith(''),
+                  map(value => typeof value === 'string' ? value : value.name),
+                  map(name => name ? this._filterArtist(name) : this.allArtists.slice())
+                );
+
+                this.filteredVenues = this.venueCtrl.valueChanges.pipe(
+                  startWith(''),
+                  map(value => typeof value === 'string' ? value : value.name),
+                  map(name => name ? this._filterVenue(name) : this.allVenues.slice())
+                );
+
+               }
 
   ngOnInit() {
     this.initForm();
@@ -196,15 +214,19 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
 
 
 
-  private _filter(value: string, type: string): Artist[] {
+  private _filterArtist(value: string): Artist[] {
     const filterValue = value.toLowerCase();
+    return this.allArtists.filter(artist => artist.name.toLowerCase().indexOf(filterValue) === 0);
 
-    if (type === 'artist') {
-      return this.allArtists.filter(artist => artist.name.toLowerCase().indexOf(filterValue) === 0);
-    } else {
-      return this.allVenues.filter(venue => venue.name.toLowerCase().indexOf(filterValue) === 0);
-    }
+  }
 
+  private _filterVenue(value: string): Venue[] {
+    const filterValue = value.toLowerCase();
+    return this.allVenues.filter(venue => venue.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  isMultiArtistEvent(): boolean {
+    return this.artists.length > 1;
   }
 
 }
