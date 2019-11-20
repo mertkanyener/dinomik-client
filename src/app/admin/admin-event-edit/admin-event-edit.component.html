@@ -18,7 +18,7 @@
         <mat-form-field>
           <input
             matInput
-            [matDatePicker]="picker"
+            [matDatepicker]="picker"
             placeholder="Tarih"
             formControlName="date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -49,10 +49,10 @@
             placeholder="Sanatçılar"
             #artistInput
             [formControl]="artistCtrl"
-            [matAutoComplete]="autoArtist"
+            [matAutocomplete]="autoArtist"
             [matChipInputFor]="chipList">
         </mat-chip-list>
-        <mat-autocomplete #autoArtist="matAutoCompArtist" (optionSelected)="selected($event , 'artist')">
+        <mat-autocomplete #autoArtist="matAutocomplete" (optionSelected)="selected($event , 'artist')">
           <mat-option *ngFor="let artist of filteredArtists | async" [value]="artist">
             {{ artist.name }}
           </mat-option>
@@ -64,8 +64,8 @@
           placeholder="Mekan"
           matInput
           [formControl]="venueCtrl"
-          [matAutoComplete]="autoVenue">
-        <mat-autocomplete #autoVenue="matAutoCompVenue" (optionSelected)="selected($event, 'venue')">
+          [matAutocomplete]="autoVenue">
+        <mat-autocomplete #autoVenue="matAutocomplete" (optionSelected)="selected($event, 'venue')">
           <mat-option *ngFor="let venue of filteredVenues | async" [value]="venue">
             {{ venue.name }}
           </mat-option>
