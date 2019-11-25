@@ -31,11 +31,11 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
   editMode = false;
   id: number;
   event = new Event();
-  artists: Artist[];
-  allArtists: Artist[];
+  artists = new Array<Artist>();
+  allArtists = new Array<Artist>();
   filteredArtists: Observable<Artist[]>;
-  venue: Venue;
-  allVenues: Venue[];
+  venue = new Venue();
+  allVenues = new Array<Venue>();
   filteredVenues: Observable<Venue[]>;
   form: FormGroup;
   fb = new FormBuilder();
@@ -43,6 +43,8 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
   venueCtrl = new FormControl();
   image = new Image('', null);
   useArtistImage = false;
+  removable = true;
+  selectable = false;
   imageSubscription: Subscription;
   eventSubscription: Subscription;
   artistSubscription: Subscription;
@@ -130,12 +132,14 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
   }
 
   setFormValues(event: Event) {
-    const timeArr = this.event.time.split(':');
+    const timeArr = event.time.split(':');
     this.form.controls.hour.setValue(timeArr[0]);
     this.form.controls.minute.setValue(timeArr[1]);
     this.form.controls.name.setValue(event.name);
+    this.form.controls.date.setValue(event.date);
     this.artists = event.artists;
     this.venue = event.venue;
+    this.venueCtrl.setValue(this.venue.name);
     this.image.dataUrl = event.image;
   }
 
@@ -190,9 +194,16 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
 
   selected(event: MatAutocompleteSelectedEvent, type: string) {
     if (type === 'artist') {
-      this.artists.push(event.option.value);
+      const selectedArtist: Artist = event.option.value;
+      const index = this.allArtists.indexOf(selectedArtist);
+      if (this.artists.find(x => x.id === selectedArtist.id) === undefined) {
+        this.artists.push(selectedArtist);
+        this.allArtists.splice(index, 1);
+      } else {
+        alert('Sanatçı zaten eklenmiş!');
+      }
       this.artistInput.nativeElement.value = '';
-      this.artistCtrl.setValue(null);
+      this.artistCtrl.setValue('');
     } else {
       this.venue = event.option.value;
       this.venueInput.nativeElement.value = '';
@@ -205,6 +216,7 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
 
     if (index >= 0) {
       this.artists.splice(index, 1);
+      this.allArtists.push(artist);
     }
   }
 
