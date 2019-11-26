@@ -253,7 +253,7 @@ export class EventHttpService {
 
   deleteEvent(id: number) {
     const url = this.path + 'admin/events/' + id;
-    this.http.delete(url, {headers: this.authService.getHeaders()}).subscribe(
+    this.http.delete(url, {headers: this.authService.getAdminHeaders()}).subscribe(
       (res) => {
         this.eventService.deleteEvent(id);
       },
@@ -272,7 +272,7 @@ export class EventHttpService {
     const url = this.path + 'admin/events/' + id;
     this.http.put(url, event, {headers: this.authService.getAdminHeaders()}).subscribe(
       (res) => {
-        if (this.eventService.getEvent(id) !== undefined) {
+        if (this.eventService.getEvents() !== undefined) {
           this.eventService.updateEvent(id, event);
         }
       },
@@ -293,7 +293,7 @@ export class EventHttpService {
             event.image = this.imageServerPath + value;
           });
         }
-        if (this.eventService.getEvent(idLong) !== undefined) {
+        if (this.eventService.getEvents() !== undefined) {
           this.eventService.addEvent(event);
         }
       },

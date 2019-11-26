@@ -16,6 +16,7 @@ import { Event } from 'src/app/shared/event.model';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent } from '@angular/material';
 import { startWith, map } from 'rxjs/operators';
+import { Genre } from 'src/app/shared/genre.interface';
 
 @Component({
   selector: 'app-admin-event-edit',
@@ -28,13 +29,22 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
            '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
   minutes = ['00', '05', '10', '15', '20', '25', '30', '35', '40', '45', '50', '55'];
 
+  genreList: Genre[] = [
+    {id: 1, name: 'Pop'},
+    {id: 2, name: 'Electronic'},
+    {id: 3, name: 'Rock'},
+    {id: 4, name: 'Metal'},
+    {id: 5, name: 'Jazz'},
+    {id: 6, name: 'Rap'},
+  ];
+
   editMode = false;
   id: number;
   event = new Event();
   artists = new Array<Artist>();
   allArtists = new Array<Artist>();
   filteredArtists: Observable<Artist[]>;
-  venue = new Venue();
+  venues = new Array<Venue>();
   allVenues = new Array<Venue>();
   filteredVenues: Observable<Venue[]>;
   form: FormGroup;
@@ -138,8 +148,7 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
     this.form.controls.name.setValue(event.name);
     this.form.controls.date.setValue(event.date);
     this.artists = event.artists;
-    this.venue = event.venue;
-    this.venueCtrl.setValue(this.venue.name);
+    this.venues.push(event.venue);
     this.image.dataUrl = event.image;
   }
 
@@ -164,16 +173,19 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
     this.event.date = date;
     this.event.time = time;
     this.event.artists = this.artists;
-    this.event.venue = this.venue;
+    this.event.venue = this.venues[0];
     if (this.useArtistImage) {
       this.event.image = this.event.artists[0].image;
       this.image = null;
     }
     if (this.editMode) {
+      console.log('Updated Event: ', this.event);
       this.eventHttpService.updateEvent(this.id, this.event, this.image.file);
     } else {
+      console.log('New Event: ', this.event);
       this.eventHttpService.addEvent(this.event, this.image.file);
     }
+    this.navigate();
   }
 
   onCancel() {
@@ -205,7 +217,7 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
       this.artistInput.nativeElement.value = '';
       this.artistCtrl.setValue('');
     } else {
-      this.venue = event.option.value;
+      this.venues.push(event.option.value);
       this.venueInput.nativeElement.value = '';
       this.venueCtrl.setValue(null);
     }
@@ -220,8 +232,12 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  removeVenue() {
-    this.venue = null;
+  removeVenue(venue: Venue) {
+    const index = this.venues.indexOf(venue);
+
+    if (index >= 0) {
+      this.venues.splice(index, 1);
+    }
   }
 
 
@@ -239,6 +255,10 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
 
   isMultiArtistEvent(): boolean {
     return this.artists.length > 1;
+  }
+
+  venueSelected(): boolean {
+    return this.venues.length > 0;
   }
 
 }

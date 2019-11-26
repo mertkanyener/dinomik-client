@@ -24,12 +24,12 @@
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker [panelClass]="dino-class" #picker></mat-datepicker>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field fxFlex="10">
           <mat-select formControlName="hour" placeholder="Saat">
             <mat-option *ngFor="let hour of hours" [value]="hour">{{ hour }}</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field fxFlex="10">
           <mat-select formControlName="minute" placeholder="Dakika">
             <mat-option *ngFor="let minute of minutes" [value]="minute">{{ minute }}</mat-option>
           </mat-select>
@@ -60,12 +60,24 @@
       </mat-form-field>
       <br>
       <mat-form-field fxFlexFill>
+        <mat-chip-list #venueChip>
+          <mat-chip
+            *ngFor="let venue of venues"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="removeVenue(venue)">
+            {{ venue.name }}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
         <input 
           type="text"
           placeholder="Mekan"
           matInput
+          [disabled]="venueSelected()"
           [formControl]="venueCtrl"
-          [matAutocomplete]="autoVenue">
+          [matAutocomplete]="autoVenue"
+          [matChipInputFor]="venueChip">
         <mat-autocomplete #autoVenue="matAutocomplete" (optionSelected)="selected($event, 'venue')">
           <mat-option *ngFor="let venue of filteredVenues | async" [value]="venue">
             {{ venue.name }}

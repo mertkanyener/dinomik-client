@@ -6,6 +6,7 @@ export class Event {
   id: number;
   name: string;
   date: Date;
+  endDate: Date;
   dateView: string;
   dayOfWeek: string;
   time: string;
