@@ -19,10 +19,19 @@
           <input
             matInput
             [matDatepicker]="picker"
-            placeholder="Tarih"
+            placeholder="Başlangıç Tarihi"
             formControlName="date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker [panelClass]="dino-class" #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="pickerEnd"
+            placeholder="Bitiş Tarihi"
+            formControlName="endDate">
+          <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+          <mat-datepicker [panelClass]="dino-class" #pickerEnd></mat-datepicker>
         </mat-form-field>
         <mat-form-field fxFlex="10">
           <mat-select formControlName="hour" placeholder="Saat">
@@ -81,6 +90,46 @@
         <mat-autocomplete #autoVenue="matAutocomplete" (optionSelected)="selected($event, 'venue')">
           <mat-option *ngFor="let venue of filteredVenues | async" [value]="venue">
             {{ venue.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div fxLayout="row">
+        <mat-form-field>
+          <input 
+            type="text"
+            placeholder="Spotify Link"
+            matInput
+            formControlName="spotifyLink">
+        </mat-form-field>
+        <br>
+        <mat-form-field>
+          <input 
+          type="text"
+          placeholder="Web Link"
+          matInput
+          formControlName="webLink">  
+        </mat-form-field>
+      </div>
+      <mat-form-field fxFlexFill>
+        <mat-chip-list #genreChips>
+          <mat-chip
+            *ngFor="let genre of genres"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="removeGenre(genre)">
+            {{ genre.name }}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input 
+            placeholder="Genre"
+            #genreInput
+            [formControl]="genreCtrl"
+            [matAutocomplete]="autoGenre"
+            [matChipInputFor]="genreChips">
+        </mat-chip-list>
+        <mat-autocomplete #autoGenre="matAutocomplete" (optionSelected)="selected($event, 'genre')">
+          <mat-option *ngFor="let genre of filteredGenres | async" [value]="genre">
+            {{ genre.name }}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>

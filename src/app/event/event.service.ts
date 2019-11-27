@@ -111,6 +111,11 @@ export class EventService {
       event.time = splitTime[0] + ':' + splitTime[1];
       event.dateView = date.getDate() + ' ' + this.months[date.getMonth()] + ' ' + date.getFullYear();
       event.dayOfWeek = this.getDayOfWeek(date.getDay());
+      if (event.endDate !== null) {
+        const endDate = new Date(event.endDate);
+        event.endDateView = endDate.getDate() + ' ' + this.months[endDate.getMonth()] + ' ' + endDate.getFullYear();
+        event.endDayOfWeek = this.getDayOfWeek(endDate.getDay());
+      }
       events[events.indexOf(event)] = event;
     });
     return events;

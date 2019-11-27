@@ -15,9 +15,9 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
   loginError = new AuthError();
   subscription: Subscription;
 
-  constructor(private authService: AuthService,
-              private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(public authService: AuthService,
+              public router: Router,
+              public route: ActivatedRoute) { }
 
   ngOnInit() {
     if (this.authService.isAdmin()){
@@ -33,7 +33,7 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
 
   onLogin(form: NgForm) {
     this.authService.userLogin(form.value.username, form.value.password, 'admin');
-    this.router.navigate(['admin/home']);
+    this.router.navigate(['home'], {relativeTo: this.route });
   }
 
   onCancel() {

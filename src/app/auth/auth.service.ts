@@ -27,6 +27,7 @@ export class AuthService{
 
   httpOptions: any;
   adminMode = false;
+  showSpinner = false;
 
   constructor(public http: HttpClient,
               public router: Router,
@@ -76,6 +77,8 @@ export class AuthService{
   }
 
   userLogin(username: string, password: string, userType: string) {
+    this.showLoadingSpinner();
+    console.log('Show spinner: ', this.showSpinner);
     let params;
     if (password === null) {
       params = new HttpParams().set('username', username);
@@ -94,6 +97,7 @@ export class AuthService{
       }
     )).subscribe(
       (token) => {
+        this.hideLoadingSpinner();
         if (token.access_token !== undefined) {
           if (userType === 'admin') {
             this.saveToken('admin_access_token', token.access_token);
@@ -102,11 +106,12 @@ export class AuthService{
             this.saveToken('dino_access_token', token.access_token);
             this.saveToken('dino_refresh_token', token.refresh_token);
             this.cookieService.set('userId', token.userId.toString());
-            location.reload();
           }
+          location.reload();
         }
       },
       (error) => {
+        this.hideLoadingSpinner();
         const loginError: AuthError = JSON.parse(error['error']);
         this.authError.next(loginError);
       }
@@ -165,6 +170,14 @@ export class AuthService{
         )
       };
     }
+  }
+
+  showLoadingSpinner() {
+    this.showSpinner = true;
+  }
+
+  hideLoadingSpinner() {
+    this.showSpinner = false;
   }
 
 //Validations

@@ -2,7 +2,11 @@
   <h1 class="mat-h1">Admin Giriş</h1>
 </div>
 <div class="row" fxLayout="row" fxLayoutAlign="center start">
-  <form (ngSubmit)="onLogin(f)" #f="ngForm">
+  <div *ngIf="authService.showSpinner; else elseBlock" fxLayout="column" fxFill fxLayoutAlign="center center">
+    <mat-spinner></mat-spinner>
+  </div>
+  <ng-template #elseBlock>
+    <form (ngSubmit)="onLogin(f)" #f="ngForm">
     <div fxLayout="column">
       <mat-form-field>
         <input type="text"
@@ -11,8 +15,7 @@
                ngModel
                placeholder="Kullanıcı Adı"
                id="username"
-               name="username"
-        >
+               name="username">
         <mat-error *ngIf="f.hasError('required', 'username')">* Kullanıcı Adı gerekli</mat-error>
       </mat-form-field>
       <br>
@@ -23,8 +26,7 @@
                ngModel
                id="password"
                name="password"
-               placeholder="Şifre"
-        >
+               placeholder="Şifre">
         <mat-error *ngIf="f.hasError('required', 'password')">* Şifre gerekli</mat-error>
       </mat-form-field>
       <mat-error *ngIf="loginError.error_description === 'Bad credentials'">Kullanıcı adı veya şifre yanlış!</mat-error>
@@ -35,4 +37,5 @@
       </div>
     </div>
   </form>
+  </ng-template>
 </div>

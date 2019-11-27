@@ -47,10 +47,13 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
   venues = new Array<Venue>();
   allVenues = new Array<Venue>();
   filteredVenues: Observable<Venue[]>;
+  genres = new Array<Genre>();
+  filteredGenres: Observable<Genre[]>;
   form: FormGroup;
   fb = new FormBuilder();
   artistCtrl = new FormControl();
   venueCtrl = new FormControl();
+  genreCtrl = new FormControl();
   image = new Image('', null);
   useArtistImage = false;
   removable = true;
@@ -62,8 +65,10 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
 
   @ViewChild('artistInput') artistInput: ElementRef<HTMLInputElement>;
   @ViewChild('venueInput') venueInput: ElementRef<HTMLInputElement>;
+  @ViewChild('genreInput') genreInput: ElementRef<HTMLInputElement>;
   @ViewChild('autoArtist') matAutoCompArtist: MatAutocomplete;
   @ViewChild('autoVenue') matAutoCompVenue: MatAutocomplete;
+  @ViewChild('autoGenre') matAutoCompGenre: MatAutocomplete;
 
   constructor(public eventService: EventService,
               public eventHttpService: EventHttpService,
@@ -86,6 +91,12 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
                   startWith(''),
                   map(value => typeof value === 'string' ? value : value.name),
                   map(name => name ? this._filterVenue(name) : this.allVenues.slice())
+                );
+
+                this.filteredGenres = this.genreCtrl.valueChanges.pipe(
+                  startWith(''),
+                  map(value => typeof value === 'string' ? value : value.name),
+                  map(name => name ? this._filterGenre(name) : this.genreList.slice())
                 );
 
                }
@@ -136,8 +147,11 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
       date: [null, [Validators.required]],
+      endDate: null,
       hour: [null, [Validators.required]],
-      minute: [null, [Validators.required]]
+      minute: [null, [Validators.required]],
+      webLink: [null, [Validators.required]],
+      spotifyLink: [null]
     });
   }
 
@@ -147,8 +161,12 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
     this.form.controls.minute.setValue(timeArr[1]);
     this.form.controls.name.setValue(event.name);
     this.form.controls.date.setValue(event.date);
+    this.form.controls.endDate.setValue(event.endDate);
+    this.form.controls.webLink.setValue(event.webLink);
+    this.form.controls.spotifyLink.setValue(event.spotifyLink);
     this.artists = event.artists;
     this.venues.push(event.venue);
+    this.genres = event.genres;
     this.image.dataUrl = event.image;
   }
 
@@ -174,6 +192,9 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
     this.event.time = time;
     this.event.artists = this.artists;
     this.event.venue = this.venues[0];
+    this.event.spotifyLink = value.spotifyLink;
+    this.event.webLink = value.webLink;
+    this.event.genres = this.genres;
     if (this.useArtistImage) {
       this.event.image = this.event.artists[0].image;
       this.image = null;
@@ -216,10 +237,19 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
       }
       this.artistInput.nativeElement.value = '';
       this.artistCtrl.setValue('');
-    } else {
+    } else if (type === 'venue') {
       this.venues.push(event.option.value);
       this.venueInput.nativeElement.value = '';
       this.venueCtrl.setValue(null);
+    } else {
+      const selectedGenre: Genre = event.option.value;
+      const index = this.genreList.indexOf(selectedGenre);
+      if (this.genres.find(x => x.id === selectedGenre.id) === undefined) {
+        this.genres.push(selectedGenre);
+        this.genreList.splice(index, 1);
+      } else {
+        alert('Genre zaten eklenmiş!');
+      }
     }
   }
 
@@ -232,6 +262,15 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
     }
   }
 
+  removeGenre(genre: Genre) {
+    const index = this.genres.indexOf(genre);
+
+    if (index >= 0) {
+      this.genres.splice(index, 1);
+      this.genreList.push(genre);
+    }
+  }
+
   removeVenue(venue: Venue) {
     const index = this.venues.indexOf(venue);
 
@@ -239,8 +278,6 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
       this.venues.splice(index, 1);
     }
   }
-
-
 
   private _filterArtist(value: string): Artist[] {
     const filterValue = value.toLowerCase();
@@ -251,6 +288,11 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
   private _filterVenue(value: string): Venue[] {
     const filterValue = value.toLowerCase();
     return this.allVenues.filter(venue => venue.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  private _filterGenre(value: string): Genre[] {
+    const filterValue = value.toLowerCase();
+    return this.genreList.filter(genre => genre.name.toLowerCase().indexOf(filterValue) === 0);
   }
 
   isMultiArtistEvent(): boolean {

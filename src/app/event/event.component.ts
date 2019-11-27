@@ -18,9 +18,9 @@ export class EventComponent implements OnInit, OnDestroy {
   subscriptionEvent: Subscription;
   isMulti = false;
 
-  constructor(private eventService: EventService,
-              private route: ActivatedRoute,
-              private eventHttpService: EventHttpService) { }
+  constructor(public eventService: EventService,
+              public route: ActivatedRoute,
+              public eventHttpService: EventHttpService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
