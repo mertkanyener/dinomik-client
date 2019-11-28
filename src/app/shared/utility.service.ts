@@ -1,6 +1,6 @@
 import { Page } from 'src/app/shared/page-model';
 import { HttpResponse } from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {Injectable, HostListener} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
 import {Subject} from 'rxjs';
 import {DomSanitizer} from '@angular/platform-browser';
@@ -19,6 +19,9 @@ export class UtilityService {
 
   private image: Image;
   imageChanged = new Subject<Image>();
+
+  screenHeight: number;
+  screehWidth: number;
 
   tableFilter(): (data: any, filter:string) => boolean {
     const filterFn = function (data, filter) {
@@ -69,7 +72,22 @@ export class UtilityService {
     return array;
   }
 
-  transformObjectArray(objectArray: Array<any>, colSize: number ): Array<any> {
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?) {
+    this.screehWidth = window.innerWidth;
+    this.screehWidth = window.innerHeight;
+    console.log('Width: ', this.screehWidth, '  Height: ', this.screenHeight);
+  }
+
+  transformObjectArray(objectArray: Array<any>, screenSize: string): Array<any> {
+    let colSize: number;
+    if (screenSize === 'xs') {
+      colSize = 1;
+    } else if (screenSize === 'md') {
+      colSize = 2;
+    } else {
+      colSize = 3;
+    }
     const rowNum = Math.floor(objectArray.length / colSize + 1);
     const result: Array<Array<any>> = new Array(rowNum);
     let n = 0;
@@ -91,5 +109,7 @@ export class UtilityService {
     page.objects = response['content'];
     return page;
   }
+
+
 }
 

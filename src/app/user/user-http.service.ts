@@ -55,7 +55,7 @@ export class UserHttpService {
     }
 
     searchFriends(firstName: string, lastName: string) {
-        const url = this.path + '/friends/find';
+        const url = this.path + 'friends/find';
         const params = new HttpParams().set('firstName', firstName).append('lastName', lastName);
         this.http.get<Friend[]>(url, { headers: this.authService.getHeaders(), params: params }).subscribe(
             (friends: Friend[]) => {

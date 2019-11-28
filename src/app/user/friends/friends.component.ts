@@ -29,12 +29,13 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.subscription = this.userService.friendsChanged.subscribe(
       (friends: Friend[]) => {
         console.log('Friends: ', friends);
-        this.friends = this.utilService.transformObjectArray(friends, 4);
+        this.friends = this.utilService.transformObjectArray(friends, 'lg');
       }
     );
     this.subscriptionSearch = this.userService.searchFriendsChanged.subscribe(
       (friends: Friend[]) => {
-        this.searchFriends = friends;
+        this.searchFriends = this.utilService.transformObjectArray(friends, 'lg');
+        console.log('Search results: ', this.searchFriends);
       }
     );
   }
@@ -45,6 +46,25 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   onRemoveFriend(id: number) {
     this.userHttpService.deleteFriend(id);
+  }
+
+  onSearch(searchValue: string) {
+    const arr = searchValue.split(' ');
+    let firstName = '';
+    let lastName = '';
+    if (arr.length > 2) {
+      for (let i = 0; i < arr.length - 1; i++) {
+        firstName = firstName + ' ' + arr[i];
+      }
+    } else {
+      firstName = arr[0];
+    }
+    if (arr.length !== 1){
+      lastName = arr[arr.length - 1];
+    }
+    console.log('First name: ', firstName, '  Last name: ', lastName);
+    this.userHttpService.searchFriends(firstName, lastName);
+    this.showFriends = false;
   }
 
   getPictureUrl(userId: number) {

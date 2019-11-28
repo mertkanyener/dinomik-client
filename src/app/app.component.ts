@@ -21,7 +21,8 @@ export class AppComponent implements OnInit {
   pictureUrl: string;
   subscription: Subscription;
   hasPhoto = true;
-  headerWidth = 90;
+  largeWidth = 90;
+  width = 70;
 
 
   constructor(public authService: AuthService,
@@ -61,9 +62,10 @@ export class AppComponent implements OnInit {
 
   isAdminView(): boolean {
     const arr = window.location.pathname.split('/');
-    const result = arr[1] === 'admin' || this.authService.isAdmin(); 
+    const result = arr[1] === 'admin' || this.authService.isAdmin();
     if (result) {
-      this.headerWidth = 100;
+      this.largeWidth = 100;
+      this.width = 100;
     }
     return result;
   }

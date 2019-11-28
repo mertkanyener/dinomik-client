@@ -1,8 +1,8 @@
 import { Genre } from './../shared/genre.interface';
 import { FormControl } from '@angular/forms';
 import { EventHttpService } from './../event/event-http.service';
-import { Subscription, from } from 'rxjs';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription, Subject } from 'rxjs';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {AuthService} from '../auth/auth.service';
 import {LoginComponent} from '../auth/login/login.component';
@@ -45,9 +45,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   monthId: number;
   year: number;
   events: Event[];
+  httpEvents: Event[];
   subscription: Subscription;
   subscriptionUser: Subscription;
   user: User;
+  screenHeight: number;
+  screenWidth: number;
+  screenSize: string;
+  screenSizeChanged = new Subject<string>();
 
   genres = new FormControl();
   cities = new FormControl();
@@ -94,7 +99,9 @@ export class HomeComponent implements OnInit, OnDestroy {
               public utilService: UtilityService,
               public userService: UserService,
               public userHttpService: UserHttpService,
-              public cookieService: CookieService) { }
+              public cookieService: CookieService) { 
+                this.getScreenSize();
+                }
 
   ngOnInit() {
     this.monthId = this.date.getMonth();
@@ -111,10 +118,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
-        this.events = this.utilService.transformObjectArray(events, 3);
+        this.httpEvents = events;
+        this.events = this.utilService.transformObjectArray(events, this.screenSize);
       },
       (error) => {
         console.log('ERROR: ', error);
+      }
+    );
+    this.screenSizeChanged.subscribe(
+      (screenSize: string) => {
+        this.events = this.utilService.transformObjectArray(this.httpEvents, screenSize);
       }
     );
     if (!this.authService.isAuthenticated()) {
@@ -168,5 +181,29 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 
+  @HostListener('window:resize', ['$event'])
+    getScreenSize(event?) {
+          this.screenHeight = window.innerHeight;
+          this.screenWidth = window.innerWidth;
+          if (this.screenWidth <= 599 && this.screenSize !== 'xs') {
+            this.screenSize = 'xs';
+            this.screenSizeChanged.next(this.screenSize);
+          } else if (600 <= this.screenWidth && this.screenWidth <= 1279 && this.screenSize !== 'md') {
+            this.screenSize = 'md';
+            this.screenSizeChanged.next(this.screenSize);
+          } else {
+            if (this.screenSize !== 'lg') {
+              this.screenSize = 'lg';
+              this.screenSizeChanged.next(this.screenSize);
+            }
+          }
+          console.log('Height: ', this.screenHeight, '  Width: ', this.screenWidth);
+    }
+
+  transformArray() {
+    if (this.events !== undefined && this.events !== null) {
+      this.events = this.utilService.transformObjectArray(this.httpEvents, this.screenSize);
+    }
+  }
 
 }

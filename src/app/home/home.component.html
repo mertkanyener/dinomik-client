@@ -11,8 +11,8 @@
   </button>
 </div>
 <div fxLayout="row" fxLayoutAlign="center start">
-  <span fxFlex="25"></span>
-  <div fxLayout="column" fxFlex="50">
+  <span fxFlex="15" fxFlex.gt-lg="25"></span>
+  <div fxLayout="column" fxFlex="70" fxFlex.gt-lg="50">
     <div id="filterRow" fxLayout="row" fxLayoutGap="3rem">
       <mat-form-field>
         <mat-select [formControl]="genres" multiple placeholder="Tür Seç">
@@ -30,7 +30,7 @@
       </button>
     </div>
     <div id="eventRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of events">
-      <mat-card fxFlex="30" *ngFor="let event of row">
+      <mat-card fxFlex="90" fxFlex.gt-xs="45"  fxFlex.gt-md="30" *ngFor="let event of row">
         <img mat-card-image [src]="event.image" alt="image">
         <mat-card-content fxLayout="column" fxLayoutGap="1px">
           <div fxLayout="row" fxLayoutAlign="start center">
@@ -71,6 +71,6 @@
       </div>
     </div>
   </div>
-  <span fxFlex="25"></span>
+  <span fxFlex="15" fxFlex.gt-lg="25"></span>
 </div>
 <br>
