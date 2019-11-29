@@ -21,7 +21,9 @@ export class UtilityService {
   imageChanged = new Subject<Image>();
 
   screenHeight: number;
-  screehWidth: number;
+  screenWidth: number;
+  screenSize: string;
+  screenSizeChanged = new Subject<string>();
 
   tableFilter(): (data: any, filter:string) => boolean {
     const filterFn = function (data, filter) {
@@ -72,11 +74,23 @@ export class UtilityService {
     return array;
   }
 
-  @HostListener('window:resize', ['$event'])
-  getScreenSize(event?) {
-    this.screehWidth = window.innerWidth;
-    this.screehWidth = window.innerHeight;
-    console.log('Width: ', this.screehWidth, '  Height: ', this.screenHeight);
+  calculateScreenSize(width: number): string {
+    let screenSize: string;
+    if (width <= 599) {
+      screenSize = 'xs';
+    } else if (600 <= width && width <= 1279) {
+      screenSize = 'md';
+    } else {
+      screenSize = 'lg';
+    }
+    return screenSize;
+  }
+
+  setScreenSize(size: string) {
+    if (this.screenSize !== size) {
+      this.screenSize = size;
+      this.screenSizeChanged.next(size);
+    }
   }
 
   transformObjectArray(objectArray: Array<any>, screenSize: string): Array<any> {

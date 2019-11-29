@@ -1,6 +1,6 @@
 <div [style.height.px]="height" fxLayout="row" fxLayoutAlign="center start">
-  <span fxFlex="25"></span>
-  <div fxFlex="50" fxLayout="column">
+  <span fxFlex="5" fxFlex.gt-xs="15" fxFlex.gt-lg="25"></span>
+  <div fxFlex="90" fxFlex.gt-xs="70" fxFlex.gt-lg="50" fxLayout="column">
     <div id="headerDiv" fxLayout="row" fxLayoutAlign="center start">
       <h1 class="mat-h1">Sevdiğin Sanatçılar</h1>
     </div>
@@ -16,7 +16,7 @@
       </mat-form-field>
     </div>
     <div id="artistRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of artists">
-      <mat-card fxFlex="30" *ngFor="let artist of row">
+      <mat-card fxFlex="90" fxFlex.gt-xs="45" fxFlex.gt-md="30" *ngFor="let artist of row">
         <img mat-card-image [src]="artist.image" alt="Image">
         <div fxLayout="row">
           <a [routerLink]="['sanatcilar', artist.id]"><h2 class="mat-h2">{{ artist.name }}</h2></a>
@@ -28,6 +28,5 @@
       </mat-card>
     </div>
   </div>
-  <span fxFlex="25"></span>
-
+  <span fxFlex="5" fxFlex.gt-xs="15" fxFlex.gt-lg="25"></span>
 </div>

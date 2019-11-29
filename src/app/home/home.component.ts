@@ -48,11 +48,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   httpEvents: Event[];
   subscription: Subscription;
   subscriptionUser: Subscription;
+  subscriptionScreenSize: Subscription;
   user: User;
-  screenHeight: number;
   screenWidth: number;
   screenSize: string;
-  screenSizeChanged = new Subject<string>();
 
   genres = new FormControl();
   cities = new FormControl();
@@ -125,8 +124,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         console.log('ERROR: ', error);
       }
     );
-    this.screenSizeChanged.subscribe(
+    this.subscriptionScreenSize =  this.utilService.screenSizeChanged.subscribe(
       (screenSize: string) => {
+        console.log('Screen sizE: ', this.screenSize);
+        this.screenSize = screenSize;
         this.events = this.utilService.transformObjectArray(this.httpEvents, screenSize);
       }
     );
@@ -183,27 +184,13 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   @HostListener('window:resize', ['$event'])
     getScreenSize(event?) {
-          this.screenHeight = window.innerHeight;
           this.screenWidth = window.innerWidth;
-          if (this.screenWidth <= 599 && this.screenSize !== 'xs') {
-            this.screenSize = 'xs';
-            this.screenSizeChanged.next(this.screenSize);
-          } else if (600 <= this.screenWidth && this.screenWidth <= 1279 && this.screenSize !== 'md') {
-            this.screenSize = 'md';
-            this.screenSizeChanged.next(this.screenSize);
-          } else {
-            if (this.screenSize !== 'lg') {
-              this.screenSize = 'lg';
-              this.screenSizeChanged.next(this.screenSize);
-            }
+          const size = this.utilService.calculateScreenSize(this.screenWidth);
+          if (this.screenSize === undefined) {
+            this.screenSize = size;
           }
-          console.log('Height: ', this.screenHeight, '  Width: ', this.screenWidth);
+          this.utilService.setScreenSize(size);
+          console.log('Width: ', this.screenWidth, '  Screen Size: ', this.screenSize);
     }
-
-  transformArray() {
-    if (this.events !== undefined && this.events !== null) {
-      this.events = this.utilService.transformObjectArray(this.httpEvents, this.screenSize);
-    }
-  }
 
 }

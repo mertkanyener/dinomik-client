@@ -15,10 +15,15 @@ export class FriendsComponent implements OnInit, OnDestroy {
   height = window.innerHeight;
   subscription: Subscription;
   subscriptionSearch: Subscription;
+  subscriptionScreenSize: Subscription;
   friends: Friend[];
+  userFriends: Friend[];
   searchFriends: Friend[];
   showFriends = true;
   searchValue = '';
+
+  screenWidth: number;
+  screenSize: string;
 
   constructor(public userHttpService: UserHttpService,
               public userService: UserService,
@@ -36,6 +41,15 @@ export class FriendsComponent implements OnInit, OnDestroy {
       (friends: Friend[]) => {
         this.searchFriends = this.utilService.transformObjectArray(friends, 'lg');
         console.log('Search results: ', this.searchFriends);
+      }
+    );
+
+    this.subscriptionScreenSize = this.utilService.screenSizeChanged.subscribe(
+      (screenSize: string) => {
+        this.screenSize = screenSize;
+        if (this.friends !== undefined) {
+          this.friends = this.utilService.transformObjectArray()
+        }
       }
     );
   }
