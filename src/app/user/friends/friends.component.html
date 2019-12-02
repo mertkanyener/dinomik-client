@@ -19,12 +19,12 @@
         <mat-icon>search</mat-icon>
       </button>
       <span style="flex: 1 1 auto;"></span>
-      <button *ngIf="!showFriends" (click)="onShowFriends()" color="primary"><label class="mat-body">Arkadaşları Göster</label></button>
+      <button mat-raised-button *ngIf="!showFriends" (click)="onShowFriends()" color="primary"><label class="mat-body">Arkadaşları Göster</label></button>
     </div>
     <h2 class="mat-h2" *ngIf="!showFriends">Arama Sonuçları: </h2>
     <div *ngIf="showFriends;else searchResults">
       <div class="friends-row" fxLayout="row" fxLayoutGap="5%"  *ngFor="let row of friends">
-        <mat-card fxFlex="20" *ngFor="let friend of row">
+        <mat-card fxFlex="90" fxFlex.gt-xs="45" fxFlex.gt-md="30" *ngFor="let friend of row">
           <img mar-card-image [src]="friend.image" alt="Image">
           <div fxLayout="row">
             <a [routerLink]="['kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>
@@ -40,7 +40,7 @@
     
     <ng-template #searchResults>
       <div class="friends-row" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of searchFriends">
-        <mat-card fxFlex="20" *ngFor="let friend of row">
+        <mat-card fxFlex="90" fxFlex.gt-xs="45" fxFlex.gt-md="30" *ngFor="let friend of row">
           <img mat-card-image [src]="friend.image" alt="Image">
           <div fxLayout="row">
             <a [routerLink]="['kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>

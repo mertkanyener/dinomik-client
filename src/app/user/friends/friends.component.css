@@ -13,3 +13,13 @@ input {
   #alreadyFriend {
       color: #0ddb4e
   }
+
+  mat-card {
+      background-color: #19191a;
+  }
+  
+  a {
+      text-decoration: none;
+      color: #c1c1c1;
+
+  }

@@ -33,13 +33,13 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.userHttpService.getFriends();
     this.subscription = this.userService.friendsChanged.subscribe(
       (friends: Friend[]) => {
-        console.log('Friends: ', friends);
-        this.friends = this.utilService.transformObjectArray(friends, 'lg');
+        this.userFriends = friends;
+        this.friends = this.utilService.transformObjectArray(friends, this.screenSize);
       }
     );
     this.subscriptionSearch = this.userService.searchFriendsChanged.subscribe(
       (friends: Friend[]) => {
-        this.searchFriends = this.utilService.transformObjectArray(friends, 'lg');
+        this.searchFriends = this.utilService.transformObjectArray(friends, this.screenSize);
         console.log('Search results: ', this.searchFriends);
       }
     );
@@ -47,8 +47,11 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.subscriptionScreenSize = this.utilService.screenSizeChanged.subscribe(
       (screenSize: string) => {
         this.screenSize = screenSize;
-        if (this.friends !== undefined) {
-          this.friends = this.utilService.transformObjectArray()
+        if (this.friends !== undefined && this.showFriends) {
+          this.friends = this.utilService.transformObjectArray(this.userFriends, this.screenSize);
+        }
+        if (this.searchFriends !== undefined) {
+          this.searchFriends = this.utilService.transformObjectArray(this.searchFriends, this.screenSize);
         }
       }
     );
@@ -60,6 +63,10 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   onRemoveFriend(id: number) {
     this.userHttpService.deleteFriend(id);
+  }
+
+  onShowFriends() {
+    this.showFriends = true;
   }
 
   onSearch(searchValue: string) {
@@ -89,9 +96,4 @@ export class FriendsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
     this.subscriptionSearch.unsubscribe();
   }
-
-  
-
-
-
 }
