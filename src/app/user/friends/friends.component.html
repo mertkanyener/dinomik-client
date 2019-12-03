@@ -1,6 +1,6 @@
 <div [style.height.px]="height" fxLayout="row">
-  <span fxFlex="25"></span>  
-  <div fxLayout="column" fxFlex="50">
+  <span fxFlex="5" fxFlex.gt-xs="15" fxFlex.gt-lg="25"></span>
+  <div fxLayout="column" fxFlex="90" fxFlex.gt-xs="70" fxFlex.gt-lg="50">
     <div id="titleRow" fxLayout="row" fxLayoutAlign="center">
       <h1 class="mat-h1">Arkadaşlarım</h1>
     </div>
@@ -26,14 +26,11 @@
       <div class="friends-row" fxLayout="row" fxLayoutGap="5%"  *ngFor="let row of friends">
         <mat-card fxFlex="90" fxFlex.gt-xs="45" fxFlex.gt-md="30" *ngFor="let friend of row">
           <img mar-card-image [src]="friend.image" alt="Image">
-          <div fxLayout="row">
-            <a [routerLink]="['kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>
-            <span style="flex: 1 1 auto;"></span>
+            <a [routerLink]="['/kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>
             <button mat-raised-button color="primary" (click)="onRemoveFriend(friend.id)">
               <mat-icon>clear</mat-icon>
               <label class="mat-body">Arkadaşlıktan Çıkar</label>
             </button>
-          </div>
         </mat-card>
       </div>
     </div>
@@ -42,9 +39,7 @@
       <div class="friends-row" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of searchFriends">
         <mat-card fxFlex="90" fxFlex.gt-xs="45" fxFlex.gt-md="30" *ngFor="let friend of row">
           <img mat-card-image [src]="friend.image" alt="Image">
-          <div fxLayout="row">
-            <a [routerLink]="['kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>
-          <span style="flex: 1 1 auto;"></span>
+            <a [routerLink]="['/kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>
           <button id="alreadyFriend" mat-flat-button *ngIf="userService.isFriend(friend.id);else notFriend">
             <mat-icon>how_to_reg</mat-icon>
             <label class="mat-body">Arkadaşsınız</label>
@@ -55,11 +50,10 @@
               <label class="mat-body">Ekle</label>
             </button>
           </ng-template>
-          </div>
         </mat-card>
       </div>
     </ng-template>
   </div>
-  <span fxFlex="25"></span>  
+  <span fxFlex="5" fxFlex.gt-xs="15" fxFlex.gt-lg="25"></span>
 
 </div>

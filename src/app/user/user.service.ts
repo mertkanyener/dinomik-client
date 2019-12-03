@@ -11,22 +11,28 @@ import { EventService } from '../event/event.service';
 export class UserService {
 
     private user: User;
+    private otherUser: User;
     private friends: Friend[];
     private searchFriends: Friend[];
     userChanged = new Subject<User>();
     friendsChanged = new Subject<Friend[]>();
     searchFriendsChanged = new Subject<Friend[]>();
-
+    otherUserChanged = new Subject<User>();
 
     constructor(public eventService: EventService) {}
 
-    setUser(user: User) {
-        this.user = user;
-        this.user.savedEvents = this.eventService.translateEventDates(this.user.savedEvents);
-        this.user.attendingEvents = this.eventService.translateEventDates(this.user.attendingEvents);
-        this.userChanged.next(this.user);
+    setUser(user: User, type: string) {
+        user.savedEvents = this.eventService.translateEventDates(user.savedEvents);
+        user.attendingEvents = this.eventService.translateEventDates(user.attendingEvents);
+        if (type === 'other') {
+            this.otherUser = user;
+            this.otherUserChanged.next(this.otherUser);
+        } else {
+            this.user = user;
+            this.userChanged.next(this.user);
+        }
     }
-
+   
     setFriends(friends: Friend[]) {
         this.friends = friends;
         this.friendsChanged.next(this.friends.slice());

@@ -1,0 +1,10 @@
+mat-card {
+    background-color: #19191a;
+}
+
+.avatar {
+    background-size: cover;
+    height: 12rem;
+    width: 12rem;
+
+}

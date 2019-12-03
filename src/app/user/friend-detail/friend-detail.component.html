@@ -1,3 +1,26 @@
-<p>
-  friend-detail works!
-</p>
+<div fxLayout="row" fxLayoutAlign="center start">
+  <span fxFlex="5" fxFlex.gt-xs="15" fxFlex.gt-lg="25"></span>
+  <div fxLayout="column" fxFlex="90" fxFlex.gt-xs="70" fxFlex.gt-lg="50">
+    <mat-card>
+      <mat-card-header>
+        <div mat-card-avatar class="avatar" [ngStyle]="{ 'background-image': 'url(' + user.image + ')'}"></div>
+        <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <button id="alreadyFriend" mat-flat-button *ngIf="userService.isFriend(user.id); else notFriend">
+          <mat-icon>how_to_reg</mat-icon>
+          <label class="mat-body">Arkadaşsınız</label>
+        </button>
+        <ng-template #notFriend>
+          <button type="button" mat-raised-button color="primary" (click)="onAddFriend(user)">
+            <mat-icon>person_add</mat-icon>
+            <label class="mat-body">Ekle</label>
+          </button>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <span fxFlex="5" fxFlex.gt-xs="15" fxFlex.gt-lg="25"></span>
+
+</div>

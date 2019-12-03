@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     if (this.authService.isAuthenticated() && this.userService.getUser() === undefined) {
-      this.userHttpService.getUser(this.cookieService.get('userId'));
+      this.userHttpService.getUser(this.cookieService.get('userId'), 'self');
     }
     this.user = this.userService.getUser();
     this.userService.userChanged.subscribe(

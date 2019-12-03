@@ -23,17 +23,17 @@ export class UserHttpService {
 
     //ASFSDF
 
-    getUser(id: string) {
+    getUser(id: string, type: string) {
         this.http.get<User>(this.path + id, { headers: this.authService.getHeaders() }).subscribe(
             (user: User) => {
                 console.log('User http : ', user);
-                this.userService.setUser(user);
+                this.userService.setUser(user, type);
             },
             (error: HttpErrorResponse) => {
                 console.log('UserHttpService error: ', error);
-                this.handleError(error).then(value => { 
+                this.handleError(error).then(value => {
                     if (value === 'tokenRefresh') {
-                        this.getUser(id);
+                        this.getUser(id, type);
                     }
                  });
             }
@@ -56,7 +56,9 @@ export class UserHttpService {
 
     searchFriends(firstName: string, lastName: string) {
         const url = this.path + 'friends/find';
-        const params = new HttpParams().set('firstName', firstName).append('lastName', lastName);
+        const params = new HttpParams().set('firstName', firstName)
+            .append('lastName', lastName)
+            .append('userId', this.cookieService.get('userId'));
         this.http.get<Friend[]>(url, { headers: this.authService.getHeaders(), params: params }).subscribe(
             (friends: Friend[]) => {
                 this.userService.setSearchFriends(friends);

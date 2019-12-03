@@ -3,7 +3,7 @@ import { Friend } from './../../shared/friend.model';
 import { Subscription } from 'rxjs';
 import { UserService } from './../user.service';
 import { UserHttpService } from './../user-http.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-friends',
@@ -19,6 +19,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
   friends: Friend[];
   userFriends: Friend[];
   searchFriends: Friend[];
+  httpFriends: Friend[];
   showFriends = true;
   searchValue = '';
 
@@ -27,7 +28,9 @@ export class FriendsComponent implements OnInit, OnDestroy {
 
   constructor(public userHttpService: UserHttpService,
               public userService: UserService,
-              public utilService: UtilityService) { }
+              public utilService: UtilityService) {
+                this.getScreenSize();
+               }
 
   ngOnInit() {
     this.userHttpService.getFriends();
@@ -39,6 +42,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
     );
     this.subscriptionSearch = this.userService.searchFriendsChanged.subscribe(
       (friends: Friend[]) => {
+        this.httpFriends = friends;
         this.searchFriends = this.utilService.transformObjectArray(friends, this.screenSize);
         console.log('Search results: ', this.searchFriends);
       }
@@ -51,7 +55,7 @@ export class FriendsComponent implements OnInit, OnDestroy {
           this.friends = this.utilService.transformObjectArray(this.userFriends, this.screenSize);
         }
         if (this.searchFriends !== undefined) {
-          this.searchFriends = this.utilService.transformObjectArray(this.searchFriends, this.screenSize);
+          this.searchFriends = this.utilService.transformObjectArray(this.httpFriends, this.screenSize);
         }
       }
     );
@@ -86,6 +90,18 @@ export class FriendsComponent implements OnInit, OnDestroy {
     console.log('First name: ', firstName, '  Last name: ', lastName);
     this.userHttpService.searchFriends(firstName, lastName);
     this.showFriends = false;
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?) {
+        this.screenWidth = window.innerWidth;
+        this.height = window.innerHeight;
+        const size = this.utilService.calculateScreenSize(this.screenWidth);
+        if (this.screenSize === undefined) {
+          this.screenSize = size;
+        }
+        this.utilService.setScreenSize(size);
+        console.log('Width: ', this.screenWidth, '  Screen Size: ', this.screenSize);
   }
 
   getPictureUrl(userId: number) {
