@@ -14,6 +14,10 @@ input {
       color: #0ddb4e
   }
 
+  .friends-row {
+      margin-bottom: 2rem;
+  }
+
   mat-card {
       background-color: #19191a;
   }
@@ -22,10 +26,15 @@ input {
     width: 100%;
     height: 70%;
 }
-
   
   a {
       text-decoration: none;
       color: #c1c1c1;
 
   }
+
+  .avatar{
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+}
