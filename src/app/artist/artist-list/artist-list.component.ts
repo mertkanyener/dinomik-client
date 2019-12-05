@@ -71,7 +71,8 @@ export class ArtistListComponent implements OnInit, OnDestroy {
     // );
     this.subscriptionEvents = this.eventService.eventPageChanged.subscribe(
       (eventPage: Page) => {
-        this.events = eventPage.objects;
+        let artistEvents: Event[] = this.eventService.translateEventDates(eventPage.objects);
+        this.events = artistEvents;
       },
       (error) => {
         console.log('Error: ', error);

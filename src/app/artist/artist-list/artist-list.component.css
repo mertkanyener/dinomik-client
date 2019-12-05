@@ -54,6 +54,10 @@ mat-icon {
 }
 
 
+mat-card {
+  background-color: #19191a;
+}
+
 
 /* 
 .card-img{

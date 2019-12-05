@@ -33,16 +33,19 @@
                 <img mat-card-image [src]="event.image" alt="Image">
                 <mat-card-content fxLayout="column">
                   <h3 class="mat-h3">{{ event.name }}</h3>
+                  <h4 class="mat-h4">{{ event.dateView }}</h4>
                   <div fxLayout="row">
-                    <h4 class="mat-h4">{{ event.date }}</h4>
+                    <h4 class="mat-h4">{{ event.dayOfWeek }}</h4>
                     <span style="flex: 1 1 auto;"></span>
                     <h4 class="mat-h4">{{ event.time }}</h4>
                   </div>
-                  <h5 class="mat-h5">{{ event.venue.name }}</h5>
+                  <a [routerLink]="['mekanlar', event.venue.id]"><h5 class="mat-h5">{{ event.venue.name }}</h5></a>
                 </mat-card-content>
               </mat-card>
             </div>
-            <a [routerLink]="artist.id" routerLinkActive="router-link-active">Daha fazlası için tıkla</a> 
+            <div fxLayout="row" fxLayoutAlign="end">
+                <a [routerLink]="artist.id" routerLinkActive="router-link-active">Daha fazlası için tıkla</a> 
+            </div>
           </div>
         </td>
       </ng-container>
