@@ -23,37 +23,46 @@
     </div>
     <h2 class="mat-h2" *ngIf="!showFriends">Arama Sonuçları: </h2>
     <div *ngIf="showFriends;else searchResults">
-      <div class="friends-row" fxLayout="row" fxLayoutGap="5%"  *ngFor="let row of friends">
-        <mat-card fxFlex="90" fxFlex.gt-xs="45" fxFlex.gt-md="30" *ngFor="let friend of row">
-          <div fxLayout="column" fxLayoutAlign="start center">
-            <div mat-card-avatar class="avatar" [ngStyle]="{ 'background-image': 'url(' + friend.image + ')'}"></div>
-            <a [routerLink]="['/kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>
-
-          </div>
-            <button mat-raised-button color="primary" (click)="onRemoveFriend(friend.id)">
-              <mat-icon>clear</mat-icon>
-              <label class="mat-body">Arkadaşlıktan Çıkar</label>
-            </button>
-        </mat-card>
+      <div class="friends-row" fxLayout="row" *ngFor="let row of friends">
+        <div fxLayout="row" fxLayoutAlign="center" *ngFor="let friend of row" fxFlex="90" fxFlex.gt-xs="45" fxFlex.gt-md="30">
+          <mat-card>
+            <div fxLayout="column" fxLayoutAlign="start center">
+              <div mat-card-avatar class="avatar" [ngStyle]="{ 'background-image': 'url(' + friend.image + ')'}"></div>
+              <br>
+              <a [routerLink]="['/kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>  
+            </div>
+              <button mat-raised-button color="warn" (click)="onRemoveFriend(friend.id)">
+                <mat-icon>clear</mat-icon>
+                <label class="mat-body">Sil</label>
+              </button>
+          </mat-card>
+        </div>
+        
       </div>
     </div>
     
     <ng-template #searchResults>
       <div class="friends-row" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of searchFriends">
-        <mat-card fxFlex="90" fxFlex.gt-xs="45" fxFlex.gt-md="30" *ngFor="let friend of row">
-          <img class="friend-img" mat-card-image [src]="friend.image" alt="Image">
-            <a [routerLink]="['/kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>
-          <button id="alreadyFriend" mat-flat-button *ngIf="userService.isFriend(friend.id);else notFriend">
-            <mat-icon>how_to_reg</mat-icon>
-            <label class="mat-body">Arkadaşsınız</label>
-          </button>
-          <ng-template #notFriend>
-            <button type="button" mat-raised-button color="primary" (click)="onAddFriend(friend)">
-              <mat-icon>person_add</mat-icon>
-              <label class="mat-body">Ekle</label>
+        <div fxLayout="row" fxLayoutAlign="center" *ngFor="let friend of row" fxFlex="90" fxFlex.gt-xs="45" fxFlex.gt-md="30">
+          <mat-card>
+            <div fxLayout="column" fxLayoutAlign="start center">
+              <div mat-card-avatar class="avatar" [ngStyle]="{ 'background-image': 'url(' + friend.image + ')'}"></div>
+              <br>
+              <a [routerLink]="['/kullanicilar', friend.id]"><h2 class="mat-h2">{{ friend.firstName }} {{friend.lastName}}</h2></a>  
+            </div>
+            <button id="alreadyFriend" mat-flat-button *ngIf="userService.isFriend(friend.id);else notFriend">
+              <mat-icon>how_to_reg</mat-icon>
+              <label class="mat-body">Arkadaşsınız</label>
             </button>
-          </ng-template>
-        </mat-card>
+            <ng-template #notFriend>
+              <button type="button" mat-raised-button color="primary" (click)="onAddFriend(friend)">
+                <mat-icon>person_add</mat-icon>
+                <label class="mat-body">Ekle</label>
+              </button>
+            </ng-template>
+          </mat-card>
+        </div>
+        
       </div>
     </ng-template>
   </div>
