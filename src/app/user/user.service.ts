@@ -12,12 +12,14 @@ export class UserService {
 
     private user: User;
     private otherUser: User;
-    private friends: Friend[];
+    private friends = new Array<Friend>();
     private searchFriends: Friend[];
+    private friend: Friend;
     userChanged = new Subject<User>();
     friendsChanged = new Subject<Friend[]>();
     searchFriendsChanged = new Subject<Friend[]>();
     otherUserChanged = new Subject<User>();
+    friendChanged = new Subject<Friend>();
 
     constructor(public eventService: EventService) {}
 
@@ -38,6 +40,11 @@ export class UserService {
         this.friendsChanged.next(this.friends.slice());
     }
 
+    setFriend(friend: Friend) {
+        this.friend = friend;
+        this.friendChanged.next(this.friend);
+    }
+
     setSearchFriends(friends: Friend[]) {
         this.searchFriends = friends;
         this.searchFriendsChanged.next(this.searchFriends.slice());
@@ -45,6 +52,8 @@ export class UserService {
 
     addFriend(friend: Friend) {
         this.friends.push(friend);
+        this.user.friends.push(friend.id);
+        this.userChanged.next(this.user);
         this.friendsChanged.next(this.friends.slice());
     }
 
@@ -60,8 +69,11 @@ export class UserService {
 
     removeFriend(id: number) {
         const index = this.friends.indexOf(this.friends.find(x => x.id === id));
+        const indexId = this.user.friends.indexOf(id);
         this.friends.splice(index, 1);
+        this.user.friends.splice(indexId, 1);
         this.friendsChanged.next(this.friends.slice());
+        this.userChanged.next(this.user);
     }
 
     removeSavedEvent(id: number) {
@@ -116,7 +128,7 @@ export class UserService {
     }
 
     isFriend(id: number): boolean {
-        return this.friends.find(x => x.id === id) !== undefined;
+        return this.user.friends.find(x => x === id) !== undefined;
     }
 
     getUser(): User {

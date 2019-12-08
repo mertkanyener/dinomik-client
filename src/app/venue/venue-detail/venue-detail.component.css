@@ -48,3 +48,7 @@ button {
 mat-option {
   background-color: #19191a;
 }
+
+agm-map {
+  height: 10rem;
+}

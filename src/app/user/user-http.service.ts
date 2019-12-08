@@ -54,6 +54,19 @@ export class UserHttpService {
 
     }
 
+    getFriend(id: number) {
+        const url = this.path + 'friends/find/' + id;
+        this.http.get<Friend>(url, { headers: this.authService.getHeaders()}).subscribe(
+            (friend: Friend) => {
+                this.userService.setFriend(friend);
+            },
+            (error) => {
+                console.log('UserHttpService error: ', error);
+                this.handleError(error);
+            }
+        );
+    }
+
     searchFriends(firstName: string, lastName: string) {
         const url = this.path + 'friends/find';
         const params = new HttpParams().set('firstName', firstName)

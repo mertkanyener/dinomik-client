@@ -18,6 +18,10 @@ export class User {
     likedGenres: Genre[];
     likedArtists: Artist[];
     friends: number[];
+    twitter: string;
+    spotify: string;
+    instagram: string;
+    facebook: string;
 
     constructor(){}
 }

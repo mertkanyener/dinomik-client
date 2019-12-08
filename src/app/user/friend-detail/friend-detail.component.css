@@ -6,5 +6,48 @@ mat-card {
     background-size: cover;
     height: 12rem;
     width: 12rem;
+}
 
+#alreadyFriend {
+    background-color: #19191a;
+    color: #0ddb4e;
+    margin-left: 0;
+    width: fit-content;
+    padding: 0;
+
+}
+
+#removeFriend {
+    height: fit-content;
+}
+
+#userCard {
+    margin-top: 3rem;
+}
+
+i {
+    margin-right: 0.5rem;
+    color: #ee2b84;
+}
+
+a {
+    color: #c1c1c1;
+    text-decoration: none;
+}
+
+.social-row {
+    margin-bottom: 0.5rem;
+}
+
+.event-name {
+    margin-bottom: 0;
+}
+
+.event-icon {
+    color: #ee2b84;
+}
+
+h2 {
+    font-size: x-large;
+    margin-top: 2rem;
 }

@@ -77,7 +77,7 @@ export class RegisterComponent implements OnInit {
         confirmPassword: [null]
       }, { validator: this.checkPasswords }),
       gender: null,
-      birthDate: null
+      birthDate: null,
     });
   }
 

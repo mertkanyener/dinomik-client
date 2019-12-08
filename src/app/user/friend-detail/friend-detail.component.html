@@ -1,25 +1,112 @@
 <div fxLayout="row" fxLayoutAlign="center start">
   <span fxFlex="5" fxFlex.gt-xs="15" fxFlex.gt-lg="25"></span>
   <div fxLayout="column" fxFlex="90" fxFlex.gt-xs="70" fxFlex.gt-lg="50">
-    <mat-card>
+    <mat-card id="userCard">
       <mat-card-header>
         <div mat-card-avatar class="avatar" [ngStyle]="{ 'background-image': 'url(' + user.image + ')'}"></div>
-        <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+        <div fxLayout="column" style="width: 100%;" >
+            <div fxLayout="row" style="width: 100%;" fxLayoutAlign="start center">
+              <h1>{{ user.firstName }} {{ user.lastName }}</h1>
+              <span style="flex: 1 1 auto;"></span>
+              <button id="removeFriend" mat-raised-button color="warn" *ngIf="userService.isFriend(user.id);else notFriend" (click)="onRemoveFriend(user.id)">
+                  <mat-icon>clear</mat-icon>
+                  <label class="mat-body">Takipten Çık</label>
+              </button>
+              <ng-template #notFriend>
+                <button type="button" mat-raised-button color="primary" (click)="onAddFriend()">
+                  <mat-icon>person_add</mat-icon>
+                  <label class="mat-body">Ekle</label>
+                </button>
+              </ng-template>
+            </div>
+            <div class="social-row" fxLayout="row" fxLayoutAlign="start center">
+              <i class="fab fa-2x fa-instagram"></i> <a href="https://www.instagram.com/mertkanyener/"><label class="mat-body">https://www.instagram.com/mertkanyener/</label></a>
+            </div>
+            <div class="social-row" fxLayout="row" fxLayoutAlign="start center">
+              <i class="fab fa-2x fa-twitter"></i><a href="https://twitter.com/dunadannn"><label class="mat-body">https://twitter.com/dunadannn</label></a>
+            </div>
+            <div class="social-row" fxLayout="row" fxLayoutAlign="start center">
+              <i class="fab fa-2x fa-spotify"></i><a href="https://open.spotify.com/user/11141433107?si=e8LDm0IYTEaUcs3fDa6kCg"><label class="mat-body">https://open.spotify.com/user/11141433107?si=e8LDm0IYTEaUcs3fDa6kCg</label></a>
+            </div>
+            <div class="social-row" fxLayout="row" fxLayoutAlign="start center">
+              <i class="fab fa-2x fa-facebook-f"></i><a href="https://www.facebook.com/NastyDwarf"><label class="mat-body">https://www.facebook.com/NastyDwarf</label></a>
+            </div>
+        </div>
       </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content>
-        <button id="alreadyFriend" mat-flat-button *ngIf="userService.isFriend(user.id); else notFriend">
-          <mat-icon>how_to_reg</mat-icon>
-          <label class="mat-body">Arkadaşsınız</label>
-        </button>
-        <ng-template #notFriend>
-          <button type="button" mat-raised-button color="primary" (click)="onAddFriend(user)">
-            <mat-icon>person_add</mat-icon>
-            <label class="mat-body">Ekle</label>
-          </button>
-        </ng-template>
-      </mat-card-content>
     </mat-card>
+    <br>
+    <h2 class="mat-h2">Kaydedilen Etkinlikler</h2>
+    <div class="event-row" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of shownSavedEvents">
+      <mat-card fxFlex="30" *ngFor="let event of row">
+        <img mat-card-image [src]="event.image" alt="Image">
+        <mat-card-content fxLayout="column" fxLayoutGap="1px">
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <a [routerLink]="['/etkinlikler', event.id]"><h2 class="mat-h2 event-name">{{ event.name }}</h2></a>
+            <span style="flex: 1 1 auto;"></span>          
+            <div *ngIf="authService.isAuthenticated()" fxLayout="row">
+                <button mat-icon-button *ngIf="userService.isSavedEvent(event.id);else notSaved" (click)="userHttpService.deleteSavedEvent(event.id)"><mat-icon class="event-icon">bookmark</mat-icon></button>
+                <ng-template #notSaved>
+                  <button mat-icon-button (click)="userHttpService.addSavedEvent(event)"><i class="material-icons-outlined">bookmark_border</i></button>
+                </ng-template>
+                <button class="attend-button" mat-icon-button *ngIf="userService.isAttendingEvent(event.id); else notGoing" (click)="userHttpService.deleteAttendingEvent(event.id)">
+                  <i class="fas fa-lg fa-calendar-check calendar"></i>
+                </button>
+                <ng-template #notGoing>
+                  <button class="attend-button" mat-icon-button (click)="userHttpService.addAttendingEvent(event)">
+                    <i class="far fa-lg fa-calendar-check calendar"></i>
+                  </button>
+                </ng-template>
+            </div>
+          </div>
+          <br>
+          <div fxLayout="row"> 
+              <h3 class="mat-h3">{{ event.dateView }}</h3>
+              <span style="flex: 1 1 auto;"></span>
+              <h3 class="mat-h3">{{ event.time }}</h3>
+            </div>
+            <div fxLayout="row">
+              <h4 class="mat-h4">{{ event.dayOfWeek }}</h4>
+            </div>
+            <a [routerLink]="['/mekanlar', event.venue.id]"><h4 class="mat-h4">{{ event.venue.name }}</h4></a>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <h2 class="mat-h2">Gidilen Etkinlikler</h2>
+    <div class="event-row" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of shownAttendingEvents">
+        <mat-card fxFlex="30" *ngFor="let event of row">
+          <img mat-card-image [src]="event.image" alt="Image">
+          <mat-card-content fxLayout="column" fxLayoutGap="1px">
+            <div fxLayout="row" fxLayoutAlign="start center">
+              <a [routerLink]="['/etkinlikler', event.id]"><h2 class="mat-h2 event-name">{{ event.name }}</h2></a>
+              <span style="flex: 1 1 auto;"></span>          
+              <div *ngIf="authService.isAuthenticated()" fxLayout="row">
+                  <button mat-icon-button *ngIf="userService.isSavedEvent(event.id);else notSaved" (click)="userHttpService.deleteSavedEvent(event.id)"><mat-icon class="event-icon">bookmark</mat-icon></button>
+                  <ng-template #notSaved>
+                    <button mat-icon-button (click)="userHttpService.addSavedEvent(event)"><i class="material-icons-outlined">bookmark_border</i></button>
+                  </ng-template>
+                  <button class="attend-button" mat-icon-button *ngIf="userService.isAttendingEvent(event.id); else notGoing" (click)="userHttpService.deleteAttendingEvent(event.id)">
+                    <i class="fas fa-lg fa-calendar-check calendar"></i>
+                  </button>
+                  <ng-template #notGoing>
+                    <button class="attend-button" mat-icon-button (click)="userHttpService.addAttendingEvent(event)">
+                      <i class="far fa-lg fa-calendar-check calendar"></i>
+                    </button>
+                  </ng-template>
+              </div>
+            </div>
+            <br>
+            <div fxLayout="row"> 
+                <h3 class="mat-h3">{{ event.dateView }}</h3>
+                <span style="flex: 1 1 auto;"></span>
+                <h3 class="mat-h3">{{ event.time }}</h3>
+              </div>
+              <div fxLayout="row">
+                <h4 class="mat-h4">{{ event.dayOfWeek }}</h4>
+              </div>
+              <a [routerLink]="['/mekanlar', event.venue.id]"><h4 class="mat-h4">{{ event.venue.name }}</h4></a>
+          </mat-card-content>
+        </mat-card>
+      </div>
   </div>
   <span fxFlex="5" fxFlex.gt-xs="15" fxFlex.gt-lg="25"></span>
 

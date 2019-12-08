@@ -2,16 +2,30 @@
   <span fxFlex="30"></span>
   <mat-card fxFlex="40">
     <mat-card-header fxLayout="row">
-      <div mat-card-avatar class="avatar" [ngStyle]="{ 'background-image': 'url(' + venue.image + ')'}"></div>
       <div fxLayout="column">
         <h1 class="mat-h1">{{ venue.name }}</h1>
-        <p class="mat-body">{{ venue.address }}</p>    
+        <p class="mat-body">{{ venue.address }}</p>
+        <div fxLayout="row">
+          <agm-map fxFlex="50" [latitude]="venue.latitude" [longitude]="venue.longitude" [zoom]="zoom">
+            <agm-marker [latitude]="venue.latitude" [longitude]="venue.longitude"></agm-marker>
+          </agm-map>
+        </div>
+          
       </div>
     </mat-card-header>
+
+    
     <mat-divider></mat-divider>
     <mat-card-content>
       <br>
       <div fxLayout="row">
+          <mat-form-field >
+              <input 
+                type="text"
+                placeholder="Etkinlik Ara"
+                matInput
+                (keyup)="applyFilter($event.target.value)">
+            </mat-form-field>
         <mat-form-field fxFlex="30">
           <mat-label>Ay Seç</mat-label>
           <mat-select (selectionChange)="onMonthChange($event.value)">
@@ -34,14 +48,7 @@
       </div>
       <div fxLayout="row" fxLayoutAlign="center">
         <div fxLayout="column" fxLayoutAlign="start center" fxFill>
-            <h2 class="mat-h2">Konserler</h2>
-            <mat-form-field fxFill>
-              <input 
-                type="text"
-                placeholder="Etkinlik Ara"
-                matInput
-                (keyup)="applyFilter($event.target.value)">
-            </mat-form-field>
+            
             <table fxFlexFill mat-table  [dataSource]="dataSource">
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef><mat-icon class="table-icon">audiotrack</mat-icon></th>
@@ -58,7 +65,6 @@
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let event; columns: displayedColumns;"></tr>
             </table>
-            <mat-paginator fxFill showFirstLastButtons="true" hidePageSize="true"  [pageSize]="pageSize"></mat-paginator>
         </div>
       </div>
     </mat-card-content>

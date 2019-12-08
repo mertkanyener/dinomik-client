@@ -38,6 +38,8 @@ export class ArtistListComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<Artist> = new MatTableDataSource(this.artists);
   displayedColumns = ['name'];
   expandedArtist: Artist;
+  zoom = 14;
+
 
   genres = [ 'rock', 'pop', 'electronic', 'rap'];
 
