@@ -20,7 +20,20 @@ table {
     width: 12rem;
 }
 
-mat-icon {
+.table-icon {
     color: #ee2b84;
 }
 
+.btn-icon {
+    margin-right: 0.5rem;
+}
+
+a {
+    text-decoration: none;
+    color: #c1c1c1;
+}
+
+button {
+    height: fit-content;
+    padding: 0;
+}

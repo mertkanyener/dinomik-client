@@ -1,3 +1,6 @@
+import { AuthService } from './../../auth/auth.service';
+import { UserService } from './../../user/user.service';
+import { UserHttpService } from './../../user/user-http.service';
 import { EventHttpService } from './../../event/event-http.service';
 import { ArtistHttpService } from './../artist-http.service';
 import { Page } from './../../shared/page-model';
@@ -30,12 +33,15 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
   subscription = new Subscription();
   subscriptionArtist: Subscription;
 
-  constructor(private artistService: ArtistService,
-              private route: ActivatedRoute,
-              private sanitizer: DomSanitizer,
-              private eventService: EventService,
-              private artistHttpService: ArtistHttpService,
-              private eventHttpService: EventHttpService) { }
+  constructor(public artistService: ArtistService,
+              public route: ActivatedRoute,
+              public sanitizer: DomSanitizer,
+              public eventService: EventService,
+              public artistHttpService: ArtistHttpService,
+              public eventHttpService: EventHttpService,
+              public userHttpService: UserHttpService,
+              public userService: UserService,
+              public authService: AuthService) { }
 
   ngOnInit() {
     this.route.params.subscribe(
@@ -73,6 +79,14 @@ export class ArtistDetailComponent implements OnInit, OnDestroy {
       'background-size': 'cover'
     };
     this.image = this.artist.image;
+  }
+
+  onFollow(artist: Artist) {
+    this.userHttpService.addLikedArtist(artist);
+  }
+
+  onUnfollow(id: number) {
+    this.userHttpService.deleteLikedArtist(id);
   }
 
   ngOnDestroy() {
