@@ -1,7 +1,7 @@
 import { VenueHttpService } from './../venue-http.service';
 import { EventHttpService } from './../../event/event-http.service';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, HostListener } from '@angular/core';
 import { trigger, transition, animate, state, style } from '@angular/animations';
 import { VenueService } from '../venue.service';
 import { UtilityService } from 'src/app/shared/utility.service';
@@ -28,7 +28,9 @@ export class VenueListComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
   subscriptionEvents: Subscription;
+  subscriptionScreenSize: Subscription;
   venues: Venue[];
+  upcomingEvents = new Array<Event>();
   events = new Array<Event>();
   expandedVenue: Venue;
   displayedColumns = ['name'];
@@ -36,6 +38,11 @@ export class VenueListComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<Venue> = new MatTableDataSource(this.venues);
   zoom = 14;
   state = 'collapsed';
+
+  screenWidth: number;
+  screenSize: string;
+
+
 
   cities: City[] = [
     { value: 'istanbul', viewValue: 'İstanbul' },
@@ -45,11 +52,12 @@ export class VenueListComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private venueService: VenueService,
-              private eventService: EventService,
-              private eventHttpService: EventHttpService,
-              private venueHttpService: VenueHttpService,
-              private utilService: UtilityService) {
+  constructor(public venueService: VenueService,
+              public eventService: EventService,
+              public eventHttpService: EventHttpService,
+              public venueHttpService: VenueHttpService,
+              public utilService: UtilityService) {
+                this.getScreenSize();
                }
 
   ngOnInit() {
@@ -85,12 +93,31 @@ export class VenueListComponent implements OnInit, OnDestroy {
     this.venueService.getVenuesByCity(city);
   }
 
+  setShownEvents() {
+    if (this.screenSize === 'xs' || this.screenSize === 'sm') {
+      this.events = this.upcomingEvents.slice(0, 2);
+    } else {
+      this.events = this.upcomingEvents;
+    }
+  }
+
   applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?) {
+        this.screenWidth = window.innerWidth;
+        const size = this.utilService.calculateScreenSize(this.screenWidth);
+        if (this.screenSize === undefined) {
+          this.screenSize = size;
+        }
+        this.setShownEvents();
+        this.utilService.setScreenSize(size);
   }
 
 }

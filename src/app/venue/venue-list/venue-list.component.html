@@ -1,6 +1,6 @@
 <div id="mainRow" fxLayout="row">
-    <span fxFlex="30"></span>
-    <div fxLayout="column" fxFlex="40">
+    <span fxFlex="5" fxFlex.gt-xs="15" fxFlex.gt-lg="25"></span>
+    <div fxLayout="column" fxFlex="90" fxFlex.gt-xs="70" fxFlex.gt-lg="50">
         <div id="topRow" fxLayout="row" fxLayoutAlign="start center">
         <mat-icon>search</mat-icon>
         <mat-form-field id="filter" fxFlex="50">
@@ -28,7 +28,7 @@
             <div id="expanded" fxLayout="row" [@detailExpand]="venue == expandedVenue ? 'expanded' : 'collapsed'" >         
               <h3 class="mat-h3">Yaklaşan Etkinlikler</h3>
               <div id="cardRow" fxLayout="row" fxLayoutGap="5%">
-                <mat-card fxFlex="30" *ngFor="let event of events">
+                <mat-card fxFlex="45" fxFlex.gt-md="30" *ngFor="let event of events">
                   <img mat-card-image [src]="event.image" alt="Image">
                   <mat-card-content fxLayout="column">
                     <h3 class="mat-h3">{{ event.name }}</h3>
@@ -54,6 +54,6 @@
       <mat-paginator showFirstLastButtons="true" hidePageSize="true"  [pageSize]="pageSize"></mat-paginator>
       <mat-divider style="margin-top: 3rem;"></mat-divider>        
     </div>
-    <span fxFlex="30"></span>
-</div>
+    <span fxFlex="5" fxFlex.gt-xs="15" fxFlex.gt-lg="25"></span>
+  </div>
   

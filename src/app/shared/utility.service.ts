@@ -78,7 +78,9 @@ export class UtilityService {
     let screenSize: string;
     if (width <= 599) {
       screenSize = 'xs';
-    } else if (600 <= width && width <= 1279) {
+    } else if (600 <= width && width <= 959) {
+      screenSize = 'sm';
+    } else if (960 <= width && width <= 1279) {
       screenSize = 'md';
     } else {
       screenSize = 'lg';
@@ -97,7 +99,7 @@ export class UtilityService {
     let colSize: number;
     if (screenSize === 'xs') {
       colSize = 1;
-    } else if (screenSize === 'md') {
+    } else if (screenSize === 'md' || screenSize === 'sm') {
       colSize = 2;
     } else {
       colSize = 3;

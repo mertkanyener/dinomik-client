@@ -1,5 +1,6 @@
 <div [style.height.px]="height" fxLayout="row" fxLayoutAlign="center">
-  <div fxLayout="column" fxFlex="20" fxLayoutAlign="start center">
+  <span fxFlex="15" fxFlex.gt-xs="30" fxFlex.gt-lg="35"></span>
+  <div fxLayout="column" fxFlex="70" fxFlex.gt-xs="40" fxLayoutAlign="start center">
     <h1 class="mat-h1">Yeni Üye</h1>
     <form fxFlexFill (ngSubmit)="onRegister()" [formGroup]="form">
       <div fxLayout="row" fxLayoutGap="2rem">
@@ -74,4 +75,5 @@
       </div>
     </form>
   </div>
+  <span fxFlex="15" fxFlex.gt-xs="30" fxFlex.gt-lg="35"></span>
 </div>

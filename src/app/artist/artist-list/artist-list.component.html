@@ -29,7 +29,7 @@
           <div id="expanded" fxLayout="column" [@detailExpand]="artist == expandedArtist ? 'expanded' : 'collapsed'" >
             <h3 class="mat-h3">Yaklaşan Etkinlikler</h3>
             <div id="card-row" fxLayout="row" fxLayoutGap="5%">
-              <mat-card fxFlex="30" *ngFor="let event of events">
+              <mat-card fxFlex="45" fxFlex.gt-md="30" *ngFor="let event of events">
                 <img mat-card-image [src]="event.image" alt="Image">
                 <mat-card-content fxLayout="column">
                   <h3 class="mat-h3">{{ event.name }}</h3>
