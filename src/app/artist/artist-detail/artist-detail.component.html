@@ -13,7 +13,7 @@
           mat-raised-button 
           color="warn" 
           *ngIf="userService.isLikedArtist(artist.id);else follow"
-          (click)="onUnfollow(artist.id)">
+          (click)="onUnfollow(artist.id) ">
           <mat-icon class="btn-icon">clear</mat-icon>
           <label class="mat-body">Takipten Çık</label>
         </button>

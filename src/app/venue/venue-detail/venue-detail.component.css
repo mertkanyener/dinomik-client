@@ -42,7 +42,8 @@ mat-form-field {
 }
 
 button {
-    margin-right: 1rem;
+    margin-right: 0.5rem;
+    height: fit-content;
 }
 
 mat-option {
@@ -51,4 +52,13 @@ mat-option {
 
 agm-map {
   height: 10rem;
+}
+
+a {
+  text-decoration: none;
+  color: #c1c1c1;
+}
+
+#mainCol {
+  margin-top: 2rem;
 }

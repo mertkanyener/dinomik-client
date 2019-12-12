@@ -9,6 +9,7 @@ export class User {
     lastName: string;
     email: string;
     password: string;
+    startDate: string;
     image: string;
     gender: Gender;
     birthDate: string;

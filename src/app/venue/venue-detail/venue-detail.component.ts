@@ -48,6 +48,7 @@ export class VenueDetailComponent implements OnInit, OnDestroy {
   year = this.date.getFullYear();
   searchMonth = -1;
   searchYear = -1;
+  zoom = 14;
 
   years = [this.year, this.year + 1];
 

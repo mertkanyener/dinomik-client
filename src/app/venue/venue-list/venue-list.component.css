@@ -19,6 +19,15 @@ h3 {
   margin-top: 1rem;
 }
 
+#expanded {
+  overflow: hidden;
+  display: flex;
+}
+
+#cardRow {
+  margin-bottom: 1rem;
+}
+
 mat-paginator {
   background-color: black;
 }
@@ -42,6 +51,10 @@ mat-divider {
 mat-icon {
   margin-right: 1rem;
   color: #ee2b84;
+}
+
+mat-card {
+  background-color: #19191a;
 }
 
 * {

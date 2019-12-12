@@ -10,6 +10,7 @@ import { Venue } from 'src/app/shared/venue.model';
 import { EventService } from 'src/app/event/event.service';
 import { Page } from 'src/app/shared/page-model';
 import { City } from 'src/app/shared/city.interface';
+import { Event } from 'src/app/shared/event.model';
 
 
 @Component({
@@ -37,7 +38,6 @@ export class VenueListComponent implements OnInit, OnDestroy {
   pageSize = 10;
   dataSource: MatTableDataSource<Venue> = new MatTableDataSource(this.venues);
   zoom = 14;
-  state = 'collapsed';
 
   screenWidth: number;
   screenSize: string;
@@ -72,8 +72,14 @@ export class VenueListComponent implements OnInit, OnDestroy {
     );
     this.subscriptionEvents = this.eventService.eventPageChanged.subscribe(
       (eventPage: Page) => {
-        this.events = eventPage.objects;
-        console.log('Events: ', this.events);
+        this.upcomingEvents = this.eventService.translateEventDates(eventPage.objects);
+        this.setShownEvents();
+      }
+    );
+    this.subscriptionScreenSize = this.utilService.screenSizeChanged.subscribe(
+      (screenSize: string) => {
+        this.screenSize = screenSize;
+        this.setShownEvents();
       }
     );
 
