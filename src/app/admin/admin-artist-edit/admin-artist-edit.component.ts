@@ -74,18 +74,34 @@ export class AdminArtistEditComponent implements OnInit, OnDestroy {
 
   private initForm() {
     let name = '';
+    let instagram = '';
+    let spotify = '';
+    let twitter = '';
+    let facebook = '';
     if (this.editMode) {
       name = this.artist.name;
+      instagram = this.artist.instagram;
+      spotify = this.artist.spotify;
+      twitter = this.artist.twitter;
+      facebook = this.artist.facebook;
     }
     console.log('Artist form name: ', name );
     this.form = new FormGroup({
       'name' : new FormControl(name),
+      'instagram': new FormControl(instagram),
+      'spotify': new FormControl(spotify),
+      'twitter': new FormControl(twitter),
+      'facebook': new FormControl(facebook)
     });
   }
 
   onSave() {
     const value = this.form.value;
     this.artist.name = value.name;
+    this.artist.instagram = value.instagram;
+    this.artist.twitter = value.twitter;
+    this.artist.spotify = value.spotify;
+    this.artist.facebook = value.facebook;
     if (this.editMode) {
       this.artistHttpService.updateArtist(this.id, this.artist, this.image.file);
     } else {

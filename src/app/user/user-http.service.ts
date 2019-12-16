@@ -23,6 +23,17 @@ export class UserHttpService {
 
     //ASFSDF
 
+    updateProfile(user: User) {
+        this.http.put(this.path + 'update', { headers: this.authService.getHeaders() }).subscribe(
+            (res) => {
+                this.userService.setUser(user, 'self');
+            },
+            (error) => {
+                console.log('UserHttpService error: ', error);
+            }
+        );
+    }
+
     getUser(id: string, type: string) {
         this.http.get<User>(this.path + id, { headers: this.authService.getHeaders() }).subscribe(
             (user: User) => {

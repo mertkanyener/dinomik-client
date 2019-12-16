@@ -37,3 +37,13 @@ button {
     height: fit-content;
     padding: 0;
 }
+
+
+.social-row {
+    margin-bottom: 0.5rem;
+}
+
+i {
+    margin-right: 0.5rem;
+    color: #ee2b84;
+}

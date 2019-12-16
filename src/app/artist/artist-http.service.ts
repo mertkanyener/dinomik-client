@@ -72,10 +72,12 @@ export class ArtistHttpService {
         );
       }
 
-      updateArtist(id: number, artist: Artist, image: File) {
-        this.httpService.uploadImage(image, 'artist', id).then(value => {
-          artist.image = this.imageServerPath + value;
-        });
+      updateArtist(id: number, artist: Artist, image?: File) {
+        if (image !== null && image !== undefined) {
+          this.httpService.uploadImage(image, 'artist', id).then(value => {
+            artist.image = this.imageServerPath + value;
+          });
+        }
         this.http.put(this.path + 'admin/artists/' + id, artist, {headers: this.authService.getAdminHeaders()}).subscribe(
           (res) => {
             if (this.artistService.getArtists() !== undefined) {

@@ -3,32 +3,47 @@
   <mat-card fxFlex="90" fxFlex.gt-md="70" fxFlex.gt-lg="50">
     <mat-card-header>
       <div mat-card-avatar class="avatar" [ngStyle]="{ 'background-image': 'url(' + artist.image + ')'}"></div>
-      <div fxLayout="row" style="width:100%;">
-        <h1 class="mat-h1">{{ artist.name }}</h1>
-        <span style="flex: 1 1 auto;"></span>
-        <div fxLayout="row" *ngIf="authService.isAuthenticated()">
-          <button 
-          id="unfollow" 
-          type="button" 
-          mat-raised-button 
-          color="warn" 
-          *ngIf="userService.isLikedArtist(artist.id);else follow"
-          (click)="onUnfollow(artist.id) ">
-          <mat-icon class="btn-icon">clear</mat-icon>
-          <label class="mat-body">Takipten Çık</label>
-        </button>
-        <ng-template #follow>
-          <button
-            type="button"
-            mat-raised-button
-            color="primary"
-            (click)="onFollow(artist)">
-            <mat-icon class="btn-icon">person_add</mat-icon>
-            <label class="mat-body">Ekle</label>
+      <div fxLayout="column" style="width: 100%;">
+        <div fxLayout="row" style="width:100%;">
+          <h1 class="mat-h1">{{ artist.name }}</h1>
+          <span style="flex: 1 1 auto;"></span>
+          <div fxLayout="row" *ngIf="authService.isAuthenticated()">
+            <button 
+            id="unfollow" 
+            type="button" 
+            mat-raised-button 
+            color="warn" 
+            *ngIf="userService.isLikedArtist(artist.id);else follow"
+            (click)="onUnfollow(artist.id) ">
+            <mat-icon class="btn-icon">clear</mat-icon>
+            <label class="mat-body">Takipten Çık</label>
           </button>
-        </ng-template>
+          <ng-template #follow>
+            <button
+              type="button"
+              mat-raised-button
+              color="primary"
+              (click)="onFollow(artist)">
+              <mat-icon class="btn-icon">person_add</mat-icon>
+              <label class="mat-body">Ekle</label>
+            </button>
+          </ng-template>
+          </div>
         </div>
+        <div class="social-row" fxLayout="row" fxLayoutAlign="start center">
+          <i class="fab fa-2x fa-instagram"></i><a [href]="'https://' + artist.instagram"><label class="mat-body">{{ artist.instagram }}</label></a>
+        </div>
+        <div class="social-row" fxLayout="row" fxLayoutAlign="start center">
+          <i class="fab fa-2x fa-twitter"></i><a [href]="'https://' + artist.twitter"><label class="mat-body">{{ artist.twitter }}</label></a>
+        </div>
+        <div class="social-row" fxLayout="row" fxLayoutAlign="start center">
+          <i class="fab fa-2x fa-spotify"></i><a [href]="artist.spotify"><label class="mat-body">{{ artist.spotify }}</label></a>
+        </div>
+        <div class="social-row" fxLayout="row" fxLayoutAlign="start center">
+          <i class="fab fa-2x fa-facebook-f"></i><a [href]="'https://' + artist.facebook"><label class="mat-body">{{ artist.facebook }}</label></a>
+        </div>  
       </div>
+      
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>

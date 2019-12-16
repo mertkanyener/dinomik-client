@@ -43,6 +43,7 @@ import { SavedEventsComponent } from './user/saved-events/saved-events.component
 import { FriendsComponent } from './user/friends/friends.component';
 import { LikedArtistsComponent } from './user/liked-artists/liked-artists.component';
 import { FriendDetailComponent } from './user/friend-detail/friend-detail.component';
+import { ProfileComponent } from './user/profile/profile.component';
 
 
 @NgModule({
@@ -64,7 +65,8 @@ import { FriendDetailComponent } from './user/friend-detail/friend-detail.compon
       SavedEventsComponent,
       FriendsComponent,
       LikedArtistsComponent,
-      FriendDetailComponent
+      FriendDetailComponent,
+      ProfileComponent
    ],
    imports: [
       BrowserModule,

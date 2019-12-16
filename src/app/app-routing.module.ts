@@ -1,3 +1,5 @@
+import { ProfileComponent } from './user/profile/profile.component';
+import { AuthGuard } from './auth/auth-guard.service';
 import { FriendDetailComponent } from './user/friend-detail/friend-detail.component';
 import { RegisterComponent } from './auth/register/register.component';
 import {NgModule} from '@angular/core';
@@ -26,17 +28,19 @@ const appRoutes: Routes = [
   { path: 'test-path', component: TestComponent },
   { path: 'kayit-ol', component: RegisterComponent },
   { path: 'giris-yap', component: UserLoginComponent },
-  { path: 'arama-sonuclari/:name', component: SearchResultComponent },
-  { path: 'kaydedilenler', component: SavedEventsComponent },
-  { path: 'gidilecekler', component: SavedEventsComponent },
-  { path: 'arkadaslar', component: FriendsComponent},
-  { path: 'kullanicilar/:id', component: FriendDetailComponent},
-  { path: 'sevilen-sanatcilar', component: LikedArtistsComponent, pathMatch: 'full'}
+  { path: 'arama-sonuclari/:name', component: SearchResultComponent, canActivate: [AuthGuard] },
+  { path: 'kaydedilenler', component: SavedEventsComponent, canActivate: [AuthGuard] },
+  { path: 'gidilecekler', component: SavedEventsComponent, canActivate: [AuthGuard] },
+  { path: 'arkadaslar', component: FriendsComponent, canActivate: [AuthGuard]},
+  { path: 'kullanicilar/:id', component: FriendDetailComponent, canActivate: [AuthGuard]},
+  { path: 'sevilen-sanatcilar', component: LikedArtistsComponent, pathMatch: 'full', canActivate: [AuthGuard]},
+  { path: 'profil', component: ProfileComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule {
 }
