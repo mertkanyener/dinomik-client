@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { HttpService } from './../shared/http.service';
 import { UtilityService } from './../shared/utility.service';
 import { AuthService } from './../auth/auth.service';
@@ -12,7 +13,7 @@ import { Injectable } from '@angular/core';
 export class VenueHttpService {
 
     private imageServerPath = 'http://localhost:9999/images/venues/';
-    private path = 'http://localhost:6060/';
+    private path = environment.apiUrl;
 
     constructor(public http: HttpClient,
                 public venueService: VenueService,
@@ -22,7 +23,8 @@ export class VenueHttpService {
 
 
 getVenues() {
-    this.http.get<Venue[]>(this.path + 'venues').subscribe(
+    console.log('Api url: ', this.path);
+    this.http.get<Venue[]>(environment.apiUrl + 'venues').subscribe(
       (venues) => {
         this.venueService.setVenues(venues);
       },

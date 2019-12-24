@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { HttpService } from './../shared/http.service';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ArtistService } from 'src/app/artist/artist.service';
@@ -11,7 +12,7 @@ import { AuthService } from '../auth/auth.service';
 @Injectable()
 export class ArtistHttpService {
 
-    private path = 'http://localhost:6060/';
+    private path = environment.apiUrl;
     private imageServerPath = 'http://localhost:9999/images/aritsts/';
 
     constructor(public artistService: ArtistService,

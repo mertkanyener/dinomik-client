@@ -7,12 +7,13 @@ import { map } from 'rxjs/operators';
 import { Page } from '../shared/page-model';
 import { UtilityService } from '../shared/utility.service';
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class EventHttpService {
 
-    private path = 'http://localhost:6060/';
-    private imageServerPath = 'http://localhost:9999/images/events/';
+  private path = environment.apiUrl;
+  private imageServerPath = 'http://localhost:9999/images/events/';
 
 
     constructor(public http: HttpClient,
@@ -84,6 +85,7 @@ export class EventHttpService {
   }
 
   filterEvents(month: number, year: number, genres?: number[], cities?: string[]) {
+    console.log('Api url: ', this.path);
     const url = this.path + 'events/filter';
     let params;
     console.log('genres: ', genres);

@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { User } from './../shared/user.model';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
@@ -21,7 +22,7 @@ export interface Token {
 @Injectable()
 export class AuthService{
 
-  private path = 'http://localhost:6060/';
+  private path = environment.apiUrl;
   status = new Subject<number>();
   authError = new Subject<AuthError>();
 
