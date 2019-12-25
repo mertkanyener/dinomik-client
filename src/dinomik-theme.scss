@@ -1,8 +1,5 @@
 @import "~@angular/material/theming";
 
-@include mat-core();
-
-
 $md-dinomik-primary: (
   50 : #fde6f0,
   100 : #fabfda,
@@ -76,10 +73,10 @@ $dinomik-theme: mat-dark-theme($dinomik-theme-primary, $dinomik-theme-warn);
 
 
 $custom-typography: mat-typography-config(
-  $font-family: 'Crete Round',
-  $headline: mat-typography-level(32px, 48px, 700),
-  $body-1: mat-typography-level(16px, 24px, 500)
+  $font-family: 'Crete Round'
 );
 
 @include angular-material-theme($dinomik-theme);
 @include angular-material-typography($custom-typography);
+@include mat-core($custom-typography);
+
