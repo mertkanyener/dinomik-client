@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { EventService } from 'src/app/event/event.service';
 import { Friend } from './../shared/friend.model';
 import { AuthService } from '../auth/auth.service';
@@ -13,7 +14,7 @@ import { User } from '../shared/user.model';
 @Injectable()
 export class UserHttpService {
 
-    private path = 'http://localhost:6060/user/';
+    private path =  environment.apiUrl + 'user/';
 
     constructor(public cookieService: CookieService,
                 public http: HttpClient,

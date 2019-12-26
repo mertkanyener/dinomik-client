@@ -147,7 +147,7 @@ export class AuthService{
 
   logout(){
     this.cookieService.delete('dino_access_token');
-    window.location.reload();
+    this.router.navigate(['/']);
   }
 
   adminLogout() {
