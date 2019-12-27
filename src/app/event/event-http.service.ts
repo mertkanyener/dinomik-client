@@ -13,7 +13,9 @@ import { environment } from 'src/environments/environment';
 export class EventHttpService {
 
   private path = environment.apiUrl;
-  private imageServerPath = 'http://localhost:9999/images/events/';
+  private imageServerPath = this.path + 'images/events/';
+
+  showSpinner = false;
 
 
     constructor(public http: HttpClient,
@@ -85,11 +87,9 @@ export class EventHttpService {
   }
 
   filterEvents(month: number, year: number, genres?: number[], cities?: string[]) {
-    console.log('Api url: ', this.path);
+    this.showLoadingSpinner();
     const url = this.path + 'events/filter';
     let params;
-    console.log('genres: ', genres);
-    console.log('cities: ', cities);
     if (genres !== undefined && genres !== null && genres.length > 0
       && (cities === null || cities === undefined || cities.length === 0)) {
 
@@ -113,8 +113,8 @@ export class EventHttpService {
     }
     this.http.get<Event[]>(url, { params: params }).subscribe(
       (events: Event[]) => {
-        console.log('Params: ', params);
         this.eventService.setEvents(events);
+        this.hideLoadingSpinner();
       },
       (error) => {
         console.log('HttpService Error: ', error);
@@ -303,6 +303,14 @@ export class EventHttpService {
         console.log('ERROR: ', error);
       }
     );
+  }
+
+  showLoadingSpinner() {
+    this.showSpinner = true;
+  }
+
+  hideLoadingSpinner() {
+    this.showSpinner = false;
   }
 
 }

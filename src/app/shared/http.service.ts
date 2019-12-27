@@ -1,3 +1,4 @@
+import { environment } from 'src/environments/environment';
 import { reject } from 'q';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
@@ -13,7 +14,7 @@ export interface UploadFileResponse {
 @Injectable()
 export class HttpService {
 
-  private path = 'http://localhost:6060/';
+  private path = environment.apiUrl;
 
   constructor(public http: HttpClient,
               public authService: AuthService ) {

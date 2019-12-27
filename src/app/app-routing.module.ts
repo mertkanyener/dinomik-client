@@ -20,7 +20,7 @@ import { LikedArtistsComponent } from './user/liked-artists/liked-artists.compon
 const appRoutes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
   { path: 'admin',
-    loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule)},
+    loadChildren: () => import('src/app/admin/admin.module').then(m => m.AdminModule)},
   { path: 'sanatcilar', component: ArtistListComponent, pathMatch: 'full' },
   { path: 'sanatcilar/:id', component: ArtistDetailComponent },
   { path: 'mekanlar', component: VenueListComponent },

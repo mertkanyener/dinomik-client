@@ -13,7 +13,9 @@ import { AuthService } from '../auth/auth.service';
 export class ArtistHttpService {
 
     private path = environment.apiUrl;
-    private imageServerPath = 'http://localhost:9999/images/aritsts/';
+    private imageServerPath = this.path + 'images/aritsts/';
+
+    showSpinner = false;
 
     constructor(public artistService: ArtistService,
                 public http: HttpClient,
@@ -22,10 +24,12 @@ export class ArtistHttpService {
                 public httpService: HttpService) {}
 
     getAllArtists() {
+        this.showLoadingSpinner();
         const url = this.path + 'artists';
         this.http.get<Artist[]>(url).subscribe(
           (artists: Artist[]) => {
             this.artistService.setArtists(artists);
+            this.hideLoadingSpinner();
           },
           (error) => {
             console.log('HttpService Error: ', error);
@@ -106,6 +110,14 @@ export class ArtistHttpService {
             console.log('ERROR: ', error);
           }
         );
+      }
+
+      showLoadingSpinner() {
+        this.showSpinner = true;
+      }
+    
+      hideLoadingSpinner() {
+        this.showSpinner = false;
       }
 
 

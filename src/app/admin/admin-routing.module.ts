@@ -13,7 +13,7 @@ import {AdminLoginComponent} from './admin-login/admin-login.component';
 
 const routes: Route[] = [
   { path: '', component: AdminComponent, children: [
-      { path: '', component: AdminLoginComponent },
+      { path: '', component: AdminLoginComponent, pathMatch: 'full' },
       { path: 'home', component: AdminStartComponent, canActivate: [AdminGuard] },
       { path: 'events', component: AdminEventListComponent, pathMatch: 'full', canActivate: [AdminGuard] },
       { path: 'venues', component: AdminVenueListComponent, canActivate: [AdminGuard] },

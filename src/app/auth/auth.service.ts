@@ -20,7 +20,7 @@ export interface Token {
 }
 
 @Injectable()
-export class AuthService{
+export class AuthService {
 
   private path = environment.apiUrl;
   status = new Subject<number>();
@@ -147,14 +147,14 @@ export class AuthService{
 
   logout(){
     this.cookieService.delete('dino_access_token');
+    console.log('Is logged in: ', this.isAuthenticated());
     this.router.navigate(['/']);
   }
 
   adminLogout() {
     this.cookieService.delete('admin_access_token', '/', '/');
-    this.cookieService.delete('admin_refresh_token', '/', '/');
     console.log('Is admin: ', this.isAdmin());
-    this.router.navigate(['/admin']);
+    this.router.navigate(['/']);
   }
 
   setAuthHeaders(userType: string) {

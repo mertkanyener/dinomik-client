@@ -26,41 +26,48 @@
         <i class="fa fa-2x fa-filter"></i> Filtrele
       </button>
     </div>
-    <div id="eventRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of events">
-      <mat-card fxFlex="90" fxFlex.gt-xs="45"  fxFlex.gt-md="30" *ngFor="let event of row">
-        <img mat-card-image [src]="event.image" alt="image">
-        <mat-card-content fxLayout="column" fxLayoutGap="1px">
-          <div fxLayout="row" fxLayoutAlign="start center">
-              <a [routerLink]="['etkinlikler', event.id]"><h2 id="eventName">{{ event.name }}</h2></a>
-              <span style="flex: 1 1 auto;"></span>          
-              <div *ngIf="authService.isAuthenticated()" fxLayout="row">
-                  <button mat-icon-button *ngIf="userService.isSavedEvent(event.id);else notSaved" (click)="userHttpService.deleteSavedEvent(event.id)"><mat-icon>bookmark</mat-icon></button>
-                  <ng-template #notSaved>
-                    <button mat-icon-button (click)="userHttpService.addSavedEvent(event)"><i class="material-icons-outlined">bookmark_border</i></button>
-                  </ng-template>
-                  <button class="attend-button" mat-icon-button *ngIf="userService.isAttendingEvent(event.id); else notGoing" (click)="userHttpService.deleteAttendingEvent(event.id)">
-                    <i class="fas fa-lg fa-calendar-check calendar"></i>
-                  </button>
-                  <ng-template #notGoing>
-                    <button class="attend-button" mat-icon-button (click)="userHttpService.addAttendingEvent(event)">
-                      <i class="far fa-lg fa-calendar-check calendar"></i>
+    <div *ngIf="!eventHttpService.showSpinner;else spinner">
+      <div id="eventRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of events">
+        <mat-card fxFlex="90" fxFlex.gt-xs="45"  fxFlex.gt-md="30" *ngFor="let event of row">
+          <img mat-card-image [src]="event.image" alt="image">
+          <mat-card-content fxLayout="column" fxLayoutGap="1px">
+            <div fxLayout="row" fxLayoutAlign="start center">
+                <a [routerLink]="['etkinlikler', event.id]"><h2 id="eventName">{{ event.name }}</h2></a>
+                <span style="flex: 1 1 auto;"></span>          
+                <div *ngIf="authService.isAuthenticated()" fxLayout="row">
+                    <button mat-icon-button *ngIf="userService.isSavedEvent(event.id);else notSaved" (click)="userHttpService.deleteSavedEvent(event.id)"><mat-icon>bookmark</mat-icon></button>
+                    <ng-template #notSaved>
+                      <button mat-icon-button (click)="userHttpService.addSavedEvent(event)"><i class="material-icons-outlined">bookmark_border</i></button>
+                    </ng-template>
+                    <button class="attend-button" mat-icon-button *ngIf="userService.isAttendingEvent(event.id); else notGoing" (click)="userHttpService.deleteAttendingEvent(event.id)">
+                      <i class="fas fa-lg fa-calendar-check calendar"></i>
                     </button>
-                  </ng-template>
-              </div>  
-          </div>
-          <br>
-          <div fxLayout="row"> 
-            <h3>{{ event.dateView }}</h3>
-            <span style="flex: 1 1 auto;"></span>
-            <h3>{{ event.time }}</h3>
-          </div>
-          <div fxLayout="row">
-            <h4>{{ event.dayOfWeek }}</h4>
-          </div>
-          <a [routerLink]="['mekanlar', event.venue.id]"><h4>{{ event.venue.name }}</h4></a>
-        </mat-card-content>
-      </mat-card>
+                    <ng-template #notGoing>
+                      <button class="attend-button" mat-icon-button (click)="userHttpService.addAttendingEvent(event)">
+                        <i class="far fa-lg fa-calendar-check calendar"></i>
+                      </button>
+                    </ng-template>
+                </div>  
+            </div>
+            <br>
+            <div fxLayout="row"> 
+              <h3>{{ event.dateView }}</h3>
+              <span style="flex: 1 1 auto;"></span>
+              <h3>{{ event.time }}</h3>
+            </div>
+            <div fxLayout="row">
+              <h4>{{ event.dayOfWeek }}</h4>
+            </div>
+            <a [routerLink]="['mekanlar', event.venue.id]"><h4>{{ event.venue.name }}</h4></a>
+          </mat-card-content>
+        </mat-card>
+      </div>  
     </div>
+    <ng-template #spinner>
+      <div fxLayout="row" fxLayoutAlign="center center" style="width: 100%;">
+        <mat-spinner color="primary"></mat-spinner>
+      </div>
+    </ng-template>
     <div fxLayout="row" fxLayoutAlign="center start">
       <div fxLayout="column" fxLayoutAlign="start center">
           <h5>Daha fazla etkinlik</h5>
