@@ -85,6 +85,7 @@ export class ArtistHttpService {
         }
         this.http.put(this.path + 'admin/artists/' + id, artist, {headers: this.authService.getAdminHeaders()}).subscribe(
           (res) => {
+            console.log('HttpService artists: ', this.artistService.getArtists());
             if (this.artistService.getArtists() !== undefined) {
               this.artistService.updateArtist(id, artist);
             }
