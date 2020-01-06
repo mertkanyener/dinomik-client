@@ -63,11 +63,12 @@ export class AdminArtistEditComponent implements OnInit, OnDestroy {
     );
     if (this.editMode) {
       this.image.dataUrl = this.artist.image;
-      console.log('Image url: ', this.image.dataUrl);
     }
     this.imageSubscription = this.utilService.imageChanged.subscribe(
       (image: Image) => {
         this.image = image;
+        console.log('Image: ', this.image);
+
       }
     );
   }
@@ -105,7 +106,6 @@ export class AdminArtistEditComponent implements OnInit, OnDestroy {
     if (this.editMode) {
       this.artistHttpService.updateArtist(this.id, this.artist, this.image.file);
     } else {
-      console.log('Image name: ', this.image.file.name);
       this.artistHttpService.addArtist(this.artist, this.image.file);
     }
     this.navigate();
@@ -125,7 +125,6 @@ export class AdminArtistEditComponent implements OnInit, OnDestroy {
 
   changeListener($event) {
     this.utilService.readImage($event.target, this.sanitizer, this.image);
-    console.log('Image url : ', this.image.dataUrl);
   }
 
   ngOnDestroy() {

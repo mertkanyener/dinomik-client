@@ -81,6 +81,7 @@ export class ArtistHttpService {
         if (image !== null && image !== undefined) {
           this.httpService.uploadImage(image, 'artist', id).then(value => {
             artist.image = this.imageServerPath + value;
+            console.log('Artist image: ', artist.image);
           });
         }
         this.http.put(this.path + 'admin/artists/' + id, artist, {headers: this.authService.getAdminHeaders()}).subscribe(
