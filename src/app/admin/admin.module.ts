@@ -17,6 +17,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { ResponseDialogComponent } from './response-dialog/response-dialog.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
     AdminVenueEditComponent,
     AdminVenueListComponent,
     DeleteDialogComponent,
-    AdminLoginComponent
+    AdminLoginComponent,
+    ResponseDialogComponent
   ],
   imports: [
     CommonModule,

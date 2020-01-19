@@ -8,6 +8,8 @@ import { map } from 'rxjs/operators';
 import { Page } from '../shared/page-model';
 import { UtilityService } from '../shared/utility.service';
 import { AuthService } from '../auth/auth.service';
+import { Subject } from 'rxjs';
+import { AdminHttpResponse } from '../shared/admin-http-response.int';
 
 @Injectable()
 export class ArtistHttpService {
@@ -16,6 +18,7 @@ export class ArtistHttpService {
     private imageServerPath = this.path + 'images/aritsts/';
 
     showSpinner = false;
+    responseStatus = new Subject<number>();
 
     constructor(public artistService: ArtistService,
                 public http: HttpClient,
@@ -98,10 +101,10 @@ export class ArtistHttpService {
       }
 
       addArtist(artist: Artist, image: File) {
-        this.http.post(this.path + 'admin/artists', artist, {headers: this.authService.getAdminHeaders(), responseType: 'text'}).subscribe(
-          (id: string) => {
-            artist.id = Number(id);
-            this.httpService.uploadImage(image, 'artist', Number(id)).then(value => {
+        this.http.post(this.path + 'admin/artists', artist, {headers: this.authService.getAdminHeaders()}).subscribe(
+          (response: HttpResponse<AdminHttpResponse>) => {
+            artist.id = response.body.objectId
+            this.httpService.uploadImage(image, 'artist', artist.id).then(value => {
               artist.image = this.imageServerPath + value;
             });
             if (this.artistService.getArtists() !== undefined) {
