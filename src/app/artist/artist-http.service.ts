@@ -18,7 +18,7 @@ export class ArtistHttpService {
     private imageServerPath = this.path + 'images/aritsts/';
 
     showSpinner = false;
-    responseStatus = new Subject<number>();
+    response = new Subject<HttpResponse<AdminHttpResponse>>();
 
     constructor(public artistService: ArtistService,
                 public http: HttpClient,
@@ -88,13 +88,14 @@ export class ArtistHttpService {
           });
         }
         this.http.put(this.path + 'admin/artists/' + id, artist, {headers: this.authService.getAdminHeaders()}).subscribe(
-          (res) => {
-            console.log('HttpService artists: ', this.artistService.getArtists());
+          (response: AdminHttpResponse) => {
             if (this.artistService.getArtists() !== undefined) {
               this.artistService.updateArtist(id, artist);
             }
+            alert('SUCCESS: ' + response.responseBody);
           },
           (error) => {
+            alert('ERROR: ', error.error.responseBody);
             console.log('ERROR: ', error);
           }
         );
@@ -102,17 +103,18 @@ export class ArtistHttpService {
 
       addArtist(artist: Artist, image: File) {
         this.http.post(this.path + 'admin/artists', artist, {headers: this.authService.getAdminHeaders()}).subscribe(
-          (response: HttpResponse<AdminHttpResponse>) => {
-            artist.id = response.body.objectId
+          (response: AdminHttpResponse) => {
+            artist.id = response.objectId;
             this.httpService.uploadImage(image, 'artist', artist.id).then(value => {
               artist.image = this.imageServerPath + value;
             });
             if (this.artistService.getArtists() !== undefined) {
               this.artistService.addArtist(artist);
             }
+            alert('SUCCESS: ' + response.responseBody);
           },
-          (error) => {
-            console.log('ERROR: ', error);
+          (errorResponse: HttpResponse<AdminHttpResponse>) => {
+            alert('ERROR: ' + errorResponse.error.responseBody);
           }
         );
       }

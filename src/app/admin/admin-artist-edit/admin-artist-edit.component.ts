@@ -10,6 +10,9 @@ import { Subscription } from 'rxjs';
 import {Image} from '../../shared/image.model';
 import {MatDialog} from '@angular/material';
 import { ArtistHttpService } from 'src/app/artist/artist-http.service';
+import { ResponseDialogComponent } from '../response-dialog/response-dialog.component';
+import { HttpResponse } from '@angular/common/http';
+import { AdminHttpResponse } from 'src/app/shared/admin-http-response.int';
 
 @Component({
   selector: 'app-admin-artist-edit',
@@ -27,6 +30,7 @@ export class AdminArtistEditComponent implements OnInit, OnDestroy {
   viewedImageUrl: any;
   imageSubscription: Subscription;
   artistSubscription: Subscription;
+  httpResponse: HttpResponse<any>;
 
   constructor(public artistHttpService: ArtistHttpService,
               public route: ActivatedRoute,
@@ -59,6 +63,11 @@ export class AdminArtistEditComponent implements OnInit, OnDestroy {
 
           }
         }
+      }
+    );
+    this.artistHttpService.response.subscribe(
+      (response: HttpResponse<any>) => {
+        this.httpResponse = response;
       }
     );
     if (this.editMode) {
@@ -107,6 +116,7 @@ export class AdminArtistEditComponent implements OnInit, OnDestroy {
       this.artistHttpService.updateArtist(this.id, this.artist, this.image.file);
     } else {
       this.artistHttpService.addArtist(this.artist, this.image.file);
+      console.log('Http Response: ', this.httpResponse);
     }
     this.navigate();
   }
