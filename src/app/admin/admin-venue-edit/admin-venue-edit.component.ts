@@ -20,7 +20,7 @@ export class AdminVenueEditComponent implements OnInit, OnDestroy {
 
   editMode = false;
   id: number;
-  venue = new Venue();
+  venue: Venue;
   form: FormGroup;
   fb = new FormBuilder();
   image = new Image('', null);
@@ -42,26 +42,31 @@ export class AdminVenueEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.initForm();
-    this.route.params.subscribe(
-      (params: Params) => {
-        this.id = +params['id'];
-        if (params['id'] !== null) {
-          this.editMode = true;
-          if (this.venueService.getVenues() === undefined) {
-            this.venueHttp.getVenue(this.id);
-            this.venueSubscription = this.venueService.venueChanged.subscribe(
-              (venue: Venue) => {
-                this.venue = venue;
-                this.setFormValues(venue);
-              }
-            );
-          } else {
-            this.venue = this.venueService.getVenue(this.id);
-            this.setFormValues(this.venue);
-          }
-        }
+    this.route.url.subscribe(
+      (url: any) => {
+        console.log('Url: ', url[0].path);
       }
     );
+    // this.route.params.subscribe(
+    //   (params: Params) => {
+    //     this.id = +params['id'];
+    //     if (params['id'] !== null) {
+    //       this.editMode = true;
+    //       if (this.venueService.getVenues() === undefined) {
+    //         this.venueHttp.getVenue(this.id);
+    //         this.venueSubscription = this.venueService.venueChanged.subscribe(
+    //           (venue: Venue) => {
+    //             this.venue = venue;
+    //             this.setFormValues(venue);
+    //           }
+    //         );
+    //       } else {
+    //         this.venue = this.venueService.getVenue(this.id);
+    //         this.setFormValues(this.venue);
+    //       }
+    //     }
+    //   }
+    // );
     this.imageSubscription = this.utilService.imageChanged.subscribe(
       (image: Image) => {
         this.image = image;
@@ -82,6 +87,7 @@ export class AdminVenueEditComponent implements OnInit, OnDestroy {
 
   onSave() {
     const value = this.form.value;
+    this.venue = new Venue();
     this.venue.name = value.name;
     this.venue.address = value.address;
     this.venue.latitude = value.latitude;
@@ -105,7 +111,7 @@ export class AdminVenueEditComponent implements OnInit, OnDestroy {
 
   navigate() {
     if (this.editMode) {
-      this.router.navigate(['../../'], {relativeTo: this.route});
+      this.router.navigate(['/admin/venues']);
     } else {
       this.router.navigate(['../'], {relativeTo: this.route});
     }

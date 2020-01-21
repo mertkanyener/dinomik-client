@@ -15,15 +15,15 @@ const routes: Route[] = [
   { path: '', component: AdminComponent, children: [
       { path: '', component: AdminLoginComponent, pathMatch: 'full' },
       { path: 'home', component: AdminStartComponent, canActivate: [AdminGuard] },
-      { path: 'events', component: AdminEventListComponent, pathMatch: 'full', canActivate: [AdminGuard] },
+      { path: 'events', component: AdminEventListComponent,  canActivate: [AdminGuard] },
       { path: 'venues', component: AdminVenueListComponent, canActivate: [AdminGuard] },
       { path: 'artists', component: AdminArtistListComponent, canActivate: [AdminGuard] },
-      { path: 'events/:id/edit', component: AdminEventEditComponent, pathMatch: 'full', canActivate: [AdminGuard]},
-      { path: 'events/new', component: AdminEventEditComponent, pathMatch: 'full', canActivate: [AdminGuard] },
-      { path: 'venues/:id/edit', component: AdminVenueEditComponent, pathMatch: 'full', canActivate: [AdminGuard] },
-      { path: 'venues/new', component: AdminVenueEditComponent, pathMatch: 'full', canActivate: [AdminGuard]},
-      { path: 'artists/:id/edit', component: AdminArtistEditComponent, pathMatch: 'full', canActivate: [AdminGuard] },
-      { path: 'artists/new', component: AdminArtistEditComponent, pathMatch: 'full', canActivate: [AdminGuard] }
+      { path: 'event/:id/edit', component: AdminEventEditComponent,  canActivate: [AdminGuard]},
+      { path: 'events/new', component: AdminEventEditComponent,  canActivate: [AdminGuard] },
+      { path: 'venue/:id/edit', component: AdminVenueEditComponent,  canActivate: [AdminGuard] },
+      { path: 'venues/new', component: AdminVenueEditComponent,  canActivate: [AdminGuard]},
+      { path: 'artist/:id/edit', component: AdminArtistEditComponent, canActivate: [AdminGuard] },
+      { path: 'artists/new', component: AdminArtistEditComponent, canActivate: [AdminGuard] }
     ] }
 ];
 

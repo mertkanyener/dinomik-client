@@ -1,6 +1,6 @@
 import { environment } from './../../environments/environment';
 import { HttpService } from './../shared/http.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { ArtistService } from 'src/app/artist/artist.service';
 import { Injectable } from '@angular/core';
 import { Artist } from '../shared/artist.model';
@@ -94,8 +94,8 @@ export class ArtistHttpService {
             }
             alert('SUCCESS: ' + response.responseBody);
           },
-          (error) => {
-            alert('ERROR: ', error.error.responseBody);
+          (error: HttpErrorResponse) => {
+            alert('ERROR: ' + error.error.responseBody);
             console.log('ERROR: ', error);
           }
         );
@@ -113,7 +113,7 @@ export class ArtistHttpService {
             }
             alert('SUCCESS: ' + response.responseBody);
           },
-          (errorResponse: HttpResponse<AdminHttpResponse>) => {
+          (errorResponse: HttpErrorResponse) => {
             alert('ERROR: ' + errorResponse.error.responseBody);
           }
         );

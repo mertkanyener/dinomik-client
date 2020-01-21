@@ -1,9 +1,10 @@
+import { AdminHttpResponse } from 'src/app/shared/admin-http-response.int';
 import { environment } from './../../environments/environment';
 import { HttpService } from './../shared/http.service';
 import { UtilityService } from './../shared/utility.service';
 import { AuthService } from './../auth/auth.service';
 import { VenueService } from 'src/app/venue/venue.service';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Venue } from '../shared/venue.model';
 import { map } from 'rxjs/operators';
 import { Page } from '../shared/page-model';
@@ -78,30 +79,33 @@ getVenues() {
       venue.image = this.imageServerPath + value;
     });
     this.http.put(this.path + 'admin/venues/' + id, venue, {headers: this.authService.getAdminHeaders()}).subscribe(
-      (res) => {
+      (response: AdminHttpResponse) => {
         if (this.venueService.getVenues() !== undefined) {
           this.venueService.updateVenue(id, venue);
         }
+        alert('SUCCESS: ' + response.responseBody);
       },
-      (error) => {
+      (error: HttpErrorResponse) => {
+        alert('ERROR: ' + error .error.responseBody);
         console.log('ERROR: ', error);
       }
     );
   }
 
   addVenue(venue: Venue, image: File) {
-    this.http.post(this.path + 'admin/venues', venue, {headers: this.authService.getAdminHeaders(), responseType: 'text'}).subscribe(
-      (id: string) => {
-        const idLong = Number(id);
-        venue.id = idLong;
-        this.httpService.uploadImage(image, 'venue', idLong).then(value => {
+    this.http.post(this.path + 'admin/venues', venue, {headers: this.authService.getAdminHeaders()}).subscribe(
+      (response: AdminHttpResponse) => {
+        venue.id = response.objectId;
+        this.httpService.uploadImage(image, 'venue', venue.id).then(value => {
           venue.image = this.imageServerPath + value;
         });
         if (this.venueService.getVenues() !== undefined) {
           this.venueService.addVenue(venue);
         }
+        alert('SUCCESS: ' + response.responseBody);
       },
-      (error) => {
+      (error: HttpErrorResponse) => {
+        alert('ERROR: ' + error.error.responseBody);
         console.log('ERROR: ', error);
       }
     );
