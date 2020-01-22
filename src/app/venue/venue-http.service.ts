@@ -74,10 +74,7 @@ getVenues() {
     );
   }
 
-  updateVenue(id: number, venue: Venue, image: File) {
-    this.httpService.uploadImage(image, 'venue', id).then(value => {
-      venue.image = this.imageServerPath + value;
-    });
+  updateVenue(id: number, venue: Venue) {
     this.http.put(this.path + 'admin/venues/' + id, venue, {headers: this.authService.getAdminHeaders()}).subscribe(
       (response: AdminHttpResponse) => {
         if (this.venueService.getVenues() !== undefined) {
@@ -92,13 +89,10 @@ getVenues() {
     );
   }
 
-  addVenue(venue: Venue, image: File) {
+  addVenue(venue: Venue) {
     this.http.post(this.path + 'admin/venues', venue, {headers: this.authService.getAdminHeaders()}).subscribe(
       (response: AdminHttpResponse) => {
         venue.id = response.objectId;
-        this.httpService.uploadImage(image, 'venue', venue.id).then(value => {
-          venue.image = this.imageServerPath + value;
-        });
         if (this.venueService.getVenues() !== undefined) {
           this.venueService.addVenue(venue);
         }

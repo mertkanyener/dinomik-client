@@ -23,8 +23,6 @@ export class AdminVenueEditComponent implements OnInit, OnDestroy {
   venue: Venue;
   form: FormGroup;
   fb = new FormBuilder();
-  image = new Image('', null);
-  imageSubscription: Subscription;
   venueSubscription: Subscription;
   cityList: City[] = [
     { value: 'istanbul', viewValue: 'İstanbul' },
@@ -45,40 +43,31 @@ export class AdminVenueEditComponent implements OnInit, OnDestroy {
     this.route.url.subscribe(
       (url: any) => {
         console.log('Url: ', url[0].path);
-      }
-    );
-    // this.route.params.subscribe(
-    //   (params: Params) => {
-    //     this.id = +params['id'];
-    //     if (params['id'] !== null) {
-    //       this.editMode = true;
-    //       if (this.venueService.getVenues() === undefined) {
-    //         this.venueHttp.getVenue(this.id);
-    //         this.venueSubscription = this.venueService.venueChanged.subscribe(
-    //           (venue: Venue) => {
-    //             this.venue = venue;
-    //             this.setFormValues(venue);
-    //           }
-    //         );
-    //       } else {
-    //         this.venue = this.venueService.getVenue(this.id);
-    //         this.setFormValues(this.venue);
-    //       }
-    //     }
-    //   }
-    // );
-    this.imageSubscription = this.utilService.imageChanged.subscribe(
-      (image: Image) => {
-        this.image = image;
+        if (url[0].path === 'venue') {
+          this.editMode = true;
+          this.route.params.subscribe(
+            (params: Params) => {
+              this.id = +params['id'];
+            }
+          );
+          if (this.venueService.getVenues() === undefined){
+            this.venueHttp.getVenue(this.id);
+            this.venueSubscription = this.venueService.venueChanged.subscribe(
+              (venue: Venue) => {
+                this.venue = venue;
+                this.setFormValues(venue);
+              }
+            );
+          } else {
+            this.venue = this.venueService.getVenue(this.id);
+            this.setFormValues(this.venue);
+          }
+        }
       }
     );
   }
 
   ngOnDestroy() {
-    if (this.imageSubscription !== undefined) {
-      this.imageSubscription.unsubscribe();
-    }
-
     if (this.venueSubscription !== undefined) {
       this.venueSubscription.unsubscribe();
     }
@@ -94,9 +83,9 @@ export class AdminVenueEditComponent implements OnInit, OnDestroy {
     this.venue.longitude = value.longitude;
     this.venue.city = value.city;
     if (this.editMode) {
-      this.venueHttp.updateVenue(this.id, this.venue, this.image.file);
+      this.venueHttp.updateVenue(this.id, this.venue);
     } else {
-      this.venueHttp.addVenue(this.venue, this.image.file);
+      this.venueHttp.addVenue(this.venue);
     }
     this.navigate();
   }
@@ -104,11 +93,6 @@ export class AdminVenueEditComponent implements OnInit, OnDestroy {
   onCancel() {
     this.navigate();
   }
-
-  changeListener($event) {
-    this.utilService.readImage($event.target, this.sanitizer, this.image);
-  }
-
   navigate() {
     if (this.editMode) {
       this.router.navigate(['/admin/venues']);
@@ -134,7 +118,6 @@ export class AdminVenueEditComponent implements OnInit, OnDestroy {
     this.form.controls.latitude.setValue(venue.latitude);
     this.form.controls.longitude.setValue(venue.longitude);
     this.form.controls.city.setValue(venue.city);
-    this.image.dataUrl = venue.image;
   }
 
 }

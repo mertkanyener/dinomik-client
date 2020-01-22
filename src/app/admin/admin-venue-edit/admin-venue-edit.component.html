@@ -55,12 +55,6 @@
           <mat-error *ngIf="form.hasError('required', 'city')">* Şehir gerekli</mat-error>
         </mat-form-field>
       </div>
-      <input 
-        type="file"
-        id="image"
-        accept="image/*"
-        (change) = "changeListener($event)">
-      <img [src]="this.image.dataUrl" alt="Görsel">
       <div fxLayout="row" fxLayoutGap="3rem">
         <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Kaydet</button>
         <button mat-raised-button color="warn" type="button" (click)="onCancel()">Vazgeç</button>

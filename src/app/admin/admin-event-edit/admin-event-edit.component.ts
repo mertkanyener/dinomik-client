@@ -215,7 +215,7 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
 
   navigate() {
     if (this.editMode) {
-      this.router.navigate(['../../'], {relativeTo: this.route});
+      this.router.navigate(['/admin/events']);
     } else {
       this.router.navigate(['../'], {relativeTo: this.route});
     }

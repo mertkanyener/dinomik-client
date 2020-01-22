@@ -1,7 +1,8 @@
+import { AdminHttpResponse } from 'src/app/shared/admin-http-response.int';
 import { HttpService } from './../shared/http.service';
 import { Event } from 'src/app/shared/event.model';
 import { AuthService } from './../auth/auth.service';
-import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { EventService } from './event.service';
 import { map } from 'rxjs/operators';
 import { Page } from '../shared/page-model';
@@ -48,7 +49,7 @@ export class EventHttpService {
       (events: Event[]) => {
         this.eventService.setEvents(events);
       },
-      (error) => {
+      (error) => { 
         console.log('HttpService error: ', error);
       }
     );
@@ -273,12 +274,14 @@ export class EventHttpService {
     }
     const url = this.path + 'admin/events/' + id;
     this.http.put(url, event, {headers: this.authService.getAdminHeaders()}).subscribe(
-      (res) => {
+      (response: AdminHttpResponse) => {
         if (this.eventService.getEvents() !== undefined) {
           this.eventService.updateEvent(id, event);
         }
+        alert('SUCCESS: ' + response.responseBody);
       },
-      (error) => {
+      (error: HttpErrorResponse) => {
+        alert('ERROR: ' + error.error.responseBody);
         console.log('ERROR: ', error);
       }
     );
@@ -286,20 +289,21 @@ export class EventHttpService {
 
   addEvent(event: Event, image?: File) {
     const url = this.path + 'admin/events/';
-    this.http.post(url, event, {headers: this.authService.getAdminHeaders(), responseType: 'text'}).subscribe(
-      (id: string) => {
-        const idLong  = Number(id);
-        event.id = idLong;
+    this.http.post(url, event, {headers: this.authService.getAdminHeaders()}).subscribe(
+      (response: AdminHttpResponse) => {
+        event.id = response.objectId;
         if (image !== null && image !== undefined) {
-          this.httpService.uploadImage(image, 'event', idLong).then(value => {
+          this.httpService.uploadImage(image, 'event', event.id).then(value => {
             event.image = this.imageServerPath + value;
           });
         }
         if (this.eventService.getEvents() !== undefined) {
           this.eventService.addEvent(event);
         }
+        alert('SUCCESS: ' + response.responseBody);
       },
-      (error) => {
+      (error: HttpErrorResponse) => {
+        alert('ERROR: ' + error.error.responseBody);
         console.log('ERROR: ', error);
       }
     );
