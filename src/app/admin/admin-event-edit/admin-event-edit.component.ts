@@ -11,7 +11,7 @@ import { EventHttpService } from 'src/app/event/event-http.service';
 import { EventService } from 'src/app/event/event.service';
 import { Subscription, Observable } from 'rxjs';
 import { Image } from './../../shared/image.model';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Event } from 'src/app/shared/event.model';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent } from '@angular/material';
@@ -62,6 +62,7 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
   eventSubscription: Subscription;
   artistSubscription: Subscription;
   venueSubscription: Subscription;
+  today = new Date();
 
   @ViewChild('artistInput') artistInput: ElementRef<HTMLInputElement>;
   @ViewChild('venueInput') venueInput: ElementRef<HTMLInputElement>;
@@ -102,6 +103,7 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
                }
 
   ngOnInit() {
+    console.log('Today: ', this.today);
     this.initForm();
     this.artistHttpService.getAllArtists();
     this.venueHttpService.getVenues();
@@ -146,8 +148,10 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
   private initForm() {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.maxLength(50)]],
-      date: [null, [Validators.required]],
-      endDate: null,
+      date: this.fb.group({
+        startDate: [null, [Validators.required]],
+        endDate: [null]
+      }, { validators: this.validateDates }),
       hour: [null, [Validators.required]],
       minute: [null, [Validators.required]],
       webLink: [null, [Validators.required]],
@@ -301,6 +305,16 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
 
   venueSelected(): boolean {
     return this.venues.length > 0;
+  }
+
+  validateDates(c: AbstractControl) {
+    const startDate: Date = c.get('startDate').value;
+    const endDate: Date = c.get('endDate').value;
+    console.log('End date: ', endDate);
+    if (endDate !== null && endDate <= startDate) {
+      c.get('endDate').setErrors({ 'WrongDateInput' : true });
+    }
+
   }
 
 }

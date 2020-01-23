@@ -15,24 +15,30 @@
       </mat-form-field>
       <br>
       <div fxLayout="row" fxLayoutGap="2rem">
-        <mat-form-field>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            placeholder="Başlangıç Tarihi"
-            formControlName="date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-          <input
-            matInput
-            [matDatepicker]="pickerEnd"
-            placeholder="Bitiş Tarihi"
-            formControlName="endDate">
-          <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-          <mat-datepicker #pickerEnd></mat-datepicker>
-        </mat-form-field>
+        <div formGroupName="date">
+          <mat-form-field style="margin-right: 1rem;">
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [min]="today"
+              placeholder="Başlangıç Tarihi"
+              formControlName="startDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="form.get('date.startDate').hasError('required')"> * Lütfen bir tarih girin</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input
+              matInput
+              [matDatepicker]="pickerEnd"
+              [min]="today"
+              placeholder="Bitiş Tarihi"
+              formControlName="endDate">
+            <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+            <mat-datepicker #pickerEnd></mat-datepicker>
+            <mat-error *ngIf="form.get('date.endDate').hasError('WrongDateInput')">* Bitiş tarihi başlangıç tarihinden sonra olmalıdır</mat-error>
+          </mat-form-field>
+        </div>
         <mat-form-field fxFlex="10">
           <mat-select formControlName="hour" placeholder="Saat">
             <mat-option *ngFor="let hour of hours" [value]="hour">{{ hour }}</mat-option>
