@@ -14,7 +14,7 @@ import { Image } from './../../shared/image.model';
 import { FormGroup, FormControl, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Event } from 'src/app/shared/event.model';
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
-import { MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocomplete, MatChipInputEvent, MatAutocompleteSelectedEvent, MatCheckboxChange } from '@angular/material';
 import { startWith, map } from 'rxjs/operators';
 import { Genre } from 'src/app/shared/genre.interface';
 
@@ -70,6 +70,7 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
   @ViewChild('autoArtist') matAutoCompArtist: MatAutocomplete;
   @ViewChild('autoVenue') matAutoCompVenue: MatAutocomplete;
   @ViewChild('autoGenre') matAutoCompGenre: MatAutocomplete;
+  @ViewChild('imageInput') imageInput: ElementRef;
 
   constructor(public eventService: EventService,
               public eventHttpService: EventHttpService,
@@ -130,6 +131,7 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
     this.imageSubscription = this.utilService.imageChanged.subscribe(
       (image: Image) => {
         this.image = image;
+        console.log('IMAGE: ', this.image);
       }
     );
     this.artistSubscription = this.artistService.artistsChanged.subscribe(
@@ -201,14 +203,21 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
     this.event.genres = this.genres;
     if (this.useArtistImage) {
       this.event.image = this.event.artists[0].image;
-      this.image = null;
     }
     if (this.editMode) {
       console.log('Updated Event: ', this.event);
-      this.eventHttpService.updateEvent(this.id, this.event, this.image.file);
+      if (this.useArtistImage) {
+        this.eventHttpService.updateEvent(this.id, this.event);
+      } else {
+        this.eventHttpService.updateEvent(this.id, this.event, this.image.file);
+      }
     } else {
       console.log('New Event: ', this.event);
-      this.eventHttpService.addEvent(this.event, this.image.file);
+      if (this.useArtistImage) {
+        this.eventHttpService.addEvent(this.event);
+      } else {
+        this.eventHttpService.addEvent(this.event, this.image.file);
+      }
     }
     this.navigate();
   }
@@ -307,7 +316,14 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
     return this.venues.length > 0;
   }
 
-  validateDates(c: AbstractControl) {
+  setUseArtistImage(event: MatCheckboxChange) {
+    if (event.checked) {
+      this.utilService.clearImage();
+      this.imageInput.nativeElement.value = '';
+    }
+  }
+
+  private validateDates(c: AbstractControl) {
     const startDate: Date = c.get('startDate').value;
     const endDate: Date = c.get('endDate').value;
     console.log('End date: ', endDate);

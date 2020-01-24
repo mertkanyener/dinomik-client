@@ -48,8 +48,11 @@ export class UtilityService {
       image.dataUrl = reader.result.toString();
     };
     reader.readAsDataURL(image.file);
+  }
 
-
+  clearImage() {
+    this.image = new Image(null, null);
+    this.imageChanged.next(this.image);
   }
 
   calculateGrid(objectCount: number): Grid {

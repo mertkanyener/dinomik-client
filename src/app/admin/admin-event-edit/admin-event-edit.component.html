@@ -140,8 +140,8 @@
         </mat-autocomplete>
       </mat-form-field>
       <div fxLayout="row" fxLayoutGap="2rem">
-        <input type="file" id="image" accept="image/*" (change)="changeListener($event)">
-        <mat-checkbox [(ngModel)]="useArtistImage" [ngModelOptions]="{standalone: true}" [disabled]="isMultiArtistEvent()">Sanatçının Resmini Kullan</mat-checkbox>
+        <input type="file" #imageInput accept="image/*" (change)="changeListener($event)">
+        <mat-checkbox (change)="setUseArtistImage($event)" [(ngModel)]="useArtistImage" [ngModelOptions]="{standalone: true}" [disabled]="isMultiArtistEvent()">Sanatçının Resmini Kullan</mat-checkbox>      
       </div>
       <img [src]="this.image.dataUrl" alt="Görsel">
       <div fxLayout="row" fxLayoutGap="3rem">
