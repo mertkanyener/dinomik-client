@@ -166,8 +166,7 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
     this.form.controls.hour.setValue(timeArr[0]);
     this.form.controls.minute.setValue(timeArr[1]);
     this.form.controls.name.setValue(event.name);
-    this.form.controls.date.setValue(event.date);
-    this.form.controls.endDate.setValue(event.endDate);
+    this.form.setValue({date:{startDate: event.startDate, endDate: event.endDate}});
     this.form.controls.webLink.setValue(event.webLink);
     this.form.controls.spotifyLink.setValue(event.spotifyLink);
     this.artists = event.artists;
@@ -191,10 +190,12 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
 
   onSave() {
     const value = this.form.value;
-    const date: Date = value.date;
+    const startDate: Date = value.date.startDate;
+    const endDate: Date = value.date.endDate;
     const time: string = value.hour + ':' + value.minute;
     this.event.name = value.name;
-    this.event.date = date;
+    this.event.startDate = startDate;
+    this.event.endDate = endDate;
     this.event.time = time;
     this.event.artists = this.artists;
     this.event.venue = this.venues[0];

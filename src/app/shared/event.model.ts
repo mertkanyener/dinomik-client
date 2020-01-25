@@ -6,7 +6,7 @@ export class Event {
 
   id: number;
   name: string;
-  date: Date;
+  startDate: Date;
   endDate: Date;
   dateView: string;
   endDateView: string;

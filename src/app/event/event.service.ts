@@ -69,7 +69,7 @@ export class EventService {
   getEventsByDate(month: number, year: number) {
     const events = new Array<Event>();
     this.events.forEach(event => {
-      if (event.date.getMonth() === month && event.date.getFullYear() === year) {
+      if (event.startDate.getMonth() === month && event.startDate.getFullYear() === year) {
         events.push(event);
       }
     });
@@ -106,7 +106,7 @@ export class EventService {
 
   translateEventDates(events: Event[]): Event[] {
     events.forEach(event => {
-      const date = new Date(event.date);
+      const date = new Date(event.startDate);
       const splitTime = event.time.split(':');
       event.time = splitTime[0] + ':' + splitTime[1];
       event.dateView = date.getDate() + ' ' + this.months[date.getMonth()] + ' ' + date.getFullYear();
@@ -123,7 +123,7 @@ export class EventService {
 
   translateSingleEventDate(event: Event): Event {
     const splitTime = event.time.split(':');
-    const date = new Date(event.date);
+    const date = new Date(event.startDate);
     event.time = splitTime[0] + ':' + splitTime[1];
     event.dateView = date.getDate() + ' ' + this.months[date.getMonth()] + ' ' + date.getFullYear();
     return event;
