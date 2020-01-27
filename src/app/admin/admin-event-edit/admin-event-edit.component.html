@@ -1,6 +1,6 @@
 <div fxLayout="row" fxLayoutAlign="center start">
   <span fxFlex="15" fxFlex.gt-md="25"></span>
-  <div fxFlex="70" fxFlex.gt-md="50" fxLayout="column">
+  <div id="mainCol" fxFlex="70" fxFlex.gt-md="50" fxLayout="column">
     <h1 class="mat-h1">{{ editMode ? 'Etkinlik Düzenleme' : 'Yeni Etkinlik Ekle' }}</h1>
     <form (ngSubmit)="onSave()" [formGroup]="form">
       <mat-form-field fxFlexFill>
@@ -67,12 +67,38 @@
             [matAutocomplete]="autoArtist"
             [matChipInputFor]="chipList">
         </mat-chip-list>
-        <mat-autocomplete #autoArtist="matAutocomplete" (optionSelected)="selected($event , 'artist')">
+        <mat-autocomplete #autoArtist="matAutocomplete" (optionSelect ed)="selected($event , 'artist')">
           <mat-option *ngFor="let artist of filteredArtists | async" [value]="artist">
             {{ artist.name }}
           </mat-option>
         </mat-autocomplete>  
       </mat-form-field>
+      <br>
+      <div fxLayout="row">
+        <mat-accordion fxFlex="50">
+          <mat-expansion-panel hideToggle>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Yeni Sanatçı Ekle</mat-panel-title>
+                <span style="flex: 1 1 ;"></span>
+                <mat-panel-description>
+                  <mat-icon class="mat-18">person_add</mat-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3rem">
+                <mat-form-field>
+                  <input 
+                    type="text"
+                    placeholder="Sanatçı Adı"
+                    matInput
+                    [formControl]="newArtistCtrl"
+                    #newArtistName>
+                </mat-form-field>
+                <button id="btnNewArtist" type="button" mat-raised-button color="primary" (click)="onNewArtist()">Kaydet</button>
+              </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <span fxFlex="50"></span>
+      </div>
       <br>
       <mat-form-field fxFlexFill>
         <mat-chip-list #venueChip>
@@ -99,22 +125,22 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <div fxLayout="row">
-        <mat-form-field>
+      <div fxLayout="row" fxLayoutGap="1.5rem">
+        <mat-form-field fxFlex="25">
           <input 
             type="text"
             placeholder="Spotify Link"
             matInput
             formControlName="spotifyLink">
         </mat-form-field>
-        <br>
-        <mat-form-field>
+        <mat-form-field fxFlex="25">
           <input 
           type="text"
           placeholder="Web Link"
           matInput
           formControlName="webLink">  
         </mat-form-field>
+        <span fxFlex="50"></span>
       </div>
       <mat-form-field fxFlexFill>
         <mat-chip-list #genreChips>

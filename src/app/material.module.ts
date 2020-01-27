@@ -21,7 +21,8 @@ import {
   MatChipsModule,
   MatCheckboxModule,
   MatProgressSpinnerModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatExpansionModule
 } from '@angular/material';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
@@ -51,6 +52,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    MatExpansionModule,
     ScrollingModule
   ],
   exports: [
@@ -77,6 +79,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatCheckboxModule,
     MatProgressSpinnerModule,
     MatTooltipModule,
+    MatExpansionModule,
     ScrollingModule
   ]
 })

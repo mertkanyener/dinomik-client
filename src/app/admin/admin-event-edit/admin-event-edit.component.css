@@ -1,0 +1,16 @@
+#mainCol {
+    margin-top: 2rem;
+}
+
+mat-form-field {
+    margin-top: 0.8rem;
+}
+
+mat-expansion-panel {
+  background-color: #19191a;
+  width: fit-content;
+}
+
+#btnNewArtist {
+    height: fit-content;
+}

@@ -54,6 +54,7 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
   artistCtrl = new FormControl();
   venueCtrl = new FormControl();
   genreCtrl = new FormControl();
+  newArtistCtrl = new FormControl();
   image = new Image('', null);
   useArtistImage = false;
   removable = true;
@@ -70,6 +71,7 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
   @ViewChild('autoArtist') matAutoCompArtist: MatAutocomplete;
   @ViewChild('autoVenue') matAutoCompVenue: MatAutocomplete;
   @ViewChild('autoGenre') matAutoCompGenre: MatAutocomplete;
+  @ViewChild('newArtistName') newArtistInput: ElementRef<HTMLInputElement>;
   @ViewChild('imageInput') imageInput: ElementRef;
 
   constructor(public eventService: EventService,

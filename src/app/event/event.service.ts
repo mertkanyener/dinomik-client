@@ -93,7 +93,7 @@ export class EventService {
 
   deleteEvent(id: number){
     const index = this.events.indexOf(this.getEvent(id));
-    this.events.slice(index, 1);
+    this.events.splice(index, 1);
     this.eventsChanged.next(this.events.slice());
   }
 
