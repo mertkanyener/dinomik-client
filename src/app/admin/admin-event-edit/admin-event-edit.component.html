@@ -67,7 +67,7 @@
             [matAutocomplete]="autoArtist"
             [matChipInputFor]="chipList">
         </mat-chip-list>
-        <mat-autocomplete #autoArtist="matAutocomplete" (optionSelect ed)="selected($event , 'artist')">
+        <mat-autocomplete #autoArtist="matAutocomplete" (optionSelected)="selected($event , 'artist')">
           <mat-option *ngFor="let artist of filteredArtists | async" [value]="artist">
             {{ artist.name }}
           </mat-option>
@@ -75,13 +75,13 @@
       </mat-form-field>
       <br>
       <div fxLayout="row">
-        <mat-accordion fxFlex="50">
+        <mat-accordion fxFlex="50" class="accordion">
           <mat-expansion-panel hideToggle>
               <mat-expansion-panel-header>
                 <mat-panel-title>Yeni Sanatçı Ekle</mat-panel-title>
-                <span style="flex: 1 1 ;"></span>
                 <mat-panel-description>
-                  <mat-icon class="mat-18">person_add</mat-icon>
+                  <span style="flex: 1 1 auto;"></span>
+                  <mat-icon id="artistAdd" class="mat-18">person_add</mat-icon>
                 </mat-panel-description>
               </mat-expansion-panel-header>
               <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="3rem">
@@ -170,7 +170,7 @@
         <mat-checkbox (change)="setUseArtistImage($event)" [(ngModel)]="useArtistImage" [ngModelOptions]="{standalone: true}" [disabled]="isMultiArtistEvent()">Sanatçının Resmini Kullan</mat-checkbox>      
       </div>
       <img [src]="this.image.dataUrl" alt="Görsel">
-      <div fxLayout="row" fxLayoutGap="3rem">
+      <div id="btnRow" fxLayout="row" fxLayoutGap="3rem">
         <button mat-raised-button color="primary" type="submit" [disabled]="!form.valid">Kaydet</button>
         <button mat-raised-button color="warn" type="button" (click)="onCancel()">Vazgeç</button>
       </div>

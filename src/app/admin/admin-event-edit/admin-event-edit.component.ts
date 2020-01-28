@@ -165,12 +165,19 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
 
   setFormValues(event: Event) {
     const timeArr = event.time.split(':');
-    this.form.controls.hour.setValue(timeArr[0]);
-    this.form.controls.minute.setValue(timeArr[1]);
-    this.form.controls.name.setValue(event.name);
-    this.form.setValue({date:{startDate: event.startDate, endDate: event.endDate}});
-    this.form.controls.webLink.setValue(event.webLink);
-    this.form.controls.spotifyLink.setValue(event.spotifyLink);
+    this.form.setValue(
+      {
+        name: event.name,
+        date: {
+          startDate: event.startDate,
+          endDate: event.endDate
+        },
+        hour: timeArr[0],
+        minute: timeArr[1],
+        webLink: event.webLink,
+        spotifyLink: event.spotifyLink
+      }
+    );
     this.artists = event.artists;
     this.venues.push(event.venue);
     this.genres = event.genres;
@@ -188,6 +195,13 @@ export class AdminEventEditComponent implements OnInit, OnDestroy {
       this.eventSubscription.unsubscribe();
     }
 
+  }
+
+  onNewArtist() {
+    const name = this.newArtistInput.nativeElement.value;
+    const artist = new Artist();
+    artist.name = name;
+    this.artistHttpService.addArtist(artist);
   }
 
   onSave() {

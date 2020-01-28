@@ -101,13 +101,15 @@ export class ArtistHttpService {
         );
       }
 
-      addArtist(artist: Artist, image: File) {
+      addArtist(artist: Artist, image?: File) {
         this.http.post(this.path + 'admin/artists', artist, {headers: this.authService.getAdminHeaders()}).subscribe(
           (response: AdminHttpResponse) => {
             artist.id = response.objectId;
-            this.httpService.uploadImage(image, 'artist', artist.id).then(value => {
-              artist.image = this.imageServerPath + value;
-            });
+            if (image !== null && image !== undefined) {
+              this.httpService.uploadImage(image, 'artist', artist.id).then(value => {
+                artist.image = this.imageServerPath + value;
+              });
+            }
             if (this.artistService.getArtists() !== undefined) {
               this.artistService.addArtist(artist);
             }

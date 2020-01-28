@@ -14,3 +14,16 @@ mat-expansion-panel {
 #btnNewArtist {
     height: fit-content;
 }
+
+.accordion .mat-expansion-panel-header-description {
+    justify-content: space-between;
+}
+
+mat-panel-description {
+    align-items: flex-end;
+}
+
+#btnRow {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}

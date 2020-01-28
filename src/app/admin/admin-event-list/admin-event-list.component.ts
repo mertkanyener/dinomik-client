@@ -36,11 +36,9 @@ export class AdminEventListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.eventHttpService.getAllEvents('coming');
-    
     this.subscription = this.eventService.eventsChanged.subscribe(
       (events: Event[]) => {
         this.events = events;
-        console.log('Events: ', this.events)
         this.dataSource.data = events;
         this.dataSource.sort = this.sort;
         this.dataSource.filterPredicate = this.utilService.tableFilter();
