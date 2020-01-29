@@ -126,6 +126,7 @@ export class EventService {
     const date = new Date(event.startDate);
     event.time = splitTime[0] + ':' + splitTime[1];
     event.dateView = date.getDate() + ' ' + this.months[date.getMonth()] + ' ' + date.getFullYear();
+    event.dayOfWeek = this.getDayOfWeek(date.getDay());
     return event;
   }
 

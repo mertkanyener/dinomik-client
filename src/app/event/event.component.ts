@@ -1,3 +1,6 @@
+import { UserHttpService } from './../user/user-http.service';
+import { UserService } from './../user/user.service';
+import { AuthService } from './../auth/auth.service';
 import { EventHttpService } from './event-http.service';
 import { Event } from 'src/app/shared/event.model';
 import { ActivatedRoute, Params } from '@angular/router';
@@ -19,8 +22,11 @@ export class EventComponent implements OnInit, OnDestroy {
   isMulti = false;
 
   constructor(public eventService: EventService,
+              public eventHttpService: EventHttpService,
               public route: ActivatedRoute,
-              public eventHttpService: EventHttpService) { }
+              public authService: AuthService,
+              public userService: UserService,
+              public userHttpService: UserHttpService) { }
 
   ngOnInit() {
     this.route.params.subscribe(

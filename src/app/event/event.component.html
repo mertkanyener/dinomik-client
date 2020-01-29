@@ -2,23 +2,57 @@
   <span fxFlex="5"></span>
   <div fxFlex="50" fxLayout="column">
     <div fxLayout="row">
-       <h1 class="mat-h1">{{ event.name }}</h1>      
+       <h1 class="mat-h1">{{ event.name }}</h1 >      
     </div>
-    <div fxLayout="row">
-      <i class="fas fa-microphone-alt"></i> <h2 *ngFor="let artist of event.artists" class="mat-h2">{{ artist.name }}</h2>
+    <mat-divider></mat-divider>
+    <div class="info-row" fxLayout="row" fxLayoutAlign="start center">
+      <i id="microphone" class="fas fa-2x fa-microphone-alt"></i> 
+      <a *ngFor="let artist of event.artists" [routerLink]="['/sanatcilar', artist.id]">
+        <h2 class="mat-h2">{{ artist.name }}</h2>
+      </a> 
     </div>
     <div class="info-row" fxLayout="row" fxLayoutAlign="start center">
-      <mat-icon>location_city</mat-icon>
+      <mat-icon class="info-icon">location_city</mat-icon>
       <a [routerLink]="['mekanlar', event.venue.id ]"><h2 class="mat-h2">{{ event.venue.name }}</h2></a>
     </div>
     <div class="info-row" fxLayout="row" fxLayoutAlign="start center">
-      <mat-icon>today</mat-icon>
+      <mat-icon class="info-icon">today</mat-icon>
       <h2 class="mat-h2 date">{{ event.dateView }}</h2>
       <h2 class="mat-h2 date">{{ event.dayOfWeek }}</h2>
     </div>
     <div class="info-row" fxLayout="row" fxLayoutAlign="start center">
-      <mat-icon>access_time</mat-icon>
+      <mat-icon class="info-icon">access_time</mat-icon>
       <h2 class="mat-h2">Saat: {{ event.time }}</h2>
+    </div>
+    <div id="btn-row" *ngIf="authService.isAuthenticated()" fxLayout="row" fxLayoutGap="2rem">
+      <button *ngIf="userService.isSavedEvent(event.id);else notSaved" 
+        id="btnSaved"
+        type="button" 
+        mat-raised-button
+        class="btn-event-ops"  
+        (click)="userHttpService.deleteSavedEvent(event.id)">
+        Kaydedildi
+      </button>
+      <ng-template #notSaved>
+        <button
+          class="btn-event-ops" 
+          mat-raised-button
+          color="primary"
+          type="button"
+          (click)="userHttpService.addSavedEvent(event)">
+          <i class="material-icons-outlined">bookmark</i>
+          Kaydet
+        </button>
+      </ng-template>
+      <button 
+        *ngIf="userService.isAttendingEvent(event.id); else notGoing"
+        class="btn-event-ops"
+        mat-raised-button
+        type="button"
+        (click)="userHttpService.deleteAttendingEvent(event.id)">
+        <i class="fas fa-lg fa-calendar-check calendar"></i>
+        Gidiyorsun
+      </button>
     </div>
   </div>
   <div fxFlex="40" fxLayout="column">
