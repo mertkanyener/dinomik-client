@@ -24,7 +24,8 @@ export class AuthService {
 
   private path = environment.apiUrl;
   status = new Subject<number>();
-  authError = new Subject<AuthError>();
+  private authError: AuthError;
+  authErrorChanged = new Subject<AuthError>();
 
   httpOptions: any;
   adminMode = false;
@@ -103,18 +104,25 @@ export class AuthService {
           if (userType === 'admin') {
             this.saveToken('admin_access_token', token.access_token);
             this.saveToken('admin_refresh_token', token.refresh_token);
+            location.reload();
+
           } else {
             this.saveToken('dino_access_token', token.access_token);
             this.saveToken('dino_refresh_token', token.refresh_token);
             this.cookieService.set('userId', token.userId.toString());
+            if (userType === 'fbUser') {
+              location.reload();
+            } else {
+              this.router.navigate(['/']);
+            }
           }
-          location.reload();
         }
       },
       (error) => {
         this.hideLoadingSpinner();
         const loginError: AuthError = JSON.parse(error['error']);
-        this.authError.next(loginError);
+        this.authError = loginError;
+        this.authErrorChanged.next(this.authError);
       }
     );
   }

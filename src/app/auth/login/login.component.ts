@@ -16,6 +16,8 @@ import { User } from 'src/app/shared/user.model';
 })
 export class LoginComponent {
 
+  dinoLogin = false;
+
   constructor(private authService: AuthService,
               private fbService: FacebookService,
               private router: Router,
@@ -34,9 +36,7 @@ export class LoginComponent {
   }
 
   onDinomikLogin() {
-    this.router.navigate(['/giris-yap']);
-    this.dialogRef.close();
-
+    this.dinoLogin = true;
   }
 
   onFacebookLogin() {
@@ -69,7 +69,7 @@ export class LoginComponent {
                 user.startDate = new Date().toISOString().split('T')[0];
                 this.authService.registerUser(user);
               }
-              this.authService.userLogin(email, null, 'user');
+              this.authService.userLogin(email, null, 'fbUser');
             });
           },
           (error) =>{

@@ -32,7 +32,9 @@
               <mat-card fxFlex="45" fxFlex.gt-md="30" *ngFor="let event of events">
                 <img mat-card-image [src]="event.image" alt="Image">
                 <mat-card-content fxLayout="column">
-                  <h3 class="mat-h3">{{ event.name }}</h3>
+                  <a [routerLink]="['/etkinlikler', event.id]">
+                    <h3 class="mat-h3">{{ event.name }}</h3>                  
+                  </a>
                   <h4 class="mat-h4">{{ event.dateView }}</h4>
                   <div fxLayout="row">
                     <h4 class="mat-h4">{{ event.dayOfWeek }}</h4>

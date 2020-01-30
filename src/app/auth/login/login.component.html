@@ -1,19 +1,25 @@
 <mat-dialog-content class="mat-typography">
-  <div fxLayout="column" fxLayoutAlign="start center">
-    <img id="topLogo" src="../../assets/photos/logo/logo.jpg" alt="Dinomik">
-    <h1 class="mat-h1">Dinomik'e Hoşgeldin</h1>
-    <button id="facebookBtn" mat-raised-button type="button" (click)="onFacebookLogin()"> 
-      <i class="fab fa-2x fa-facebook-f"></i>
-      <label class="mat-body">Facebook ile Devam Et</label> 
-    </button>
-    <button id="dinoBtn" mat-raised-button color="primary" (click)="onDinomikLogin()">
-      <i class="fa fa-2x fa-user"></i>
-      <label class="mat-body">Dinomik ile Giriş Yap</label>
-    </button>
-    <mat-divider></mat-divider>
-    <h4 class="mat-h4">Hesabın yok mu? <a routerLink="kayit-ol" (click)="onRegister()"><b>Kayıt ol!</b></a></h4>
-    <h4 class="mat-h4">Giriş yapmadan devam et</h4>
-    <button mat-fab color="primary" mat-dialog-close><mat-icon>arrow_forward</mat-icon></button>
+  <div id="mainDiv" fxLayout="column" fxLayoutAlign="start center">
+    <img id="topLogo" src="../../assets/photos/logo/logo.png" alt="Dinomik">
+    <h1 class="mat-h1">Hoşgeldin!</h1>
+    <div *ngIf="!dinoLogin" fxLayout="column" fxLayoutAlign="start center">
+      <button id="facebookBtn" mat-raised-button type="button" (click)="onFacebookLogin()"> 
+        <i class="fab fa-2x fa-facebook-f"></i>
+        <label class="mat-body">Facebook ile Devam Et</label> 
+      </button>
+      <button id="dinoBtn" mat-raised-button color="primary" (click)="onDinomikLogin()">
+        <i class="fa fa-2x fa-user"></i>
+        <label class="mat-body">Dinomik ile Giriş Yap</label>
+      </button>
+      <mat-divider></mat-divider>
+      <h4 class="mat-h4">Hesabın yok mu? <a routerLink="kayit-ol" (click)="onRegister()"><b>Kayıt ol!</b></a></h4>
+      <h4 class="mat-h4">Giriş yapmadan devam et</h4>
+      <button mat-fab color="primary" mat-dialog-close><mat-icon>arrow_forward</mat-icon></button>
+    </div>
+    <div *ngIf="dinoLogin">
+
+      
+    </div>
   </div>
 </mat-dialog-content>
 

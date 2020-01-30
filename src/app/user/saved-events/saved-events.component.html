@@ -1,10 +1,13 @@
 <div [style.height.px]="height" fxLayout="row" fxLayoutAlign="center start">
   <span fxFlex="5" fxFlex.gt-xs="15" fxFlex.gt-lg="25"></span>
   <div fxFlex="90" fxFlex.gt-xs="70" fxFlex.gt-lg="50" fxLayout="column" fxLayoutAlign="start center">
-    <h1 *ngIf="path === 'kaydedilenler'; else elseBlock" class="mat-h1">Kaydedilen Etkinlikler</h1>
-    <ng-template #elseBlock>
-      <h1 class="mat-h1">Gidilecek Etkinlikler</h1>
-    </ng-template>
+    <div id="headerRow" fxLayout="row" fxLayoutAlign="start">
+      <h1 *ngIf="path === 'kaydedilenler'; else elseBlock" class="mat-h1">Kaydedilen Etkinlikler</h1>
+      <ng-template #elseBlock>
+        <h1 class="mat-h1">Gideceğin Etkinlikler</h1>
+      </ng-template>
+    </div>
+    <mat-divider></mat-divider>
     <div fxFlexFill id="eventRow" fxLayout="row" fxLayoutGap="5%" *ngFor="let row of events">
       <mat-card fxFlex="90" fxFlex.gt-xs="45" fxFlex.gt-md="30" *ngFor="let event of row">
         <img mat-card-image [src]="event.image" alt="image">

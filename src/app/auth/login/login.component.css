@@ -20,10 +20,11 @@
   text-align: left;
 }
 
-
 mat-dialog-content {
-  margin-bottom: 1rem;
+  overflow: hidden;
 }
+
+
 
 mat-divider {
   margin-top: 2rem;
@@ -57,4 +58,8 @@ a {
 
 #fbIcon {
   color: #3C5A99;
+}
+
+#mainDiv {
+  height: 100%;
 }

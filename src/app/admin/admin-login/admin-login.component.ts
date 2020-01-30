@@ -24,7 +24,7 @@ export class AdminLoginComponent implements OnInit, OnDestroy {
       console.log('Admin!');
       this.router.navigate(['home'], {relativeTo: this.route });
     }
-    this.subscription = this.authService.authError.subscribe(
+    this.subscription = this.authService.authErrorChanged.subscribe(
       (error: AuthError) => {
         this.loginError = error;
       }

@@ -7,6 +7,10 @@
     mat-dialog-container, mat-calendar {
         background-color: #19191a;
     }
+
+    .mat-dialog-container {
+        overflow: hidden;
+    }
     
 * {
     letter-spacing: 2px;

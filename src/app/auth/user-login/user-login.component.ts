@@ -1,6 +1,7 @@
+import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { AuthError } from '../auth-error.class';
 
@@ -9,16 +10,18 @@ import { AuthError } from '../auth-error.class';
   templateUrl: './user-login.component.html',
   styleUrls: ['./user-login.component.css']
 })
-export class UserLoginComponent implements OnInit {
+export class UserLoginComponent implements OnInit, OnDestroy {
 
   loginError = new AuthError();
   height = window.innerHeight;
+  subscription: Subscription;
 
-  constructor(private authService: AuthService,
-              private router: Router) { }
+  constructor(public authService: AuthService,
+              public router: Router,
+              public route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.authService.authError.subscribe(
+    this.subscription = this.authService.authErrorChanged.subscribe(
       (error: AuthError) => {
         this.loginError = error;
         console.log('Error: ', this.loginError.error_description);
@@ -31,12 +34,15 @@ export class UserLoginComponent implements OnInit {
     const username = form.value.email;
     const password = form.value.password;
     this.authService.userLogin(username, password, 'user');
-    console.log('Error: ', this.loginError);
-    this.router.navigate(['/']);
   }
 
   onCancel() {
     this.router.navigate(['/']);
   }
+
+  ngOnDestroy () {
+    this.subscription.unsubscribe();
+  }
+
 
 }
