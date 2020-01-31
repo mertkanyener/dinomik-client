@@ -104,18 +104,12 @@ export class AuthService {
           if (userType === 'admin') {
             this.saveToken('admin_access_token', token.access_token);
             this.saveToken('admin_refresh_token', token.refresh_token);
-            location.reload();
-
           } else {
             this.saveToken('dino_access_token', token.access_token);
             this.saveToken('dino_refresh_token', token.refresh_token);
             this.cookieService.set('userId', token.userId.toString());
-            if (userType === 'fbUser') {
-              location.reload();
-            } else {
-              this.router.navigate(['/']);
-            }
           }
+          location.reload();
         }
       },
       (error) => {

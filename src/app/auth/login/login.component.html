@@ -1,7 +1,10 @@
 <mat-dialog-content class="mat-typography">
   <div id="mainDiv" fxLayout="column" fxLayoutAlign="start center">
     <img id="topLogo" src="../../assets/photos/logo/logo.png" alt="Dinomik">
-    <h1 class="mat-h1">Hoşgeldin!</h1>
+    <h1 *ngIf="!dinoLogin;else headerLogin" class="mat-h1">Hoşgeldin!</h1>
+    <ng-template #headerLogin>
+      <h1 class="mat-h1">Kullanıcı Girişi</h1>
+    </ng-template>
     <div *ngIf="!dinoLogin" fxLayout="column" fxLayoutAlign="start center">
       <button id="facebookBtn" mat-raised-button type="button" (click)="onFacebookLogin()"> 
         <i class="fab fa-2x fa-facebook-f"></i>
@@ -16,8 +19,40 @@
       <h4 class="mat-h4">Giriş yapmadan devam et</h4>
       <button mat-fab color="primary" mat-dialog-close><mat-icon>arrow_forward</mat-icon></button>
     </div>
-    <div *ngIf="dinoLogin">
-
+    <div style="width: 100%; height: 100%;" *ngIf="dinoLogin">
+      <form fxFlexFill (ngSubmit)="onLogin(f)" #f="ngForm">
+        <mat-form-field fxFlexFill>
+          <input 
+          type="email"
+          matInput
+          required
+          email
+          ngModel
+          id="email"
+          name="email"
+          placeholder="E-Mail Adresiniz">
+          <mat-error *ngIf="f.hasError('required', 'email')">* Lütfen e-mail adresinizi girin</mat-error>
+          <mat-error *ngIf="f.hasError('email', 'email')">* Lütfen geçerli bir e-mail adresi girin</mat-error>
+        </mat-form-field>
+        <br>
+      <mat-form-field fxFlexFill>
+        <input 
+          type="password" 
+          name="password" 
+          id="password"
+          placeholder="Şifreniz"
+          matInput
+          required
+          ngModel  >
+          <mat-error *ngIf="f.hasError('required', 'email')">* Lütfen şifrenizi girin</mat-error>
+      </mat-form-field>
+      <mat-error *ngIf="loginError.error_description === 'Bad credentials'">Kullanıcı adı veya şifre yanlış!</mat-error>
+      <br>
+      <div id="btnRow" fxLayout="row" fxLayoutGap="2rem">
+        <button fxFlex="25" mat-raised-button color="primary" type="submit" [disabled]="!f.valid">Giriş</button>
+        <button fxFlex="25" mat-raised-button color="warn" type="button" (click)="onCancel()">Vazgeç</button>
+      </div>
+    </form>
       
     </div>
   </div>

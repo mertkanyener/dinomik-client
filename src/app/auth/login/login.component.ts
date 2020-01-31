@@ -1,3 +1,6 @@
+import { Subscription } from 'rxjs';
+import { AuthError } from './../auth-error.class';
+import { NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { LoginResponse } from './../../shared/login-response.int';
 import { LoginOptions } from './../../shared/login-options.int';
@@ -14,9 +17,11 @@ import { User } from 'src/app/shared/user.model';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   dinoLogin = false;
+  loginError = new AuthError();
+  subscription: Subscription;
 
   constructor(private authService: AuthService,
               private fbService: FacebookService,
@@ -35,8 +40,26 @@ export class LoginComponent {
     this.dialogRef.close();
   }
 
+  ngOnInit() {
+    this.subscription = this.authService.authErrorChanged.subscribe(
+      (error: AuthError) => {
+        this.loginError = error;
+      }
+    );
+  }
+
   onDinomikLogin() {
     this.dinoLogin = true;
+  }
+
+  onLogin(form: NgForm) {
+    const username = form.value.email;
+    const password = form.value.password;
+    this.authService.userLogin(username, password, 'user');
+  }
+
+  onCancel() {
+    this.dinoLogin = false;
   }
 
   onFacebookLogin() {

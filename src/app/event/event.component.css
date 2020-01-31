@@ -21,9 +21,8 @@ a {
 }
 
 img {
-    margin-right: 2rem;
-    width: fit-content;
-    height: fit-content;
+    max-width: 100%;
+    height: auto;
 }
 
 .info-icon {
@@ -50,4 +49,8 @@ img {
 .btn-event-ops {
     width: fit-content;
     padding: 0;
+}
+
+.pos {
+    color: ;
 }
