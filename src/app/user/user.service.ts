@@ -15,11 +15,13 @@ export class UserService {
     private friends = new Array<Friend>();
     private searchFriends: Friend[];
     private friend: Friend;
+    private attendingFriends: Friend[];
     userChanged = new Subject<User>();
     friendsChanged = new Subject<Friend[]>();
     searchFriendsChanged = new Subject<Friend[]>();
     otherUserChanged = new Subject<User>();
     friendChanged = new Subject<Friend>();
+    attendingFriendsChanged = new Subject<Friend[]>();
 
     constructor(public eventService: EventService) {}
 
@@ -38,6 +40,11 @@ export class UserService {
     setFriends(friends: Friend[]) {
         this.friends = friends;
         this.friendsChanged.next(this.friends.slice());
+    }
+
+    setAttendingFriends(friends: Friend[]) {
+        this.attendingFriends = friends;
+        this.attendingFriendsChanged.next(this.attendingFriends.slice());
     }
 
     setFriend(friend: Friend) {

@@ -1,3 +1,4 @@
+import { Friend } from './../shared/friend.model';
 import { UserHttpService } from './../user/user-http.service';
 import { UserService } from './../user/user.service';
 import { AuthService } from './../auth/auth.service';
@@ -17,8 +18,10 @@ export class EventComponent implements OnInit, OnDestroy {
 
   event = new Event();
   id: number;
+  attendingFriends: Friend[];
   subscription: Subscription;
   subscriptionEvent: Subscription;
+  subscrtiptionFriends: Subscription;
   isMulti = false;
 
   constructor(public eventService: EventService,
@@ -35,6 +38,7 @@ export class EventComponent implements OnInit, OnDestroy {
       }
     );
     this.eventHttpService.getEvent(this.id);
+    this.userHttpService.getAttendingFriendsOfEvent(this.id);
     this.subscriptionEvent = this.eventService.eventChanged.subscribe(
       (event: Event) => {
         this.event = event;
@@ -43,10 +47,16 @@ export class EventComponent implements OnInit, OnDestroy {
         }
       }
     );
+    this.subscrtiptionFriends = this.userService.attendingFriendsChanged.subscribe(
+      (friends: Friend[]) => {
+        this.attendingFriends = friends;
+      }
+    );
   }
 
   ngOnDestroy() {
     this.subscriptionEvent.unsubscribe();
+    this.subscrtiptionFriends.unsubscribe();
   }
 
 }

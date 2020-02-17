@@ -79,6 +79,20 @@ export class UserHttpService {
         );
     }
 
+    getAttendingFriendsOfEvent(eventId: number) {
+        const url = this.path + this.cookieService.get('userId') + '/event/' + eventId + '/friends';
+        this.http.get<Friend[]>(url, { headers: this.authService.getHeaders() }).subscribe(
+            (friends: Friend[]) => {
+                this.userService.setAttendingFriends(friends);
+            },
+            (error) => {
+                console.log('UserHttpService error: ', error);
+                this.handleError(error);
+            }
+        );
+
+    }
+
     searchFriends(firstName: string, lastName: string) {
         const url = this.path + 'friends/find';
         const params = new HttpParams().set('firstName', firstName)
